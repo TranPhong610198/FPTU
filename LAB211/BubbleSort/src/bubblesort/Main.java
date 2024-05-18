@@ -1,13 +1,13 @@
 package bubblesort;
 import java.util.*;
-public class BubbleSort {
+public class Main {
     
     public static void displayArr(int[] arr, String str) {
         System.out.print(str);
         System.out.println(Arrays.toString(arr));
     }
     
-    public static int[] BubbleSort(int[] arr){
+    public static void BubbleSort(int[] arr){
         boolean check;
         for (int i=0; i<arr.length; i++){
             check = false;
@@ -21,7 +21,6 @@ public class BubbleSort {
             }
             if (!check) break;
         }
-        return arr;
     }
     
     public static int[] createRandomArr(int size){
@@ -43,7 +42,7 @@ public class BubbleSort {
         int[] arr = createRandomArr(size);
         
         displayArr(arr, "Unsorted Array: ");
-        arr = BubbleSort(arr);
+        BubbleSort(arr);
         displayArr(arr, "Sorted Array" );
     }
 }
