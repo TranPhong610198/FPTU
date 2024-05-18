@@ -1,0 +1,19 @@
+{
+    "terminal.integrated.cursorStyle": "line",
+    "terminal.integrated.sendKeybindingsToShell": true,
+    "terminal.integrated.allowMnemonics": true,
+    "terminal.integrated.copyOnSelection": true,
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.enableBell": true,
+    "terminal.integrated.enableImages": true,
+    "terminal.integrated.ignoreBracketedPasteMode": true,
+    "terminal.integrated.macOptionClickForcesSelection": true,
+    "terminal.integrated.macOptionIsMeta": true,
+    "terminal.integrated.shellIntegration.suggestEnabled": true,
+    "terminal.integrated.smoothScrolling": true,
+    "files.associations": {
+        "string.h": "c",
+        "math.h": "c",
+        "btslot6.h": "c"
+    }
+}
