@@ -10,11 +10,17 @@ package fibonacci;
  */
 public class Main {
 
-    /**
-     * @param args the command line arguments
-     */
+    public static int fibonacci(int num){
+        if(num == 0) return 0;
+        else if (num == 1) return 1;
+        else return fibonacci(num-1) + fibonacci(num-2);
+    }
+    
     public static void main(String[] args) {
-        // TODO code application logic here
+        System.out.println("The sequence 45 fibonacci: ");
+        for (int i=0; i<45; i++){
+            System.out.print(fibonacci(i)+", ");
+        }
     }
     
 }
