@@ -15,10 +15,10 @@ public class Validation {
             try{
                 System.out.println(str);
                 int temp = Integer.parseInt(scan.nextLine().trim());
-                if (temp<=0) throw new Exception();
+                if (temp<=0) throw new Exception("Input EROR!!! Enter Again: ");
                 return temp;
             }catch (Exception e){
-                System.err.println("Input EROR!!! Enter Again: ");
+                System.err.println(e.getMessage());
             }
         } while (true);
     }

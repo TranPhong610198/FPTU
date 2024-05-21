@@ -72,30 +72,6 @@ public class Main {
 
         int[] result = merge(arr1, arr2);
         return result;
-//        int size = arr1.length + arr2.length;
-//        int[] result = new int[size];
-//
-//        int i = 0, i1 = 0, i2 = 0;
-//        while (i1 < arr1.length && i2 < arr2.length) {
-//            if (i1 == arr1.length && i2 < arr2.length) {
-//                result[i] = arr2[i2];
-//                i2++;
-//                i++;
-//            } else if (i2 == arr2.length && i1 < arr1.length) {
-//                result[i] = arr1[i1];
-//                i1++;
-//                i++;
-//            } else if (arr1[i1] < arr2[i2]) {
-//                result[i] = arr1[i1];
-//                i1++;
-//                i++;
-//            } else {
-//                result[i] = arr2[i2];
-//                i2++;
-//                i++;
-//            }
-//        }
-//        return result;
     }
 
     public static void main(String[] args) {

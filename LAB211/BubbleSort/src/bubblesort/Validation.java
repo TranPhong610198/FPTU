@@ -22,11 +22,11 @@ public class Validation {
                 System.out.print(str);
                 int temp = Integer.parseInt(scan.nextLine().trim());
                 if (temp <= 0) {
-                    throw new NumberFormatException("Number Format Eror");
+                    throw new NumberFormatException("Input Eror!!! Enter Again: ");
                 }
                 return temp;
             } catch (NumberFormatException e) {
-                System.err.println("Input Eror!!! Enter Again: ");
+                System.err.println(e.getMessage());
             }
         } while (true);
     }

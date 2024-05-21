@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package linearsearch;
+package selectionsort;
 import java.util.*;
 /**
  *
@@ -16,19 +16,6 @@ public class Validation {
                 System.out.println(str);
                 int temp = Integer.parseInt(scan.nextLine().trim());
                 if (temp<=0) throw new Exception("Input EROR!!! Enter Again: ");
-                return temp;
-            }catch (Exception e){
-                System.err.println(e.getMessage());
-            }
-        } while (true);
-    }
-    public int inputValue(String str){
-        Scanner scan = new Scanner(System.in);
-        do {            
-            try{
-                System.out.println(str);
-                int temp = Integer.parseInt(scan.nextLine().trim());
-                if (temp<0) throw new Exception("Input EROR!!! Enter Again: ");
                 return temp;
             }catch (Exception e){
                 System.err.println(e.getMessage());
