@@ -1,20 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package q2_queue;
 
-/**
- *
- * @author tphon
- */
+
 public class Main {
+    public static void main(String[] args) throws Exception {
+        MyQueue queue = new MyQueue();
+        System.out.println("Is queue empty? " + queue.isEmpty());
+        queue.clear();
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+        queue.enqueue(40);
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+        System.out.print("3. Queue elements before enqueue: ");
+        queue.traverse();
+       
+        System.out.println("4. Dequeued element: " + queue.dequeue());
+        
+        System.out.println("5. First element: " + queue.front());
 
+        queue.convertToBinary(0.625);
     }
-    
 }
