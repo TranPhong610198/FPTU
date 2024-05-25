@@ -10,9 +10,7 @@ import java.util.*;
  *
  * @author tphon
  */
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -20,7 +18,7 @@ public class Main {
         Validation valid = new Validation();
         String input = valid.inputString("Enter your content: ");
 
-        String[] words = input.trim().split("\\s+");
+        String[] words = input.trim().split(" ");
         
         Map<String, Integer> wordCount = new HashMap<>();
         Map<Character, Integer> charCount = new HashMap<>();

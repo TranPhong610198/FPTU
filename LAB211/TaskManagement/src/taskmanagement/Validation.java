@@ -104,14 +104,14 @@ public class Validation {
                     }
                 }
                 if (to < from) {
-                    throw new Throwable();
+                    throw new UnknownError();
                 }
                 return to;
             } catch (NumberFormatException e) {
                 System.err.println("End time must between 8-17!!!");
             } catch (Exception e) {
                 System.err.println("Time must be .0 or .5!!!");
-            } catch (Throwable e) {
+            } catch (UnknownError e) {
                 System.err.println("End time must greater than start");
             }
         }
