@@ -23,6 +23,7 @@ public class Function {
 
     public void addTask(List<Task> task) {
         Validation Valid = new Validation();
+        
         int id = 1;
         if (!task.isEmpty()) {
             id = task.get(task.size() - 1).getId() + 1;
@@ -61,8 +62,7 @@ public class Function {
         
         for (int i=task.size()-1; i>=id; i--){
             Task temp = task.get(i);
-            int tempId = temp.getId();
-            temp.setId(tempId-1);
+            temp.setId(task.get(i).getId()-1);
             task.set(i, temp);
         }
         task.remove(id-1);

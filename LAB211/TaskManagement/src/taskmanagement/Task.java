@@ -117,6 +117,6 @@ public class Task {
     
     @Override
     public String toString(){
-        return id +"\t" +name+"\t\t"+this.getTaskType()+"\t\t"+date+"\t"+this.getTime()+"\t\t"+assignee+"\t\t"+reviewer;
+        return id +"\t" +name.trim()+"\t\t"+this.getTaskType().trim()+"\t\t"+date.trim()+"\t"+this.getTime()+"\t\t"+assignee.trim()+"\t\t"+reviewer.trim();
     }
 }

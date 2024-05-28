@@ -8,6 +8,7 @@ import java.util.*;
 import java.lang.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -51,68 +52,113 @@ public class Validation {
         Scanner scan = new Scanner(System.in);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         dateFormat.setLenient(false);
-        System.out.print(str);
+//        System.out.print(str);
         while (true) {
+            System.out.print(str);
             try {
                 Date date = dateFormat.parse(scan.next());
                 return dateFormat.format(date);
             } catch (ParseException e) {
-                System.err.print("Enter with date format dd-MM-yyyy: ");
+                System.err.print("Enter with date format dd-MM-yyyy!!!");
             }
         }
     }
 
+//    public double inputFrom() {
+//        Scanner scan = new Scanner(System.in);
+//        
+//        
+//        while (true) {
+//            System.out.print("From: ");
+//            try {
+//                double from = Double.parseDouble(scan.next());
+//                if (from < 8 || from > 17.5) {
+//                    throw new NumberFormatException();
+//                }
+//                if (from - (int) from != 0.0) {
+//                    if (from - (int) from == 0.5) {
+//                        return from;
+//                    } else {
+//                        throw new Exception();
+//                    }
+//                }
+//                return from;
+//            } catch (NumberFormatException e) {
+//                System.err.println("Start time must between 8-17.5!!!");
+//            } catch (Exception e) {
+//                System.err.println("Time must be .0 or .5!!!");
+//            }
+//        }
+//    }
+//    public double inputTo(double from) {
+//        Scanner scan = new Scanner(System.in);
+//        while (true) {
+//            System.out.print("To: ");
+//            try {
+//                double to = Double.parseDouble(scan.next());
+//                if (to < 8 || to > 17.5) {
+//                    throw new NumberFormatException();
+//                }
+//                if (to - (int) to != 0.0) {
+//                    if (to - (int) to == 0.5) {
+//                        return to;
+//                    } else {
+//                        throw new Exception();
+//                    }
+//                }
+//                if (to < from) {
+//                    throw new UnknownError();
+//                }
+//                return to;
+//            } catch (NumberFormatException e) {
+//                System.err.println("End time must between 8-17.5!!!");
+//            } catch (Exception e) {
+//                System.err.println("Time must be .0 or .5!!!");
+//            } catch (UnknownError e) {
+//                System.err.println("End time must greater than start");
+//            }
+//        }
+//    }
     public double inputFrom() {
         Scanner scan = new Scanner(System.in);
+        Pattern pattern = Pattern.compile("^(8|9|1[0-7])(\\.0||\\.5)?$");
+
         while (true) {
             System.out.print("From: ");
             try {
-                double from = Double.parseDouble(scan.next());
-                if (from < 8 || from > 17.5) {
-                    throw new NumberFormatException();
+                String input = scan.nextLine();
+                if (pattern.matcher(input).matches()) {
+                    return Double.parseDouble(input);
+                } else {
+                    throw new Exception();
                 }
-                if (from - (int) from != 0.0) {
-                    if (from - (int) from == 0.5) {
-                        return from;
-                    } else {
-                        throw new Exception();
-                    }
-                }
-                return from;
-            } catch (NumberFormatException e) {
-                System.err.println("Start time must between 8-17!!!");
             } catch (Exception e) {
-                System.err.println("Time must be .0 or .5!!!");
+                System.err.println("Error time format!!!");
             }
         }
     }
 
     public double inputTo(double from) {
         Scanner scan = new Scanner(System.in);
+        Pattern pattern = Pattern.compile("^(8|9|1[0-7])(\\.0||\\.5)?$");
+
         while (true) {
             System.out.print("To: ");
             try {
-                double to = Double.parseDouble(scan.next());
-                if (to < 8 || to > 17.5) {
+                String input = scan.nextLine();
+                if (pattern.matcher(input).matches()) {
+                    if (Double.parseDouble(input) > from) {
+                        return Double.parseDouble(input);
+                    } else {
+                        throw new Error();
+                    }
+                } else {
                     throw new NumberFormatException();
                 }
-                if (to - (int) to != 0.0) {
-                    if (to - (int) to == 0.5) {
-                        return to;
-                    } else {
-                        throw new Exception();
-                    }
-                }
-                if (to < from) {
-                    throw new UnknownError();
-                }
-                return to;
-            } catch (NumberFormatException e) {
-                System.err.println("End time must between 8-17!!!");
-            } catch (Exception e) {
-                System.err.println("Time must be .0 or .5!!!");
-            } catch (UnknownError e) {
-                System.err.println("End time must greater than start");
+            } catch (Error e) {
+                System.err.println("End time must greater than start!!!");
+            } catch (NumberFormatException e){
+                System.err.println("Error time format!!!");
             }
         }
     }
