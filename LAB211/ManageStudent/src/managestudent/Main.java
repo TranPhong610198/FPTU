@@ -2,7 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
-package j1.s.p0071;
+package managestudent;
+
 import java.util.*;
 
 /**
@@ -17,27 +18,33 @@ public class Main {
     public static void main(String[] args) {
         Validation Valid = new Validation();
         Function Funct = new Function();
-        List<Task> task = new ArrayList<>();
-        
-        while (true){
+        List<Student> studArr = new ArrayList<>();
+
+        while (true) {
             Funct.displayMenu();
-            int chose =  Valid.inputInt("Chose option: ", "EROR chose!!!", 1, 4);
-            switch (chose) {
+            int choice = Valid.inputInt("Your choice: ", "ERROR choice!!!", 1, 5);
+            switch (choice) {
                 case 1:
-                    Funct.addTask(task);
+                    Funct.create(studArr);
                     break;
                 case 2:
-                    Funct.delTask(task);
+//                    Funct.displayAll(studArr);
+                    Funct.findNSort(studArr);
+                    
                     break;
                 case 3:
-                    Funct.displayTask(task);
+                    Funct.updateOrDel(studArr);
                     break;
                 case 4:
+                    Funct.report(studArr);
+                    break;
+                case 5:
                     System.exit(0);
                     break;
-                
+
             }
         }
+
     }
-    
+
 }
