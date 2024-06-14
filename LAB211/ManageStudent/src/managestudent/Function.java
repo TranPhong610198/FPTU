@@ -23,32 +23,54 @@ public class Function {
                 + "5.	Exit");
     }
 
+    public int find(List<Student> stud, String name) {
+        int maxID = 0;
+        for (Student temp : stud) {
+            if (maxID < temp.getIdStudent()) {
+                maxID = temp.getIdStudent();
+            }
+            if (temp.getsName().equalsIgnoreCase(name)) {
+                return temp.getIdStudent();
+            }
+        }
+        return maxID + 1;
+    }
+
+    public Student add(List<Student> stud) {
+        String sName = Valid.inputString("Enter name: ");
+        int idStudent = 1;
+        int id = 1;
+        if (!stud.isEmpty()) {
+            idStudent = find(stud, sName);
+            id = stud.get(stud.size() - 1).getId() + 1;
+        }
+        int semester = Valid.inputInt("Enter semester: ", "Eror semester!!!", 1, 9);
+        String cName = Valid.inputCourse("Enter course: ");
+
+        return new Student(id, sName, cName, semester, idStudent);
+    }
+
     public void create(List<Student> stud) {
         while (true) {
-            int id = 1;
-            if (!stud.isEmpty()) {
-                id = stud.get(stud.size() - 1).getId() + 1;
-            }
-
-            if (stud.size() >= 3) {
+            if (stud.size() < 3) {
+                Student temp = add(stud);
+                while (Valid.isDuplicate(stud, temp)) {
+                    System.err.println("Student already exist!!!");
+                    temp = add(stud);
+                }
+                stud.add(temp);
+            } else {
                 String chose = Valid.inputChose("Do you want to continue (Y/N)?", "Eror chose!!! (Y/N)", "Y", "N");
                 if (chose.equalsIgnoreCase("Y")) {
-                    String sName = Valid.inputString("Student Name: ");
-                    int semester = Valid.inputInt("Semester: ", "Eror Semester!!!", 1, 9);
-                    String cName = Valid.inputCourse("Course Name: ");
-
-                    Student temp = new Student(id, sName, cName, semester);
+                    Student temp = add(stud);
+                    while (Valid.isDuplicate(stud, temp)) {
+                        System.err.println("Student already exist!!!");
+                        temp = add(stud);
+                    }
                     stud.add(temp);
                 } else {
-                    return;
+                    break;
                 }
-            } else {
-                String sName = Valid.inputString("Student Name: ");
-                int semester = Valid.inputInt("Semester: ", "Eror Semester!!!", 1, 9);
-                String cName = Valid.inputCourse("Course Name: ");
-
-                Student temp = new Student(id, sName, cName, semester);
-                stud.add(temp);
             }
         }
     }
@@ -98,13 +120,49 @@ public class Function {
         }
     }
 
-    public void update(List<Student> stud, int id) {
-        String newSName = Valid.inputString("New student name: ");
-        String newCName = Valid.inputCourse("New course name: ");
-        int newSemester = Valid.inputInt("New semester: ", "Error semseter !!!(1-9)", 1, 9);
+    public int upIdS(List<Student> stud, int ID, String name) {
+        for (Student temp : stud) {
+            if (temp.getsName().equalsIgnoreCase(name)) {
+                return temp.getIdStudent();
+            }
+        }
+        return stud.get(ID - 1).getIdStudent();
+    }
 
-        Student temp = new Student(id, newSName, newCName, newSemester);
-        stud.set(id - 1, temp);
+    public void update(List<Student> stud, int id) {
+        String newName = Valid.upName("Enter name: ", stud, id);
+        int newID = upIdS(stud, id, newName);
+
+        int idS = stud.get(id - 1).getIdStudent();
+
+        String course = Valid.upCourse("Enter course: ", stud, id).toUpperCase();
+        int semester = Valid.upSemester(1, 9, stud, id);
+
+        Student temp = new Student(id, newName, course, semester, newID);
+        if (Valid.isDuplicate(stud, temp)) {
+            System.err.println("Have duplication student!!!");
+            return;
+        } else {
+            stud.set(id - 1, temp);
+        }
+        for (Student tempS : stud) {
+            if (tempS.getIdStudent() == idS && tempS.getId() != id) {
+                Student newS = new Student(tempS.getId(), newName, tempS.getcName(), tempS.getSemester(), idS);
+                newS.setsName(newName);
+                newS.setIdStudent(newID);
+                if (Valid.isDuplicate(stud, newS)) {
+                    System.err.println("Have duplication student!!!");
+                    return;
+                }
+            }
+        }
+        for (int i = 0; i < stud.size(); i++) {
+            Student tempS = stud.get(i);
+            if (tempS.getIdStudent() == idS && i != id - 1) {
+                tempS.setsName(newName);
+                tempS.setIdStudent(newID);
+            }
+        }
     }
 
     public void delete(List<Student> stud, int id) {
@@ -144,13 +202,13 @@ public class Function {
             countCourse.put(course, countCourse.getOrDefault(course, 0) + 1);
         }
 
-        for (Map.Entry<String, Map<String, Integer>> tempReport : reportMap.entrySet()){
+        for (Map.Entry<String, Map<String, Integer>> tempReport : reportMap.entrySet()) {
             String name = tempReport.getKey();
             Map<String, Integer> tempCourse = tempReport.getValue();
-            for (Map.Entry<String, Integer> temp : tempCourse.entrySet()){
+            for (Map.Entry<String, Integer> temp : tempCourse.entrySet()) {
                 String course = temp.getKey();
                 int times = temp.getValue();
-                
+
                 System.out.println(name + "\t|" + course + "\t|" + times);
             }
         }

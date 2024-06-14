@@ -9,19 +9,24 @@ package managestudent;
  * @author tphon
  */
 public class Student {
-    private int id, semester;
+    private int id, semester, idStudent;
     private String sName, cName;
 
     public Student() {
     }
 
-    public Student(int id, String sName, String cName, int semester) {
+    public Student(int id, String sName, String cName, int semester, int idStudent) {
         this.id = id;
         this.sName = sName;
         this.cName = cName.toUpperCase();
         this.semester = semester;
+        this.idStudent = idStudent;
     }
 
+    public int getIdStudent(){
+        return idStudent;
+    }
+    
     public int getId() {
         return id;
     }
@@ -54,8 +59,12 @@ public class Student {
         this.semester = semester;
     }
     
+    public void setIdStudent(int idStudent){
+        this.idStudent = idStudent;
+    }
+    
     @Override
     public String toString(){
-        return id+"\t"+sName.trim()+"\t\t"+semester+"\t\t"+cName.trim();
+        return id+"\t"+sName.trim()+"\t\t"+semester+"\t\t"+cName.trim()+"\t\t"+idStudent;
     }
 }
