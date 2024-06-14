@@ -142,8 +142,6 @@ public class Function {
         if (Valid.isDuplicate(stud, temp)) {
             System.err.println("Have duplication student!!!");
             return 0;
-        } else {
-            stud.set(id - 1, temp);
         }
         for (Student tempS : stud) {
             if (tempS.getIdStudent() == idS && tempS.getId() != id) {
@@ -154,6 +152,9 @@ public class Function {
                 }
             }
         }
+        
+        
+        stud.set(id - 1, temp);
         for (int i = 0; i < stud.size(); i++) {
             Student tempS = stud.get(i);
             if (tempS.getIdStudent() == idS && i != id - 1) {
@@ -167,9 +168,7 @@ public class Function {
     public void delete(List<Student> stud, int id) {
         for (int i = stud.size() - 1; i >= id; i--) {
             Student temp = stud.get(i);
-            int tempID = temp.getId();
-            temp.setId(tempID - 1);
-            stud.set(i, temp);
+            temp.setId(temp.getId() - 1);
         }
         stud.remove(id - 1);
     }
@@ -180,10 +179,10 @@ public class Function {
         String chose = Valid.inputChose("Do you want to update (U) or delete (D) student. ", "Eror chose!!! (U/D)", "U", "D");
 
         if (chose.equalsIgnoreCase("U")) {
-            if(update(stud, ID) == 1){
-            display(stud, "After Update ID:" + ID);
-        }
-            
+            if (update(stud, ID) == 1) {
+                display(stud, "After Update ID:" + ID);
+            }
+
         } else {
             delete(stud, ID);
             display(stud, "After Delete ID:" + ID);
