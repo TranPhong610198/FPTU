@@ -129,7 +129,7 @@ public class Function {
         return stud.get(ID - 1).getIdStudent();
     }
 
-    public void update(List<Student> stud, int id) {
+    public int update(List<Student> stud, int id) {
         String newName = Valid.upName("Enter name: ", stud, id);
         int newID = upIdS(stud, id, newName);
 
@@ -141,18 +141,16 @@ public class Function {
         Student temp = new Student(id, newName, course, semester, newID);
         if (Valid.isDuplicate(stud, temp)) {
             System.err.println("Have duplication student!!!");
-            return;
+            return 0;
         } else {
             stud.set(id - 1, temp);
         }
         for (Student tempS : stud) {
             if (tempS.getIdStudent() == idS && tempS.getId() != id) {
-                Student newS = new Student(tempS.getId(), newName, tempS.getcName(), tempS.getSemester(), idS);
-                newS.setsName(newName);
-                newS.setIdStudent(newID);
+                Student newS = new Student(tempS.getId(), newName, tempS.getcName(), tempS.getSemester(), newID);
                 if (Valid.isDuplicate(stud, newS)) {
                     System.err.println("Have duplication student!!!");
-                    return;
+                    return 0;
                 }
             }
         }
@@ -163,6 +161,7 @@ public class Function {
                 tempS.setIdStudent(newID);
             }
         }
+        return 1;
     }
 
     public void delete(List<Student> stud, int id) {
@@ -181,8 +180,10 @@ public class Function {
         String chose = Valid.inputChose("Do you want to update (U) or delete (D) student. ", "Eror chose!!! (U/D)", "U", "D");
 
         if (chose.equalsIgnoreCase("U")) {
-            update(stud, ID);
+            if(update(stud, ID) == 1){
             display(stud, "After Update ID:" + ID);
+        }
+            
         } else {
             delete(stud, ID);
             display(stud, "After Delete ID:" + ID);
