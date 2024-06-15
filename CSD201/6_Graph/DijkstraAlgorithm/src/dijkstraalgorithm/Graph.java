@@ -22,10 +22,10 @@ import java.util.*;
             }
         }
 
-        public void addEdge(int source, int target, int weight) {
-            adjacencyMatrix[source][target] = weight;
-            adjacencyMatrix[target][source] = weight; // For undirected graph
-        }
+//        public void addEdge(int source, int target, int weight) {
+//            adjacencyMatrix[source][target] = weight;
+//            adjacencyMatrix[target][source] = weight; // For undirected graph
+//        }
 
         public void dijkstra(int startVertex, int endVertex) {
             int[] distances = new int[vertices];
