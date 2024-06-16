@@ -30,7 +30,7 @@ public class FloydWarshall {
         for (int k = 0; k < V; k++) {
             for (int i = 0; i < V; i++) {
                 for (int j = 0; j < V; j++) {
-                    if (dist[i][k]!= INF && dist[k][j]!= INF && dist[i][k] + dist[k][j] < dist[i][j]) {
+                    if (dist[i][k] != INF && dist[k][j] != INF && dist[i][k] + dist[k][j] < dist[i][j]) {
                         dist[i][j] = dist[i][k] + dist[k][j];
                         path[i][j] = path[k][j];
                     }
@@ -38,8 +38,10 @@ public class FloydWarshall {
             }
         }
 
-        printMatrix(dist, V, "Shortest path matrix");
-        printMatrix(path, V, "Previous edge matrix");
+        printMatrix(dist, V, "Shortest distances matrix");
+        printMatrix(path, V, "Previous vertex matrix");
+
+        paths(path, dist);
 
     }
 
@@ -64,4 +66,28 @@ public class FloydWarshall {
             System.out.println();
         }
     }
+
+    public void paths(int path[][], int dist[][]) {
+        int size = 5;
+        System.out.println("Vertex\t\tDistances\tPaths");
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                if (i != j) {
+                    System.out.print((i + 1) + "->" + (j + 1) + "\t\t" + dist[i][j] + "\t\t");
+                    printPath(i, j, path);
+                    System.out.println("");
+                }
+            }
+        }
+    }
+
+    public void printPath(int start, int end, int[][] path) {
+        if (path[start][end] == 0) {
+            System.out.print(start + 1);
+            return;
+        }
+        printPath(start, (path[start][end]-1), path);
+        System.out.print(" -> " + (end+1));
+    }
+
 }

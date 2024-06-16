@@ -14,9 +14,9 @@ import java.util.*;
 
 public class WGraph {
 
-    private int[][] adjMatrix; 
-    private int n; 
-    
+    private int[][] adjMatrix;
+    private int n;
+
     public void setAMatrix(int[][] inMatrix, int vertices) {
         n = vertices;
         adjMatrix = new int[n][n];
@@ -33,7 +33,7 @@ public class WGraph {
 
         while (!queue.isEmpty()) {
             int v = queue.poll();
-            System.out.print((char) ('A'+v) + " ");
+            System.out.print((char) ('A' + v) + " ");
             for (int i = 0; i < n; i++) {
                 if (adjMatrix[v][i] != 0 && !visited[i]) {
                     visited[i] = true;
@@ -53,8 +53,8 @@ public class WGraph {
 
         while (!stack.isEmpty()) {
             int currentVertex = stack.pop();
-            
-            System.out.print((char) ('A'+currentVertex) + " ");
+
+            System.out.print((char) ('A' + currentVertex) + " ");
             for (int i = 0; i < n; i++) {
                 if (adjMatrix[currentVertex][i] > 0 && !visited[i]) {
                     visited[i] = true;
@@ -68,9 +68,11 @@ public class WGraph {
     public void dijkstra(int start) {
         int[] dist = new int[n];
         boolean[] sptSet = new boolean[n];
+        int[] pred = new int[n];
 
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[start] = 0;
+        Arrays.fill(pred, -1);
 
         for (int count = 0; count < n - 1; count++) {
             int u = minDistance(dist, sptSet);
@@ -81,11 +83,12 @@ public class WGraph {
                         && dist[u] != Integer.MAX_VALUE
                         && dist[u] + adjMatrix[u][v] < dist[v]) {
                     dist[v] = dist[u] + adjMatrix[u][v];
+                    pred[v] = u;
                 }
             }
         }
 
-        printDijkstra(dist);
+        printDijkstra(dist, pred, start);
     }
 
     private int minDistance(int[] dist, boolean[] sptSet) {
@@ -100,13 +103,27 @@ public class WGraph {
         return min_index;
     }
 
-    private void printDijkstra(int[] dist) {
+    private void printDijkstra(int[] dist, int[] pred, int start) {
         System.out.println("Vertex \t Distance from Source");
         for (int i = 0; i < n; i++) {
-            System.out.println((char)('A'+i) + " \t\t " + dist[i]);
+            if (i != start) {
+                System.out.print((char) ('A' + start) + "->" + (char) ('A' + i)
+                        + " \t\t" + dist[i] + "\t\t");
+                printPath(i, pred);
+                System.out.println("");
+            }
         }
     }
 
+    public void printPath(int current, int[] pred){
+        if (pred[current] == -1) {
+            System.out.print((char) ('A' + current));
+            return;
+        }
+        printPath(pred[current], pred);
+        System.out.print(" -> " + (char) ('A' + current));
+    }    
+    
     public int[][] readAdjacencyMatrix(String filename) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get(filename));
         int size = lines.size();
