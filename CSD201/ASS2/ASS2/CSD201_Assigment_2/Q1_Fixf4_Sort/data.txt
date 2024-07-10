@@ -1,0 +1,13 @@
+Line 0 - The next line is line 1 (f1)
+ A        B        C        D        E        F       G
+ 90000    30000    70000    20000    60000    40000   5000
+Line 3 - The next line is line 4 (f2)
+ C       B        E        F        I
+ 90000   60000    80000    20000    60000
+Line 6 - The next line is line 7 (f3)
+ C       B        E        F        I
+ 90000   50000    30000    50000    60000
+Line 9 - The next line is line 10 (f4)
+ C       B        E        F        I        J
+ 90000    60000    50000   130000   20000   10000
+END
