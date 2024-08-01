@@ -6,5 +6,5 @@ public class Main {
         test.add(3);
         test.add(5);
         test.traverse();
-    } 
+    }
 }
