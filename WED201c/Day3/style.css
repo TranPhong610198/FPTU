@@ -1,0 +1,61 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+img{
+    width: 350px;
+}
+
+/* PHAN NAY LA VE Position */
+.whitespace{
+    height: 50px;
+}
+.header{
+    /* position: absolute; */
+    position: sticky;
+    border: 1px solid rgb(0, 183, 255);
+    width: 100px;
+    top: 20px;
+    background-color: beige;
+    text-align: center;
+    /* left: 100px; */
+}
+.content{
+    position: relative;
+    height: 300px;
+    border: 1px solid saddlebrown;
+}
+.absolute{
+    position: absolute;
+    top: 10px;
+    background-color: blue;
+}
+
+
+/* Phan nay la Ve Float */
+
+.float{
+    /* float: left; */
+    float: right;
+}
+.clear{
+    clear: both;
+}
+
+
+/* Phan nay la ve Align */
+.text_center{
+    text-align: center;
+    border: 1px solid blue;
+}
+.center{
+    width: 100px;
+    border: 1px solid blue;
+    margin: auto;
+    text-align: center;
+}
+.picCenter{
+    display: block;
+    margin: auto;
+}

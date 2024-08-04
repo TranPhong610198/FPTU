@@ -1,0 +1,36 @@
+.container {
+    display: flex;
+    width: 600px;
+    height:300px;
+    background-color: #ddd;
+    /* flex-direction: column-reverse; */
+    /* flex-wrap: wrap-reverse; */
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+
+.item {
+    width: 100px;
+    height: 100px;
+    color: white;
+}
+
+.red {
+    background-color: red;
+    flex-grow: 1;
+}
+
+.green {
+    background-color: green;
+    order: 2;
+}
+
+.blue {
+    background-color: blue;
+    order: -3;
+}
+
+.black {
+    background-color: black;
+    flex-grow: 2;
+}

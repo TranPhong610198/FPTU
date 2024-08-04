@@ -1,0 +1,50 @@
+body{
+    background-color: azure;
+    height: 100vh;
+    background-image: url('background.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-size: cover;
+    background-position: center;
+    background: none;
+}
+
+.container{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 50%;
+    height: auto;
+    text-align: center;
+    padding: 20px;
+    transform: translateY(25%);
+    margin: auto;
+    
+    
+}
+
+#avt{
+    width: 125px;
+    height: 125px;
+    border-radius: 100%;
+    position: static;
+}
+
+h2{
+    margin-bottom: -17px;
+}
+
+h4{
+    font-size: small;
+    color: rgb(100, 100, 100);
+}
+
+a{
+    display: block;
+    width: 350px;
+    margin-bottom: 10px;
+    background-color: aqua;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    /* align-items: center; */
+}
+

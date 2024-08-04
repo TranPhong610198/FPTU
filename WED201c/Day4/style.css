@@ -1,0 +1,26 @@
+/* COMBINATION SELECTOR */
+/* Dau cach (" ") de chon toan bo chau chat chut chit */
+/* .test h3{
+    color: blue;
+} */
+
+
+/* Dau mui ten (">") de chon con */
+/* .test>h3{
+    color: blue;
+} */
+
+
+/* Dau cong ("+") de chon anh chi em lien ke sau seletor */
+/* .test{
+    color: rgb(6, 117, 117);
+}
+.test+h3{
+    color: blue;
+} */
+
+
+/* Dau nga ("~") chon toan bo anh chi em sau selector */
+/* .test~h3{
+    color: blue;
+} */

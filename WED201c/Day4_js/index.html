@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 4 Javascript</title>
+</head>
+<body>
+    <script>
+        let a = 10;
+        let b = "Hello World!!!";
+        const pi = 3.14;
+        
+        // document.write("a = "+a +'<br>');
+        // document.write("Pi = "+ pi);
+        console.log("a = " + a);
+        console.log("b = " + b);
+
+
+    // TYPEOF to take data type of variable
+        console.log(typeof b)
+
+
+    // ARRAY //
+        let arr = [1, 2, 3, 4, 5];
+        // add elements in last array
+        arr.push(6);
+        // delete last element
+        arr.pop();
+        arr.pop();
+        // delete first element
+        arr.shift();
+        // add elements in first array
+        arr.unshift(1)
+        console.log(arr)
+        console.log(arr.length);
+        // document.write(arr.length)
+
+
+    // OBJECT //
+        let obj = {
+            id: 1 ,
+            name: "Phong",
+            "phone number": "09610093838"
+        }
+        console.log(obj.name);
+        console.log(obj["phone number"]);
+        
+
+    // ALERT - just alert :)) //
+        // alert("Hello World!!!");
+
+
+    // PROMPT - alert and take input from keyboard //
+        // let great = prompt("What your name bro ? ");
+        // alert("Hello " + great)
+
+    
+    // FUNCTION
+        // function sayHello() {
+        //     alert("Hello World!!!");
+        // }
+        // sayHello();
+
+        // function sum(num1, num2) {
+        //     return num1+num2;
+        // }
+        // alert(sum("Hello", " World")) ;
+
+    
+    // LOOP
+        // for(let i=0; i<10; i++){
+        //     console.log(i);
+        // }
+
+        // let i=10;
+        // while (i<20) {
+        //     console.log(i);
+        //     i++;
+        // }
+
+    
+    // setTimeOut - set time and then do something
+        // setTimeout(() => {
+        //     alert("Hello World!!!")
+        // }, 3000);
+
+
+    // setInterval - like setTimeout but have loop
+        // setInterval(() => {
+        //     console.log("HelloWorld!!!");
+        // }, 1000);
+
+        // let times = 10;
+        // let id = setInterval(() => {
+        //     document.write(times + "<br>");
+        //     if (times <= 0){
+        //         clearInterval(id);
+        //     } else {
+        //         times--;
+        //     }
+        // }, 1000);
+    
+    
+    </script>
+
+</body>
+</html>
