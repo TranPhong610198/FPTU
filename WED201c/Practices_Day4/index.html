@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTVN Day 4</title>
+</head>
+<body>
+    <img id="bulb" onclick="switchBulb()" src="pic_bulboff.gif" alt="off"><br>
+    click bulb to on/off
+
+    <script>
+        isOn = false;
+        function switchBulb() {
+            isOn = !isOn;
+            let bulb = document.getElementById("bulb");
+            bulb.src = isOn?"pic_bulbon.gif":"pic_bulboff.gif";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO DO APP</title>
+</head>
+
+<body>
+    <h1>Todo App</h1>
+    <input type="text" name="newTask" id="newTask">
+    <input type="button" value="Add" onclick="addTask()">
+    <div>
+        <ul class="listTodo">
+            <li>Viec can lam 1</li>
+            <li>Viec can lam 2</li>
+        </ul>
+    </div>
+
+    <script>
+        function addTask() {
+            let text = newTask.value;
+            console.log(text);
+            console.log(document.getElementsByClassName("listTodo"));
+            
+        }
+    </script>
+</body>
+
+</html>

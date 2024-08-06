@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Practice Grid</title>
+    <style>
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            /* grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr; */
+        }
+
+        .header {
+            background-color: rgb(28, 167, 28);
+            grid-column: 1/13;
+        }
+        .iconMenu{
+            display: none;
+        }
+        .menu {
+            background-color: aqua;
+            grid-row: 2/4;
+            grid-column: 1/5;
+        }
+
+        .main {
+            background-color: red;
+            grid-column: 5/11;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .right {
+            background-color: yellow;
+            grid-column: 11/13;
+        }
+
+        .footer {
+            background-color: darkgrey;
+            grid-column: 5/13
+        }
+
+        .card{
+            background-color: aliceblue;
+        }
+
+        /* chinh responsive khi thu nho man hinh */
+        @media screen and (max-width: 1200px){
+            .header{
+                grid-column: 1/8;
+            }
+            .menu{
+                grid-column: 8/13;
+                grid-row: 1/2;
+            }
+            .main{
+                grid-column: 1/11;
+            }
+            .footer{
+                grid-column: 1/15;
+            }
+        }
+
+        @media screen and (max-width: 750px){
+            .header{
+                grid-column: 1/12;
+            }
+            .menu{
+                display: none;
+            }
+            .iconMenu{
+                display: block;
+                grid-column: 12/13;
+                background-color: darkgray;
+            }
+            .main{
+                grid-column: 1/13;
+            }
+            .right{
+                grid-column: 1/13;
+            }
+            .footer{
+                grid-column: 1/15;
+            }
+        }
+
+        @media screen and (max-width: 500px){
+            .header{
+                grid-column: 1/12;
+            }
+            .menu{
+                /* grid-column: 8/13; */
+                /* grid-row: 1/2; */
+                display: none;
+            }
+            .iconMenu{
+                display: block;
+                grid-column: 12/13;
+            }
+            .main{
+                grid-column: 1/13;
+                grid-template-columns: 1fr 1fr;
+            }
+            .right{
+                grid-column: 1/13;
+            }
+            .footer{
+                grid-column: 1/15;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">Header</div>
+        <div class="iconMenu">
+            <i class="bi bi-list"></i>
+        </div>
+        <div class="menu">Menu</div>
+        <div class="main">
+            <div class="card">Card1</div>
+            <div class="card">Card2</div>
+            <div class="card">Card3</div>
+            <div class="card">Card4</div>
+            <div class="card">Card5</div>
+            <div class="card">Card6</div>
+            <div class="card">Card7</div>
+            <div class="card">Card8</div>
+            <div class="card">Card9</div>
+            <div class="card">Card10</div>
+            <div class="card">Card11</div>
+            <div class="card">Card12</div>
+        </div>
+        <div class="right">Right</div>
+        <div class="footer">Footer</div>
+    </div>
+</body>
+
+</html>

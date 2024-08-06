@@ -4,8 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Day 4 JS DOM</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 <body>
+    <h3>The h3 cap 0 - test 1</h3>
+    <div class="test">
+        <h3>The h3 cap 1 - test 1</h3>
+        <h3>The h3 cap 1 - test 2</h3>
+        <span>
+            <h3>The h3 cap 2</h3>
+        </span>
+        <h3 id="id1_3">The h3 cap 1 - test 3</h3>
+        <div>
+            <div>
+                <h3>The h3 cap 3</h3>
+            </div>
+        </div>
+    </div>
+    <h3>The h3 cap 0 - test 2</h3>
+    <h3>The h3 cap 0 - test 3</h3>
+    <a id="gg">Go to google</a>
+
+    <script>
+        let h13 = document.getElementById("id1_3")
+        console.log(h13);
+        let h3 = document.getElementsByTagName("h3")
+        console.log(h3);
+        let test = document.getElementsByClassName("test")
+        console.log(test);
+        
+
+        // querySelectorALl
+        let h33 = document.querySelectorAll("div div h3");
+        console.log(h33);
     
+        
+    // Thay doi gia tri
+        h13.inerHTML = "h13 Da bi thay doi"         // thay doi noi dung
+        h13.innerHTML = "<a href='#'>Click Me</a>"  // thay doi noi dung
+
+        let gg = document.getElementById('gg');
+        gg.href = "https://www.google.com/";        // thay doi thuoc tinh
+
+        gg.style.fontSize = "50px";                 // thay doi style
+
+
+
+    </script>
 </body>
 </html>

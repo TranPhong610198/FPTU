@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 1</title>
+    <link rel="stylesheet" href="Q1.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        justify-content: center;
+    }
+
+    .container {
+        background-color: darkgrey;
+        width: 250px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+        border-radius: 10pxx;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        
+    }
+
+    .mode {
+        /* background-color: aqua; */
+        display: flex;
+        align-items: top;
+        justify-content: top;
+    }
+
+    input#display {
+        width: 235px;
+        height: 30px;
+        border: hidden;
+        font-size: 35px;
+        text-align: right;
+        background-color: darkgrey;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    input[type="button"] {
+        background-color: aqua;
+        border: hidden;
+        border-radius: 5px;
+        width: 57px;
+        height: 30px;
+    }
+
+    .row1 {
+        margin-bottom: 5px;
+    }
+
+    .row2 {
+        margin-bottom: 5px;
+    }
+
+    .row3 {
+        margin-bottom: 5px;
+    }
+
+    .row4 {
+        margin-bottom: 5px;
+    }
+
+    .row5 {
+        margin-bottom: 5px;
+    }
+
+    .row6 {
+        margin-bottom: 5px;
+    }
+    .bi-calculator{
+        text-decoration: none;
+        padding-left: 5px;
+        padding-top: 5px;
+        background-color: darkgrey;
+        width: 285px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+</style>
+
+<body>
+    <!-- <div class="title"> -->
+        <i class="bi bi-calculator">Calculator</i>
+        <!-- <label for="logo">Calculator</label> -->
+    <!-- </div> -->
+    <div class="container">
+
+
+
+        <div class="mode">
+            <i class="bi bi-gear"></i>
+            Standard
+            <i class="bi bi-arrow-up-right-square"></i>
+        </div>
+
+        <form>
+            <div>
+                <input type="text" name="display" id="display">
+            </div>
+            <div class="row1">
+                <input type="button" value="%">
+                <input type="button" value="CE" onclick="display.value = ''">
+                <input type="button" value="C">
+                <input type="button" value="Del" onclick="display.value = display.value.toString().slice(0,-1)">
+            </div>
+            <div class="row2">
+                <input type="button" value="1/x">
+                <input type="button" value="X^2">
+                <input type="button" value="Xcan2">
+                <input type="button" value="/" onclick="display.value += '/'">
+            </div>
+            <div class="row3">
+                <input type="button" value="7" onclick="display.value += '7'">
+                <input type="button" value="8" onclick="display.value += '8'">
+                <input type="button" value="9" onclick="display.value += '9'">
+                <input type="button" value="*" onclick="display.value += '*'">
+            </div>
+            <div class="row4">
+                <input type="button" value="4" onclick="display.value += '4'">
+                <input type="button" value="5" onclick="display.value += '5'">
+                <input type="button" value="6" onclick="display.value += '6'">
+                <input type="button" value="-" onclick="display.value += '-'">
+            </div>
+            <div class="row5">
+                <input type="button" value="1" onclick="display.value += '1'">
+                <input type="button" value="2" onclick="display.value += '2'">
+                <input type="button" value="3" onclick="display.value += '3'">
+                <input type="button" value="+" onclick="display.value += '+'">
+            </div>
+            <div class="row6">
+                <input type="button" value="+/-">
+                <input type="button" value="0" onclick="display.value += '0'">
+                <input type="button" value="." onclick="display.value += '.'">
+                <input type="button" value="=" onclick="display.value = eval(display.value)">
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
