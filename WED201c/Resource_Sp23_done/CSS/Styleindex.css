@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+
+}
+
+.header_content {
+    display: flex;
+    /* Use flexbox */
+    justify-content: space-between;
+    /* Distribute the items evenly along the main axis */
+    align-items: center;
+    /* Vertically center the items */
+}
+
+.header_menu ul {
+    list-style-type: none;
+    /* Remove the bullet points */
+    display: flex;
+    /* Use flexbox */
+    justify-content: space-between;
+    /* Distribute the items evenly along the main axis */
+    align-items: center;
+    /* Vertically center the items */
+}
+
+.header_menu li a {
+    text-decoration: none;
+    /* Remove underlines from links */
+    color: rgb(38, 161, 209);
+    /* Set the text color to black */
+    font-weight: bold;
+    /* Make the font bold */
+    padding: 10px;
+    /* Add padding to the links */
+}
+
+.header_logo img {
+    width: 50%;
+    /* Set the width to 50% */
+}
+
+.header_search button {
+    background-color: orange;
+    /* Set the background color to orange */
+    color: white;
+    /* Set the text color to white */
+}
+
+.banner {
+    display: flex;
+    /* Use flexbox */
+}
+
+.banner img {
+    width: 50%;
+    /* Set the width of each image to 50% */
+    object-fit: cover;
+    /* Scale the images to fit without distortion */
+}
+
+
+.best_seller {
+    display: flex;
+    /* Use flexbox */
+    flex-wrap: wrap;
+    /* Allow items to wrap onto new lines */
+    justify-content: center;
+    /* Center child elements horizontally */
+    align-items: flex-start;
+    /* Align child elements at the top of the container */
+}
+
+.best_seller h1 {
+    color: red;
+    /* Set the text color to red */
+    text-align: center;
+    /* Center the heading horizontally */
+    width: 100%;
+    /* Take up the full width of the container */
+    margin-top: 0;
+    /* Remove default top margin */
+    margin-bottom: 20px;
+    /* Add some space below the heading */
+}
+
+.best_seller_img,
+.best_seller_content {
+    width: 50%;
+    /* Take up 50% of the width */
+    box-sizing: border-box;
+    /* Include padding and border in element's total width */
+    padding: 10px;
+    /* Add some padding to the elements */
+}
+
+.best_seller_img img {
+    width: 70%;
+    /* Make the image take up the full width of its container */
+}
+
+.best_seller_content h2 {
+    color: rgb(38, 161, 209);
+}
+
+.best_seller_content span {
+    color: orange;
+}
+
+
+
+.gift {
+    width: 100%;
+    display: flex;
+    /* Use flexbox */
+    align-items: center;
+    /* Center child elements vertically */
+}
+
+.gift>div {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.gift>div img {
+    width: 50%;
+}
+
+.gift>div h2 {
+    font-size: 16px;
+}
+
+.sale_off {
+    display: flex;
+    /* Use flexbox */
+    flex-wrap: wrap;
+    /* Allow items to wrap onto new lines */
+    justify-content: center;
+    /* Center child elements horizontally */
+    align-items: flex-start;
+    /* Align child elements at the top of the container */
+}
+
+.sale_off h1 {
+    color: red;
+    /* Set the text color to red */
+    text-align: center;
+    /* Center the heading horizontally */
+    width: 100%;
+    /* Take up the full width of the container */
+    margin-top: 0;
+    /* Remove default top margin */
+    margin-bottom: 20px;
+    /* Add some space below the heading */
+}
+
+.product {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 250px;
+    height: 250px;
+    margin: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 50px;
+}
+
+.product img{
+    width: 250px;
+    height: 250px;
+}
+
+.product>div {
+    flex: 1;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    /* Add some spacing below each child element */
+}
+
+.product>div:last-child {
+    margin-right: 0;
+}
+
+.productname {
+    background-color: orange;
+    color: #fff;
+    display: inline-block;
+    padding: 10px;
+    
+  }
+  
+  .footer {
+    padding-top: 10px;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100px;
+  }
+  
+  .footer p,
+  .footer h5 {
+    margin: 0;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  
