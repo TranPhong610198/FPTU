@@ -1,0 +1,19 @@
+                                                         [ Ôn tập WED201c ]
+Part 1: HTML
+• Introduce to HTML: HTML Tags, Basic Syntax và Development Tool
+• Practice with Project 1: Tạo các tài liệu HTML đơn giản sử dụng Semantic in HTML, Italicize Tag, Bold Tag, List Tag.
+• Practice with Project 2: Anchor Tag, Tạo các bảng trong HTML
+• Practice with Project 3: Image Tag, Triển khai dự án lên Git và Blank Space trong HTML
+
+Part 2: CSS
+• Introduce to CSS: Tạo văn bản dùng CSS để định dạng, Basic Syntax (inline, internal, external và so sánh giữa chúng)
+• Practice with Projects: Selector, Pseudo, Display Property, CSS position…
+
+Part 3: JavaScript
+• Introduce to JS: Sử dụng JS để thao tác với văn bản và các cú pháp thiết yếu
+• Sự kiện và điều khiển dòng chảy
+• Cấu trúc điều kiện và hàm
+• Toán tử và vòng lặp
+• Dom Object
+
+Part 4 : PE + FE (thực chiến các đề theo format)
