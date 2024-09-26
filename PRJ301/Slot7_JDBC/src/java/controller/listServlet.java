@@ -20,7 +20,7 @@ import model.Category;
  *
  * @author tphon
  */
-@WebServlet(name="listServlet", urlPatterns={"/listServlet"})
+@WebServlet(name="listServlet", urlPatterns={"/list"})
 public class listServlet extends HttpServlet {
    
     /** 

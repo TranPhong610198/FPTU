@@ -10,22 +10,38 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Home</title>
     </head>
     <body>
+        <h1>List</h1>
+        <a  href="addNew.jsp">ADD NEW</a>
         <table border="1px" width="40%" >
             <tr style="color: red">
                 <th>ID</th>
                 <th>Name</th>
                 <th>Describe</th>
+                <th>Action</th>
+
             </tr>
             <c:forEach items="${requestScope.data}" var="c">
                 <tr>
-                <td>${c.id}</td>
-                <td>${c.name}</td>
-                <td>${c.describe}</td>
-            </tr>
+                    <td>${c.id}</td>
+                    <td>${c.name}</td>
+                    <td>${c.describe}</td>
+                    <td>
+                        <a onclick="doDelete('${c.id}')"  href="">Delete</a> &nbsp; &nbsp; &nbsp;
+                        <a href="update?id=${c.id}">Update</a>
+                    </td>
+                </tr>
             </c:forEach>
         </table>
+        
+        <script type="text/javascript">
+            function doDelete(id){
+                if(confirm("are you want to delete id: "+id +"?")){
+                    window.location='delete?id='+id;
+                }
+            }
+        </script>
     </body>
 </html>
