@@ -29,17 +29,17 @@
                     <td>${c.name}</td>
                     <td>${c.describe}</td>
                     <td>
-                        <a onclick="doDelete('${c.id}')"  href="">Delete</a> &nbsp; &nbsp; &nbsp;
+                        <a href="#" onclick="doDelete('${c.id}')">Delete</a> &nbsp; &nbsp; &nbsp;
                         <a href="update?id=${c.id}">Update</a>
                     </td>
                 </tr>
             </c:forEach>
         </table>
-        
+
         <script type="text/javascript">
-            function doDelete(id){
-                if(confirm("are you want to delete id: "+id +"?")){
-                    window.location='delete?id='+id;
+            function doDelete(id) {
+                if (confirm("are you want to delete id: " + id + "?")) {
+                    window.location = "delete?id="+id;
                 }
             }
         </script>

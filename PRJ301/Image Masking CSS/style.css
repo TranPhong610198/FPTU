@@ -1,0 +1,31 @@
+ 
+ *{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+ }
+
+ body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+
+.image1{ 
+    position: relative;
+    height: 80vh;
+    width: 60%;
+    background-image: url(./login-bg.png);
+    background-size: cover;
+}
+
+.image2{
+    position: absolute;
+    height: 80vh;
+    width: 60%;
+    background-image: url(./splash.jpg);
+    background-position: center;
+    background-size: cover;
+    mix-blend-mode: screen;
+}
+
