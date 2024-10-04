@@ -14,7 +14,7 @@
     </head>
     <body>
         <h1>List</h1>
-        <a  href="addNew.jsp">ADD NEW</a>
+        <a  href="authen?action=add">ADD NEW</a>
         <table border="1px" width="40%" >
             <tr style="color: red">
                 <th>ID</th>
@@ -30,7 +30,7 @@
                     <td>${c.describe}</td>
                     <td>
                         <a href="#" onclick="doDelete('${c.id}')">Delete</a> &nbsp; &nbsp; &nbsp;
-                        <a href="update?id=${c.id}">Update</a>
+                        <a href="authen?action=update&id=${c.id}">Update</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -39,7 +39,7 @@
         <script type="text/javascript">
             function doDelete(id) {
                 if (confirm("are you want to delete id: " + id + "?")) {
-                    window.location = "delete?id="+id;
+                    window.location = "authen?action=delete&id="+id;
                 }
             }
         </script>
