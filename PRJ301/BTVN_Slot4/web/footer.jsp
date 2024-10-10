@@ -14,30 +14,30 @@
 
     </head>
     <body>
-         <footer class="bg-primary text-white text-center py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <p>TheMoriarty11 @copyright 2024</p>
+        <footer class="bg-primary text-white text-center py-3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>TheMoriarty11 @copyright 2024</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Examples</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Projects</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#">Contact us</a>
-                </li>
-            </ul>
-        </nav>
-    </footer>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Examples</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Contact us</a>
+                    </li>
+                </ul>
+            </nav>
+        </footer>
     </body>
 </html>

@@ -1,0 +1,66 @@
+
+
+body{
+    background-image: url("../images/fuji-bg.jpg");
+    background-size: auto;
+    background-repeat: no-repeat;
+    background-position: 50% 20%;
+    background-color: rgba(0, 0, 0, 0.1)    ;
+}
+
+:root {
+    --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --heading-font: "Roboto", sans-serif;
+    --nav-font: "Poppins", sans-serif;
+}
+
+/* Header */
+.header {
+    --background-color: rgba(0, 0, 0, 0.5);
+    --default-color: #ffffff;
+    --heading-color: #ffffff;
+    color: var(--default-color);
+    background-color: var(--background-color);
+    padding: 15px 15px;
+    transition: all 0.5s;
+    z-index: 997;
+}
+
+.scrolled .header {
+    box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Global Header on Scroll
+  ------------------------------*/
+  .scrolled .header {
+    --background-color: #474d52;
+  }
+.Toggler{
+    border: hidden;
+}
+
+/* đưa content vào giữa */
+
+.child{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #ffffff;
+   
+}  
+.child h2{
+    font-size: 48px;
+    font-weight: 700;
+} 
+
+.navbar-brand{
+    position: relative;
+    left: 5%;
+}
+
+.log-btn{
+    position: sticky;
+    right: 5%;
+}
+

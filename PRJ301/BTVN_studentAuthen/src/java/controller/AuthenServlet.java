@@ -65,9 +65,10 @@ public class AuthenServlet extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
         Admin a = (Admin) session.getAttribute("account");
-        PrintWriter out = response.getWriter();
+//        PrintWriter out = response.getWriter();
         if (a == null) {
-            out.print("access dined!!!");
+//            out.print("access dined!!!");
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             if (action.equals("add")) {
                 response.sendRedirect("addNew.jsp");

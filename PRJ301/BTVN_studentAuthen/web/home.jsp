@@ -22,6 +22,7 @@
                 <th>DOB</th>
                 <th>Gender</th>
                 <th>Address</th>
+                <th>Action</th>
             </tr>
             <c:forEach items="${requestScope.data}" var="c">
                 <tr>
@@ -40,8 +41,8 @@
                     </td>
                     <td>${c.address}</td>
                     <td>
-                        
-                        <a href="#" onclick="doDelete('${c.id}')">Delete</a> &nbsp; &nbsp; &nbsp;
+                        <button type="button" onclick="doDelete('${c.id}')">Delete</button>
+                        &nbsp; &nbsp; &nbsp;
                         <a href="authen?action=update&id=${c.id}">Update</a>
                     </td>
                 </tr>
