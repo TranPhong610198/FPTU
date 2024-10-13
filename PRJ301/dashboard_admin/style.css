@@ -1,0 +1,139 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    background-color: #f8f9fa;
+}
+
+h1 {
+    text-align: center;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #fff;
+    height: 100vh;
+    position: fixed;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding-top: 20px;
+}
+
+.sidebar .logo {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+
+/* .sidebar .logo img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+} */
+
+.sidebar .logo h1 {
+    font-size: 24px;
+    color: #ff3e3e;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 15px 20px;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar ul li i {
+    margin-right: 10px;
+}
+
+.sidebar ul li.active,
+.sidebar ul li:hover {
+    background-color: #f1f1f1;
+    color: #ff3e3e;
+}
+
+.sidebar ul li.active i,
+.sidebar ul li:hover i {
+    color: #ff3e3e;
+}
+
+.sidebar .menu {
+    text-decoration: none;
+    color: #333;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+
+/* .header .search-bar {
+    width: 300px;
+    position: relative;
+}
+
+.header .search-bar input {
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+}
+
+.header .search-bar i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+} */
+
+.header .icons {
+    display: flex;
+    align-items: center;
+}
+
+.header .icons i {
+    font-size: 20px;
+    margin-right: 20px;
+    color: #333;
+    position: relative;
+}
+
+.header .icons i .badge {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: #ff3e3e;
+    color: #fff;
+    border-radius: 50%;
+    padding: 2px 5px;
+    font-size: 12px;
+}
+
+.header .profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+/*--------------------------------------------------------*/
+
+/*--------------------------------------------------------*/
+
+/*--------------------------------------------------------*/
+

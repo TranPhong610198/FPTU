@@ -11,56 +11,46 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Header</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark header ">
-            <div class="container-fluid">
-                <!-- Logo và tên thương hiệu bên trái -->
-                <a class="navbar-brand" href="home">
-                    <img src="./images/tải xuống.png" alt="Logo" 
-                         class="d-inline-block align-text-top">
-                    <!--FondevJS-->
-                </a>
-
-
-
-                <!-- Các link điều hướng ở giữa -->
-                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="home">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="listProduct">Admin</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
-                        </li>
-                    </ul>
+    <body class="font-sans">
+        <header class="bg-gray-800 shadow-md">
+            <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+                <div class="text-xl font-bold text-gray-800">
+                    <img src="images/FondevJSLogo1.svg" alt="alt"/>
                 </div>
-
-                <!-- Nút Login và Sign-up ở bên phải -->
-                <div class="d-flex log-btn">
-                    <a class="btn btn-outline-primary me-2" type="button" href="./login/">Login</a>
-                    <a class="btn btn-primary" type="button" href="./register/">Register</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="#" class="text-cyan-300 hover:text-white">Home</a>
+                    <a href="listProduct" class="text-cyan-300 hover:text-white">Shop</a>
+                    <a href="#" class="text-cyan-300 hover:text-white">About</a>
+                    <a href="#" class="text-cyan-300 hover:text-white">Contact</a>
                 </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-search"></i></a>
+                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-shopping-cart"></i></a>
+                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-user"></i></a>
 
-                <!-- Toggler cho mobile -->
-                <button class="navbar-toggler Toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-cyan-300">
+                    <i class="fas fa-bars"></i>
                 </button>
-            </div>
-        </nav>
+                <div id="mobile-menu" class="md:hidden hidden mt-4">
+                    <a href="#" class="block py-2 text-cyan-300 hover:text-white">Home</a>
+                    <a href="listProduct" class="block py-2 text-cyan-300 hover:text-white">Shop</a>
+                    <a href="#" class="block py-2 text-cyan-300 hover:text-white">About</a>
+                    <a href="#" class="block py-2 text-cyan-300 hover:text-white">Contact</a>
+                </div>
+            </nav>
+        </header>
 
+        <script>
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        </script>
     </body>
 </html>

@@ -22,7 +22,7 @@
 
     </head>
 
-    <body class="img js-fullheight" style="background-image: url(images/fuji-bg.jpg);">
+    <body class="img js-fullheight" style="background-image: url(images/fuji-bg.jpg); background-color: #000116">
         <section class="ftco-section">
             <div class="container">
                 <div class="row justify-content-center">

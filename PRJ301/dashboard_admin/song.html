@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-content a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .container {
+            width: 95%;
+            margin: 20px auto;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .add-song-btn {
+            background-color: #ff4d4d;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-song-btn:hover {
+            background-color: #ff3333;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            table-layout: fixed;
+            /* Cố định chiều rộng các cột */
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #dee2e6;
+            word-wrap: break-word;
+            /* Đảm bảo nội dung tự xuống dòng */
+            white-space: normal;
+            /* Đảm bảo không kéo dài chiều rộng */
+        }
+
+        th {
+            background-color: #f1f1f1;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .table-header .search {
+            display: flex;
+            align-items: center;
+        }
+
+        .table-header .search label {
+            font-weight: bold;
+            ;
+        }
+
+        .table-header .search input {
+            padding: 5px;
+            margin-left: 10px;
+            border-radius: 5px;
+            width: 220px;
+        }
+
+        .action-buttons .fas {
+            color: #ff4d4d;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>ADMIN</h1>
+        </div>
+        <ul>
+            <li><a href="dashboard.html" class="menu">Dashboard</a></li>
+            <li>Genre</li>
+            <li>Artist</li>
+            <li class="active">Song</li>
+            <li>Album</li>
+            <li>Podcast</li>
+            <li>User</li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <div class="icons">
+                <i class="fas fa-cog"></i>
+                <i class="fas fa-envelope">
+                    <!-- <span class="badge">
+                        5
+                    </span> -->
+                </i>
+                <i class="fas fa-bell">
+                    <!-- <span class="badge">
+                        3
+                    </span> -->
+                </i>
+                <div class="profile">
+                    <img alt="Profile Picture" height="40"
+                        src="https://storage.googleapis.com/a1aa/image/gbH5SSpcXrYZCFD9SNVDbZQTEViWknED44geD7x5QHhKC1xJA.jpg"
+                        width="40" />
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="header-content">
+                <h1>Song Lists</h1>
+                <button class="add-song-btn"><a href="addSong.html">Add New Song</a></button>
+            </div>
+            <div class="table-header">
+                <div class="search">
+                    <label for="search">Search:</label>
+                    <input id="search" type="text" />
+                </div>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;">ID</th>
+                            <th style="width: 40px;">Image</th>
+                            <th style="width: 150px;">Name</th>
+                            <th style="width: 150px;">Singer</th>
+                            <th style="width: 150px;">Album</th>
+                            <th style="width: 50px;">Genre</th>
+                            <th style="width: 50px;">Duration</th>
+                            <th style="width: 70px;">ReleaseDate</th>
+                            <th style="width: 40px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><img alt="DJ Khaled Featuring" height="50"
+                                    src="https://storage.googleapis.com/a1aa/image/Gl07UgANAzaRD1UkYF03xOfX5eql29sjMbUOEUq6elCmRmHnA.jpg"
+                                    width="50" /></td>
+                            <td>bai1</td>
+                            <td>huy</td>
+                            <td>huy</td>
+                            <td>pop</td>
+                            <td>04:24</td>
+                            <td>2020-02-02</td>
+                            <td class="action-buttons">
+                                <a href="editSong.html"><i class="fas fa-edit"></i></a>
+                                <i class="fas fa-trash"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -10,34 +10,27 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Footer</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
     </head>
     <body>
-        <footer class="bg-dark text-white text-center py-3">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>TheMoriarty11 @copyright 2024</p>
+        <footer class="bg-gray-800 text-white py-8">
+            <div class="container mx-auto px-6">
+                <div class="flex justify-between items-center">
+                    <div class="text-xl font-bold">
+                        <a href="home"> <img src="./images/FondevJSLogo2.svg" alt="alt"/></a>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/Moriaty11" class="hover:text-gray-300"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="hover:text-gray-300"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-gray-300"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
+                <div class="mt-4 text-center text-sm">
+                    &copy; 2024 FondevJS . Reference from sublime.
+                </div>
             </div>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Examples</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Contact us</a>
-                    </li>
-                </ul>
-            </nav>
         </footer>
     </body>
 </html>

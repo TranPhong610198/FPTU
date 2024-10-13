@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .cards {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 20px;
+            /*Thuộc tính gap: 20px; sẽ tạo khoảng cách 20px giữa các card.*/
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            flex-grow: 1;
+            /* Thay thế width: 23% */
+            position: relative;
+        }
+
+        .card h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+            margin-left: 20px;
+        }
+
+        .card .icon {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            font-size: 30px;
+            color: #ff3e3e;
+        }
+
+        .card .icon.green {
+            color: #00c853;
+        }
+
+        .card .icon.orange {
+            color: #ff9800;
+        }
+
+        .card .icon.blue {
+            color: #2196f3;
+        }
+
+        .card .number {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-left: 20px;
+        }
+
+        .content-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .chart {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 66%;
+        }
+
+        .best-artist {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 32%;
+        }
+
+        .best-artist h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .best-artist .artist {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .best-artist .artist:last-child {
+            border-bottom: none;
+        }
+
+        .best-artist .artist img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .best-artist .artist .info {
+            flex: 1;
+        }
+
+        .best-artist .artist .info h4 {
+            font-size: 14px;
+            color: #333;
+            margin: 0;
+        }
+
+        .best-artist .artist .info p {
+            font-size: 12px;
+            color: #aaa;
+            margin: 0;
+        }
+
+        .best-artist .artist .score {
+            background-color: #ff3e3e;
+            color: #fff;
+            border-radius: 20px;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .best-artist .artist .score.green {
+            background-color: #00c853;
+        }
+
+        .best-artist .artist .score.orange {
+            background-color: #ff9800;
+        }
+
+        .top-songs {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 96.8%;
+        }
+
+        .top-songs h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .top-songs table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .top-songs table th,
+        .top-songs table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .top-songs table th {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>ADMIN</h1>
+        </div>
+        <ul>
+            <li class="active">Dashboard</li>
+            <li>Genre</li>
+            <li>Artist</li>
+            <li><a href="song.html" class="menu">Song</a></li>
+            <li>Album</li>
+            <li>Podcast</li>
+            <li>User</li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <!-- <div class="search-bar">
+                <input placeholder="Search Here" type="text" />
+                <i class="fas fa-search"></i>
+            </div> -->
+            <div class="icons">
+                <i class="fas fa-cog"></i>
+                <i class="fas fa-envelope">
+                    <!-- <span class="badge">
+                        5
+                    </span> -->
+                </i>
+                <i class="fas fa-bell">
+                    <!-- <span class="badge">
+                        3
+                    </span> -->
+                </i>
+                <div class="profile">
+                    <img alt="Profile Picture" height="40"
+                        src="https://storage.googleapis.com/a1aa/image/gbH5SSpcXrYZCFD9SNVDbZQTEViWknED44geD7x5QHhKC1xJA.jpg"
+                        width="40" />
+                </div>
+            </div>
+        </div>
+        <div class="cards">
+            <div class="card">
+                <h3>Music Artist</h3>
+                <i class='bx bxs-microphone icon red'></i>
+                <div class="number">
+                    352
+                </div>
+            </div>
+            <div class="card">
+                <h3>Music Album</h3>
+                <i class='bx bxs-album icon green'></i>
+                <div class="number">
+                    987
+                </div>
+            </div>
+            <div class="card">
+                <h3>Music Favorites</h3>
+                <i class='bx bxs-heart icon orange'></i>
+                <div class="number">
+                    2.5K
+                </div>
+            </div>
+            <div class="card">
+                <h3>Music Plays</h3>
+                <i class='bx bx-play-circle icon blue'></i>
+                </i>
+                <div class="number">
+                    5.2M
+                </div>
+            </div>
+        </div>
+        <div class="content-row">
+            <div class="chart">
+                <!-- <img alt="Bar Chart" height="300"
+                    src="https://storage.googleapis.com/a1aa/image/HeuDFsJGvMxQV69ImPFHOA7ga5DukTpX7tunXCVhacBLC1xJA.jpg"
+                    width="600" /> -->
+            </div>
+            <div class="best-artist">
+                <h3>Best artist</h3>
+                <div class="artist">
+                    <img alt="Artist 1" height="40"
+                        src="https://storage.googleapis.com/a1aa/image/kge2sOqSvzwMEacputAEDVPo6vlRPYY9XXsrvdsOl1ZMC1xJA.jpg"
+                        width="40" />
+                    <div class="info">
+                        <h4>
+                            Pete Sariya
+                        </h4>
+                        <p>
+                            24 jan, 2020
+                        </p>
+                    </div>
+                    <div class="score">
+                        157
+                    </div>
+                </div>
+                <div class="artist">
+                    <img alt="Artist 2" height="40"
+                        src="https://storage.googleapis.com/a1aa/image/nVpC5fxajPVHF6VBvEfh6PAdiHwe92kVg3s0qBtYv2G2IUHnA.jpg"
+                        width="40" />
+                    <div class="info">
+                        <h4>
+                            Anna Mull
+                        </h4>
+                        <p>
+                            15 feb, 2020
+                        </p>
+                    </div>
+                    <div class="score green">
+                        280
+                    </div>
+                </div>
+                <div class="artist">
+                    <img alt="Artist 3" height="40"
+                        src="https://storage.googleapis.com/a1aa/image/eC2pxnV9hPR5SCvKjZNzI3AtRdKYSHqdkVAJ4ASpW1BOC1xJA.jpg"
+                        width="40" />
+                    <div class="info">
+                        <h4>
+                            Alex John
+                        </h4>
+                        <p>
+                            05 March, 2020
+                        </p>
+                    </div>
+                    <div class="score orange">
+                        200
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="top-songs">
+            <h3>Top songs</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Song</th>
+                        <th>Name</th>
+                        <th>Duration</th>
+                        <th>Release Date</th>
+                        <th>Plays</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            1
+                        </td>
+                        <td>
+                            Song A
+                        </td>
+                        <td>
+                            Artist A
+                        </td>
+                        <td>
+                            3:45
+                        </td>
+                        <td>
+                            01 Jan, 2020
+                        </td>
+                        <td>
+                            1.2M
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            2
+                        </td>
+                        <td>
+                            Song B
+                        </td>
+                        <td>
+                            Artist B
+                        </td>
+                        <td>
+                            4:20
+                        </td>
+                        <td>
+                            15 Feb, 2020
+                        </td>
+                        <td>
+                            900K
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            3
+                        </td>
+                        <td>
+                            Song C
+                        </td>
+                        <td>
+                            Artist C
+                        </td>
+                        <td>
+                            2:50
+                        </td>
+                        <td>
+                            05 Mar, 2020
+                        </td>
+                        <td>
+                            1.5M
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            4
+                        </td>
+                        <td>
+                            Song D
+                        </td>
+                        <td>
+                            Artist D
+                        </td>
+                        <td>
+                            3:30
+                        </td>
+                        <td>
+                            20 Apr, 2020
+                        </td>
+                        <td>
+                            800K
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            5
+                        </td>
+                        <td>
+                            Song E
+                        </td>
+                        <td>
+                            Artist E
+                        </td>
+                        <td>
+                            4:00
+                        </td>
+                        <td>
+                            10 May, 2020
+                        </td>
+                        <td>
+                            1.1M
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>
