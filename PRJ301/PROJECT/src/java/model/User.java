@@ -11,12 +11,12 @@ package model;
 public class User {
 
     int id;
-    String username, password, email, phone, address, role;
-
+    String username, password, email, phone, address, role, avtUrl;
+    
     public User() {
     }
 
-    public User(int id, String username, String password, String email, String phone, String address, String role) {
+    public User(int id, String username, String password, String email, String phone, String address, String role, String avtUrl) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -24,6 +24,7 @@ public class User {
         this.phone = phone;
         this.address = address;
         this.role = role;
+        this.avtUrl = avtUrl;
     }
 
     public User(String username, String password, String email, String phone, String address, String role) {
@@ -63,6 +64,10 @@ public class User {
         return username;
     }
 
+    public String getAvtUrl() {
+        return avtUrl;
+    }
+
     public void setAddress(String address) {
         this.address = address;
     }
@@ -91,4 +96,8 @@ public class User {
         this.username = username;
     }
 
+    public void setAvtUrl(String avtUrl) {
+        this.avtUrl = avtUrl;
+    }
+    
 }

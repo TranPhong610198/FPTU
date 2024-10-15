@@ -193,12 +193,13 @@
                         <input type="text" name="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Description of Product is here" required="">
                     </div>
                     <div>
-                        <label for="discount-create" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Type</label>
-                        <select id="discount-create" name="categoryId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 ">
+                        <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Type</label>
+                        <select id="type" name="categoryId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 ">
                             <option selected="">Type of Product</option>
-                            <option value="1">Văn Phòng</option>
+                            <option value="1">Office</option>
                             <option value="2">Gaming</option>
                             <option value="3">Workstation</option>
+                            <option value="4">Accessories</option>
                         </select>
                     </div>
                     <div>
@@ -209,14 +210,14 @@
                         <label for="image">Image Upload:</label>
                         <input type="file" id="image" name="image" required="">
                     </div>
-                    <div class="bottom-0 left-0 flex justify-center w-full pb-4 space-x-4 md:px-4 md:absolute">
+                    <!--<div class="bottom-0 left-0 flex justify-center w-full pb-4 space-x-4 md:px-4 md:absolute">-->
                         <button type="submit" class="text-white w-full justify-center bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                             Add product
                         </button>
                         <button type="button" data-drawer-dismiss="drawer-create-product-default" aria-controls="drawer-create-product-default" class="inline-flex w-full justify-center text-gray-500 items-center bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600 ">
                             Cancel
                         </button>
-                    </div>
+                    <!--</div>-->
                 </div>
             </form>
         </div>
@@ -230,7 +231,7 @@
             </button>
 
             <form action="updateProduct" method="post" enctype="multipart/form-data">
-                <input type="text" id="oldId" name="id" value="">
+                <input type="hidden" id="oldId" name="id" value="">
                 <input type="hidden" name="oldImageUrl" value="" id="oldImage">
                 <div class="space-y-4">
                     <div>
@@ -242,8 +243,8 @@
                         <input value="" type="text" name="price" id="oPrice" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$" required="">
                     </div>
                     <div>
-                        <label for="oCategory-create" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brand</label>
-                        <select id="oCategory-create" name="brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <label for="oBand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brand</label>
+                        <select id="oBrand" name="brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             <option selected="">Brand of Product</option>
                             <option value="MSI">MSI</option>
                             <option value="DELL">DELL</option>
@@ -260,9 +261,11 @@
                         <label for="oType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Type</label>
                         <select id="oType" name="categoryId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 ">
                             <option selected="">Type of Product</option>
-                            <option value="1">Văn Phòng</option>
+                            <option value="1">Office</option>
                             <option value="2">Gaming</option>
                             <option value="3">Workstation</option>
+                            <option value="4">Accessories</option>
+
                         </select>
                     </div>
                     <div>
@@ -323,7 +326,7 @@
                 document.getElementById('oldImage').value = imageUrl;
                 document.getElementById('oldId').value = id;
                 // Cập nhật brand nếu cần (Giả sử bạn có một cách để thiết lập giá trị selected cho select)
-                const brandSelect = document.getElementById('oCategory-create');
+                const brandSelect = document.getElementById('oBrand');
                 Array.from(brandSelect.options).forEach(option => {
                     if (option.value === brand) {
                         option.selected = true;
