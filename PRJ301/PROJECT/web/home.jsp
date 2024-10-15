@@ -16,18 +16,18 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     </head>
     <body class="font-sans">
-        <header class="bg-gray-800 shadow-md">
+        <header class="bg-gray-800 shadow-md text-gray-300">
             <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
                 <div class="text-xl font-bold text-gray-800">
                     <img src="images/FondevJSLogo1.svg" alt="alt"/>
                 </div>
-                <div class="hidden md:flex space-x-4">
-                    <a href="#" class="text-cyan-300 hover:text-white">Home</a>
+                <div class="hidden md:flex space-x-4 justify-center flex-grow mr-20">
+                    <a href="home" class="text-cyan-300 hover:text-white">Home</a>
                     <a href="listProduct" class="text-cyan-300 hover:text-white">Shop</a>
-                    <a href="#" class="text-cyan-300 hover:text-white">About</a>
+                    <a href="./admin.jsp" class="text-cyan-300 hover:text-white">Admin</a>
                     <a href="#" class="text-cyan-300 hover:text-white">Contact</a>
                 </div>
-                <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-4 ml-auto mr-10">
                     <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-search"></i></a>
                     <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-shopping-cart"></i></a>
                     <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-user"></i></a>
@@ -37,9 +37,9 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div id="mobile-menu" class="md:hidden hidden mt-4">
-                    <a href="#" class="block py-2 text-cyan-300 hover:text-white">Home</a>
+                    <a href="home" class="block py-2 text-cyan-300 hover:text-white">Home</a>
                     <a href="listProduct" class="block py-2 text-cyan-300 hover:text-white">Shop</a>
-                    <a href="#" class="block py-2 text-cyan-300 hover:text-white">About</a>
+                    <a href="./admin.jsp" class="block py-2 text-cyan-300 hover:text-white">Admin</a>
                     <a href="#" class="block py-2 text-cyan-300 hover:text-white">Contact</a>
                 </div>
             </nav>
@@ -69,8 +69,8 @@
                 </div>
             </section>
 
-            <section class="container mx-auto px-6 py-8">
-                <h2 class="text-2xl font-bold mb-8">Featured Products</h2>
+            <section class="container mx-auto px-20 py-8">
+                <h2 class="text-2xl font-bold mb-8">All Products</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                     <c:if test="${not empty requestScope.data}">
                         <c:forEach var="product" items="${requestScope.data}">
@@ -150,7 +150,7 @@
                     </div>
                 </div>
                 <div class="mt-4 text-center text-sm">
-                    &copy; 2024 FondevJS . Reference from sublime.
+                    &copy; 2024 FondevJS . Reference from Sublime.
                 </div>
             </div>
         </footer>

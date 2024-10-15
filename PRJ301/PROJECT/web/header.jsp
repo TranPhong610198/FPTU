@@ -18,7 +18,7 @@
         <header class="bg-gray-800 shadow-md">
             <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
                 <div class="text-xl font-bold text-gray-800">
-                    <img src="images/FondevJSLogo1.svg" alt="alt"/>
+                    <img src="FondevJSLogo1.svg" alt="alt"/>
                 </div>
                 <div class="hidden md:flex space-x-4">
                     <a href="#" class="text-cyan-300 hover:text-white">Home</a>

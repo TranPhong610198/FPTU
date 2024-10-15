@@ -69,17 +69,19 @@ public class updateProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
-        String id_raw = request.getParameter("id");
-        try {
-            int id = Integer.parseInt(id_raw);
-            ProductDAO pd = new ProductDAO();
-            Product temp = pd.getProductByID(id);
-            request.setAttribute("oldProduct", temp);
-            request.getRequestDispatcher("updateProduct.jsp").forward(request, response);
-        } catch (ServletException | IOException | NumberFormatException e) {
-            System.out.println(e);
-        }
+////        processRequest(request, response);
+//        String id_raw = request.getParameter("id");
+//        try {
+//            int id = Integer.parseInt(id_raw);
+//            ProductDAO pd = new ProductDAO();
+//            Product temp = pd.getProductByID(id);
+//            request.setAttribute("oldProduct", temp);
+////            request.getRequestDispatcher("updateProduct.jsp").forward(request, response);
+//            request.getRequestDispatcher("productCRUD.jsp").forward(request, response);
+//
+//        } catch (ServletException | IOException | NumberFormatException e) {
+//            System.out.println(e);
+//        }
     }
 
     /**
@@ -137,7 +139,7 @@ public class updateProductServlet extends HttpServlet {
 //            Product oldProduct = pd.getProductByID(id);
 //            String oldImageUrl = oldProduct.getImageUrl(); // URL ảnh cũ
 //            System.out.println(oldImageUrl);
-            
+
             // Kiểm tra xem có file ảnh được tải lên hay không
             Part filePart = request.getPart("image");
             String fileName = filePart.getSubmittedFileName();
