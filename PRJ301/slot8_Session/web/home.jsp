@@ -25,8 +25,7 @@
             <a href="logout" >Logout</a>
         </h2>
     </c:if>
-    
-    
+
     <body>
         <h1>${sessionScope.account.username}</h1>
     </body>

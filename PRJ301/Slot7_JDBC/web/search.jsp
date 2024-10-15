@@ -17,15 +17,15 @@
         <form action="search" >
             ID <input type="text" name="id"><br>
             Name <input type="text" name="name"><br/>
-
             Gender 
             <input type="radio" name="gender" value="true"/>Nam
             <input type="radio" name="gender" value="flase"/>Nữ
-            <input type="radio" name="gender" value="null" checked/>Both<br>
+            <input type="radio" name="gender" value="null"/>Both<br>
             Department
             <select name="did">
                 <option ${requestScope.did == 0?'selected':''} 
                     value="0">-----ALL-----</option>
+
                 <c:forEach items="${requestScope.depts}" var="d">
                     <option value="${d.id}">${d.name}</option>
                     ${requestScope.did == d.id?'selected':''} 

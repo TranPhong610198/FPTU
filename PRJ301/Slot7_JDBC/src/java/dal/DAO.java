@@ -181,13 +181,7 @@ public class DAO extends DBContext {
 
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            System.out.println(sql);
-            System.out.println(id);
-            System.out.println(gender);
-//            System.out.println(from);
-//            System.out.println(to);
-            System.out.println(did);
-            System.out.println(name);
+
 //            st.setInt(1, did);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
