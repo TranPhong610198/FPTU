@@ -118,5 +118,29 @@ public class UserDAO extends DBContext {
             System.out.println(e);
         }
     }
+    
+    public User getUserById(int id){
+        String sql = "SELECT * FROM users WHERE user_id=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()){
+                return new User(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("address"),
+                        resultSet.getString("role"),
+                        resultSet.getString("avt_url")
+                );
+            }
+            
+        } catch (Exception e) {
+        }
+        return null;
+    }
 
 }

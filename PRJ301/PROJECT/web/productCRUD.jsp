@@ -21,6 +21,7 @@
         </style>
     </head>
     <body class="bg-gray-900 text-gray-300">
+        <!-- Header -->
         <header class="bg-gray-800 shadow-md ">
             <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
                 <div class="text-xl font-bold text-gray-800">
@@ -82,7 +83,7 @@
                                        class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700  bg-gray-100 dark:bg-gray-700 ">Products</a>
                                 </li>
                                 <li>
-                                    <a href="#" 
+                                    <a href="listUser" 
                                        class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 ">Users</a>
                                 </li>
                             </ul>
@@ -132,25 +133,19 @@
                                         <img src="${c.imageUrl}" alt="${c.name}" width="150px"/>
                                     </td>
                                     <td class="py-2">
-<!--                                        <button class="bg-blue-600 hover:bg-blue-800 text-white px-2 py-1 rounded" onclick="doDelete('${c.id}')">Delete</button> 
-                                        <button class="bg-red-600 hover:bg-red-800 text-white px-2 py-1 rounded" onclick="doUpdate('${c.id}')">Update</button>-->
-
                                         <button  onclick="doUpdate('${c.id}', '${c.name}', '${c.price}', '${c.description}', '${c.brand}', '${c.stock}', '${c.imageUrl}', '${c.categoryId}')" type="button" id="updateProductButton" data-drawer-target="drawer-update-product-default" data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default" data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
                                             <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path>
                                             </svg>
                                             Update
-
                                         </button>
                                         <button onclick="openDeleteDrawer(${c.id})" type="button" id="deleteProductButton" data-drawer-target="drawer-delete-product-default" data-drawer-show="drawer-delete-product-default" aria-controls="drawer-delete-product-default" data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
                                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                                             </svg>
                                             Delete item
-
                                         </button>
-
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -211,12 +206,12 @@
                         <input type="file" id="image" name="image" required="">
                     </div>
                     <!--<div class="bottom-0 left-0 flex justify-center w-full pb-4 space-x-4 md:px-4 md:absolute">-->
-                        <button type="submit" class="text-white w-full justify-center bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                            Add product
-                        </button>
-                        <button type="button" data-drawer-dismiss="drawer-create-product-default" aria-controls="drawer-create-product-default" class="inline-flex w-full justify-center text-gray-500 items-center bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600 ">
-                            Cancel
-                        </button>
+                    <button type="submit" class="text-white w-full justify-center bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        Add product
+                    </button>
+                    <button type="button" data-drawer-dismiss="drawer-create-product-default" aria-controls="drawer-create-product-default" class="inline-flex w-full justify-center text-gray-500 items-center bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600 ">
+                        Cancel
+                    </button>
                     <!--</div>-->
                 </div>
             </form>
@@ -277,8 +272,6 @@
                         <input type="file" id="image" name="image">
                         <img src="" alt="alt" id="image-preview"/>
                     </div>
-                    <!--</div>-->
-                    <!--                <div class="bottom-0 left-0 flex justify-center w-full pb-4 mt-4 space-x-4 sm:absolute sm:px-4 sm:mt-0 ">-->
                     <button type="submit" class="w-full justify-center text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 ">
                         Update
                     </button>
@@ -310,12 +303,6 @@
 
 
         <script type="text/javascript">
-//            function doUpdate(id) {
-//                window.location = 'updateProduct?id=' + id;
-//            }
-//            function openUpdateDrawer(productId) {
-//                document.getElementById('delete-link').href = 'updateProduct?id=' + productId;
-//            }
 
             function doUpdate(id, name, price, description, brand, stock, imageUrl, categoryId) {
                 // Cập nhật các trường trong form Edit Product Drawer
@@ -325,7 +312,7 @@
                 document.getElementById('oStock').value = stock;
                 document.getElementById('oldImage').value = imageUrl;
                 document.getElementById('oldId').value = id;
-                // Cập nhật brand nếu cần (Giả sử bạn có một cách để thiết lập giá trị selected cho select)
+                // Cập nhật brand nếu cần 
                 const brandSelect = document.getElementById('oBrand');
                 Array.from(brandSelect.options).forEach(option => {
                     if (option.value === brand) {
@@ -334,16 +321,9 @@
                         option.selected = false;
                     }
                 });
-
-
-
                 // Cập nhật trường image nếu cần, có thể hiển thị hình ảnh hiện tại
-                const imagePreview = document.getElementById('image-preview'); // Bạn cần tạo 1 thẻ img để hiển thị
+                const imagePreview = document.getElementById('image-preview'); // Tạo 1 thẻ img để hiển thị
                 imagePreview.src = imageUrl; // Cập nhật đường dẫn hình ảnh
-
-//                const oldImage = document.getElementById('oldImage');
-//                oldImage.value = imageUrl;
-
                 const typeSelect = document.getElementById('oType');
                 Array.from(typeSelect.options).forEach(option => {
                     if (option.value === categoryId) {
