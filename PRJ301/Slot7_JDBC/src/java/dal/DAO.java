@@ -151,32 +151,28 @@ public class DAO extends DBContext {
     }
 
     //-----------------
-    public List<Employee> search(Integer id, int did, String name, Boolean gender) {
+    public List<Employee> search(Integer id, Integer did, String name, Boolean gender, String from, String to) {
         List<Employee> list = new ArrayList<>();
-        String sql = "select e.id,e.name,e.dob,e.gender,d.id as did,d.name as dname\n"
-                + "   from Employee e inner join Department d on (d.id=e.did) where 1=1";
+        String sql = """
+                     select e.id,e.name,e.dob,e.gender,d.id as did,d.name as dname
+                        from Employee e inner join Department d on (d.id=e.did) where 1=1""";
         if (id != null) {
             sql += " AND e.id= " + id;
         }
         if (gender != null) {
-            if (gender) {
-                sql += " AND e.gender= " + 1;
-            }
-            if (gender == false) {
-                sql += " AND e.gender= " + 0;
-            }
+            sql += " AND e.gender = " + (gender ? 1 : 0);
         }
-//        if (from != null) {
-//            sql += " AND e.dob >= '" + from + "'";
-//        }
-//        if (to != null) {
-//            sql += " AND e.dob <= '" + to + "'";
-//        }
+        if (from != null && !from.isEmpty()) {
+            sql += " AND e.dob >= '" + from + "'";
+        }
+        if (to != null && !to.isEmpty()) {
+            sql += " AND e.dob <= '" + to + "'";
+        }
         if (name != null) {
             sql += " AND e.name like '%" + name + "%'";
         }
-        if (did > 0) {
-            sql += " and did=" + did;
+        if (did != null && did > 0) {
+            sql += " AND e.did = " + did;
         }
 
         try {

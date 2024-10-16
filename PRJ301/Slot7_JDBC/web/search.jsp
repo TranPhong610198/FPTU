@@ -19,7 +19,7 @@
             Name <input type="text" name="name"><br/>
             Gender 
             <input type="radio" name="gender" value="true"/>Nam
-            <input type="radio" name="gender" value="flase"/>Nữ
+            <input type="radio" name="gender" value="false"/>Nữ
             <input type="radio" name="gender" value="null"/>Both<br>
             Department
             <select name="did">
@@ -27,13 +27,12 @@
                     value="0">-----ALL-----</option>
 
                 <c:forEach items="${requestScope.depts}" var="d">
-                    <option value="${d.id}">${d.name}</option>
-                    ${requestScope.did == d.id?'selected':''} 
+                    <option value="${d.id}" ${requestScope.did == d.id?'selected':''}>${d.name}</option>
                 </c:forEach>
             </select>
             <br>
             Dob From<input type="date" name="from"/><br>
-            Dob To <input type="date" name="to"/>
+            Dob To <input type="date" name="to"/><br>
 
             <input type="submit" value="SEARCH" />
         </form>
@@ -51,7 +50,7 @@
                     <td>${e.id}</td>
                     <td>${e.name}</td>
                     <td>${e.dob}</td>
-                    <td>${e.gender}</td>
+                    <td>${e.gender ? 'Male' : 'Female'}</td>
                     <td>${e.department.name}</td>
 
                 </tr>
