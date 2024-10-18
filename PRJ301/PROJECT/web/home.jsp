@@ -75,9 +75,11 @@
                     <c:if test="${not empty requestScope.data}">
                         <c:forEach var="product" items="${requestScope.data}">
                             <div class="border p-4 rounded-lg">
+                                <a href="home?action=view&id=${product.id}">
                                 <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-40 object-cover mb-4">
                                 <h3 class="font-semibold">${product.name}</h3>
                                 <p class="text-gray-600">$${product.price}</p>
+                                </a>
                             </div>  
                         </c:forEach>
                     </c:if>

@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dal.ProductDAO;
+import dal.BrandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,15 +12,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import model.Product;
+import model.Brand;
 
 /**
  *
  * @author tphon
  */
-@WebServlet(name = "homeServlet", urlPatterns = {"/home"})
-public class homeServlet extends HttpServlet {
+@WebServlet(name = "addBrandServlet", urlPatterns = {"/addBrand"})
+public class addBrandServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +38,10 @@ public class homeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet homeServlet</title>");
+            out.println("<title>Servlet addBrandServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet homeServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet addBrandServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,29 +59,7 @@ public class homeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
-        String action = request.getParameter("action");
-        if ("view".equals(action)) {
-            int productId = Integer.parseInt(request.getParameter("id"));
-            ProductDAO pd = new ProductDAO();
-
-            Product product = pd.getProductByID(productId);
-            List<String> subImages = pd.getSubImagesByProductId(productId);
-
-            request.setAttribute("product", product);
-            request.setAttribute("subImages", subImages);
-
-            request.getRequestDispatcher("getDetail.jsp").forward(request, response);
-
-        } else {
-            // Xử lý logic khác cho trang home
-            ProductDAO pd = new ProductDAO();
-            List<Product> list = pd.getAllProducts();
-            request.setAttribute("data", list);
-            request.getRequestDispatcher("home.jsp").forward(request, response);
-        }
-
-        
+        processRequest(request, response);
     }
 
     /**
@@ -96,7 +73,14 @@ public class homeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        String name = request.getParameter("name");
+         try {
+             BrandDAO bd = new BrandDAO();
+             bd.addBrand(name);
+             response.sendRedirect("listBrand");
+        } catch (Exception e) {
+        }
     }
 
     /**

@@ -86,6 +86,21 @@
                                     <a href="listUser" 
                                        class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 ">Users</a>
                                 </li>
+                                <li>
+                                    <!--categories-->
+                                    <a href="listCategories" 
+                                       class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Categories</a>
+                                </li>
+                                <li>
+                                    <!--brand-->
+                                    <a href="listBrand" 
+                                       class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Brand</a>
+                                </li>
+                                <li>
+                                    <!--sub Images-->
+                                    <a href="listSubImages" 
+                                       class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Sub Images</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -123,17 +138,19 @@
                         <tbody>
                             <!-- Repeat for each product -->
                             <c:forEach items="${requestScope.listProduct}" var="c">
+                                <c:set var="listSub" value="${c.listSubImages}"/>
                                 <tr class="border-b border-gray-700">
                                     <td class="py-2">${c.name}</td>
                                     <td class="py-2">${c.description}</td>
                                     <td class="py-2">${c.price}</td>
                                     <td class="py-2">${c.stock}</td>
-                                    <td class="py-2">${c.brand}</td>
+                                    <td class="py-2">${c.brandId}</td>
                                     <td class="py-2 grid justify-items-center">
                                         <img src="${c.imageUrl}" alt="${c.name}" width="150px"/>
                                     </td>
                                     <td class="py-2">
-                                        <button  onclick="doUpdate('${c.id}', '${c.name}', '${c.price}', '${c.description}', '${c.brand}', '${c.stock}', '${c.imageUrl}', '${c.categoryId}')" type="button" id="updateProductButton" data-drawer-target="drawer-update-product-default" data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default" data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+
+                                        <button onclick="doUpdate('${c.id}', '${c.name}', '${c.price}', '${c.description}', '${c.brandId}', '${c.stock}', '${c.imageUrl}', '${c.categoryId}')"  type="button" id="updateProductButton" data-drawer-target="drawer-update-product-default" data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default" data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
                                             <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path>
@@ -174,13 +191,13 @@
                     </div>
                     <div>
                         <label for="category-create" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brand</label>
-                        <select id="category-create" name="brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <select id="category-create" name="brandId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             <option selected="">Brand of Product</option>
-                            <option value="MSI">MSI</option>
-                            <option value="DELL">DELL</option>
-                            <option value="ACER">ACER</option>
-                            <option value="ASUS">ASUS</option>
-                            <option value="HP">HP</option>
+                            <c:forEach var="oB" items="${requestScope.listProduct.get(0).getListBrand()}">
+                                <option value="${oB.brandId}">${oB.brandName}</option>
+                            </c:forEach>
+
+
                         </select>
                     </div>
                     <div>
@@ -191,10 +208,10 @@
                         <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Type</label>
                         <select id="type" name="categoryId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 ">
                             <option selected="">Type of Product</option>
-                            <option value="1">Office</option>
-                            <option value="2">Gaming</option>
-                            <option value="3">Workstation</option>
-                            <option value="4">Accessories</option>
+
+                            <c:forEach var="oCate" items="${requestScope.listProduct.get(0).getListCategory()}">
+                                <option value="${oCate.categoryId}">${oCate.categoryName}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div>
@@ -202,8 +219,28 @@
                         <input type="text" name="stock" id="stock" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$" required="">
                     </div>
                     <div class="form-group">
-                        <label for="image">Image Upload:</label>
-                        <input type="file" id="image" name="image" required="">
+                        <label for="image">Main Image</label>
+                        <input name="image" class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" id="image" required="">
+                    </div>
+                    <div class="form-group">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Sub image 1</label>
+                        <input name="subImage1" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Sub image 2</label>
+                        <input name="subImage2" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Sub image 3</label>
+                        <input name="subImage3" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Sub image 4</label>
+                        <input name="subImage4" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file">
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG</p>
                     </div>
                     <!--<div class="bottom-0 left-0 flex justify-center w-full pb-4 space-x-4 md:px-4 md:absolute">-->
                     <button type="submit" class="text-white w-full justify-center bg-blue-600 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
@@ -224,7 +261,6 @@
                 <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd " d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                 <span class="sr-only">Close menu</span>
             </button>
-
             <form action="updateProduct" method="post" enctype="multipart/form-data">
                 <input type="hidden" id="oldId" name="id" value="">
                 <input type="hidden" name="oldImageUrl" value="" id="oldImage">
@@ -239,13 +275,11 @@
                     </div>
                     <div>
                         <label for="oBand" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Brand</label>
-                        <select id="oBrand" name="brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <select id="oBrand" name="brandId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             <option selected="">Brand of Product</option>
-                            <option value="MSI">MSI</option>
-                            <option value="DELL">DELL</option>
-                            <option value="ACER">ACER</option>
-                            <option value="ASUS">ASUS</option>
-                            <option value="HP">HP</option>
+                            <c:forEach var="oB" items="${requestScope.listProduct.get(0).getListBrand()}">
+                                <option value="${oB.brandId}">${oB.brandName}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div>
@@ -256,10 +290,9 @@
                         <label for="oType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Type</label>
                         <select id="oType" name="categoryId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 ">
                             <option selected="">Type of Product</option>
-                            <option value="1">Office</option>
-                            <option value="2">Gaming</option>
-                            <option value="3">Workstation</option>
-                            <option value="4">Accessories</option>
+                            <c:forEach var="oCate" items="${requestScope.listProduct.get(0).getListCategory()}">
+                                <option value="${oCate.categoryId}">${oCate.categoryName}</option>
+                            </c:forEach>
 
                         </select>
                     </div>
@@ -268,8 +301,8 @@
                         <input type="text" name="stock" id="oStock" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$" required="">
                     </div>
                     <div class="form-group">
-                        <label for="image">Image Upload:</label>
-                        <input type="file" id="image" name="image">
+                        <label for="image">Main Image</label>
+                        <input name="image" class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" id="image" required="">
                         <img src="" alt="alt" id="image-preview"/>
                     </div>
                     <button type="submit" class="w-full justify-center text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 ">
@@ -304,7 +337,7 @@
 
         <script type="text/javascript">
 
-            function doUpdate(id, name, price, description, brand, stock, imageUrl, categoryId) {
+            function doUpdate(id, name, price, description, brandId, stock, imageUrl, categoryId) {
                 // Cập nhật các trường trong form Edit Product Drawer
                 document.getElementById('oName').value = name;
                 document.getElementById('oPrice').value = price;
@@ -315,7 +348,7 @@
                 // Cập nhật brand nếu cần 
                 const brandSelect = document.getElementById('oBrand');
                 Array.from(brandSelect.options).forEach(option => {
-                    if (option.value === brand) {
+                    if (option.value === brandId) {
                         option.selected = true;
                     } else {
                         option.selected = false;
@@ -324,6 +357,7 @@
                 // Cập nhật trường image nếu cần, có thể hiển thị hình ảnh hiện tại
                 const imagePreview = document.getElementById('image-preview'); // Tạo 1 thẻ img để hiển thị
                 imagePreview.src = imageUrl; // Cập nhật đường dẫn hình ảnh
+
                 const typeSelect = document.getElementById('oType');
                 Array.from(typeSelect.options).forEach(option => {
                     if (option.value === categoryId) {
@@ -333,6 +367,7 @@
                     }
                 });
             }
+
 
             function openDeleteDrawer(productId) {
                 document.getElementById('delete-link').href = 'deleteProduct?id=' + productId;

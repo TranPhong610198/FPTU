@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.util.List;
 import model.Product;
 
 /**
@@ -64,16 +65,27 @@ public class deleteProductServlet extends HttpServlet {
         String id_raw = request.getParameter("id");
         try {
             int id = Integer.parseInt(id_raw);
+
             ProductDAO pd = new ProductDAO();
-
             Product oldProduct = pd.getProductByID(id);
-            String oldImageUrl = oldProduct.getImageUrl(); // URL ảnh cũ
-            File oldImageFile = new File("D:/CODING/FPTU/PRJ301/PROJECT/web/" + File.separator + oldImageUrl);
-            if (oldImageFile.exists()) {
-                oldImageFile.delete();
-            }
-            pd.deleteProduct(id);
+            if (oldProduct != null) {
+                //xóa ảnh chính
+                String oldImageUrl = oldProduct.getImageUrl(); // URL ảnh cũ
+                File oldImageFile = new File("D:/CODING/FPTU/PRJ301/PROJECT/web/" + File.separator + oldImageUrl);
+                if (oldImageFile.exists()) {
+                    oldImageFile.delete();
+                }
 
+                //xóa list ảnh phụ
+                List<String> subImages = pd.getSubImagesByProductId(id);
+                for (String subImageUrl : subImages) {
+                    File subImageFile = new File("D:/CODING/FPTU/PRJ301/PROJECT/web/" + subImageUrl);
+                    if (subImageFile.exists()) {
+                        subImageFile.delete();
+                    }
+                }
+                pd.deleteProduct(id);
+            }
             response.sendRedirect("listProduct");
         } catch (IOException | NumberFormatException e) {
             System.out.println(e);

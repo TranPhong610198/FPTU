@@ -85,6 +85,21 @@
                                     <a href="listUser" 
                                        class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700 bg-gray-100 dark:bg-gray-700">Users</a>
                                 </li>
+                                <li>
+                                    <!--categories-->
+                                    <a href="listCategories" 
+                                       class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Categories</a>
+                                </li>
+                                <li>
+                                    <!--brand-->
+                                    <a href="listBrand" 
+                                       class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Brand</a>
+                                </li>
+                                <li>
+                                    <!--sub Images-->
+                                    <a href="listSubImages" 
+                                       class="text-base text-gray-900 rounded-lg flex items-center p-2 group hover:bg-gray-100 transition duration-75 pl-11 dark:text-gray-200 dark:hover:bg-gray-700">Sub Images</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -96,12 +111,6 @@
             <main class="flex-1 p-6">
                 <div class="flex justify-between items-center mb-6">
                     <div class="text-2xl font-bold text-white">All users</div>
-                    <button data-modal-toggle="add-user-modal" class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                        <svg class="w-5 h-5 mr-2 -ml-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
-                        </svg>
-                        Add user
-                    </button>
                 </div>
 
                 <div class="bg-gray-800 p-4 rounded-lg">
@@ -194,14 +203,6 @@
                                     <label for="position " class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Position</label>
                                     <input type="text " name="position " value="React Developer " id="position " class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 " placeholder="e.g.React developer " required>
                                 </div>
-                                <div class="col-span-6 sm:col-span-3 ">
-                                    <label for="current-password " class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Current Password</label>
-                                    <input type="password " name="current-password " value="••••••••" id="current-password " class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 " placeholder="••••••••" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3 ">
-                                    <label for="new-password " class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">New Password</label>
-                                    <input type="password " name="new-password " value="••••••••" id="new-password " class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 " placeholder="••••••••" required>
-                                </div>
                                 <div class="col-span-6 ">
                                     <label for="biography " class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Biography</label>
                                     <textarea id="biography " rows="4 " class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 " placeholder="👨‍💻Full-stack web developer.Open-source contributor.">👨‍💻Full-stack web developer. Open-source contributor.</textarea>
@@ -217,59 +218,6 @@
                 </div>
             </div>
 
-        </div>
-
-        <!-- Add User Modal -->
-        <div class="fixed left-0 right-0 z-50 items-center justify-center hidden overflow-x-hidden overflow-y-auto top-4 md:inset-0 h-modal sm:h-full" id="add-user-modal">
-            <div class="relative w-full h-full max-w-2xl px-4 md:h-auto">
-                <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow dark:bg-gray-800">
-                    <!-- Modal header -->
-                    <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-700">
-                        <h3 class="text-xl font-semibold dark:text-white">
-                            Add new user
-                        </h3>
-                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-700 dark:hover:text-white" data-modal-toggle="add-user-modal">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
-                        </button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="p-6 space-y-6">
-                        <form action="addUser" method="post">
-                            <div class="grid grid-cols-6 gap-6">
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
-                                    <input type="text" name="username" id="username" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Username" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                                    <input type="password" name="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 " placeholder="Password" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3">
-                                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Email</label>
-                                    <input type="email" name="email " id="email " class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 " placeholder="blabla@gmail.com" required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3 ">
-                                    <label for="role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Role</label>
-                                    <select id="role" name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500">
-                                        <option selected="" value="customer">Customer</option>
-                                        <option value="admin">Admin</option>
-                                    </select>
-                                </div>
-                                <div class="col-span-6 ">
-                                    <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Address</label>
-                                    <input type="text" name="address" id="address" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Binh Yen - Thach That - Ha Noi">
-                                </div>
-                            </div> 
-
-                            <!-- Modal footer -->
-                            <div class="items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-700">
-                                <button class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" type="submit">Add user</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- Delete User Modal -->
@@ -297,45 +245,11 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-
     </div>
 
     <script type="text/javascript">
 
-        function doUpdate(id, name, price, description, brand, stock, imageUrl, categoryId) {
-            // Cập nhật các trường trong form Edit Product Drawer
-            document.getElementById('oName').value = name;
-            document.getElementById('oPrice').value = price;
-            document.getElementById('oDescription').value = description;
-            document.getElementById('oStock').value = stock;
-            document.getElementById('oldImage').value = imageUrl;
-            document.getElementById('oldId').value = id;
-            // Cập nhật brand nếu cần 
-            const brandSelect = document.getElementById('oBrand');
-            Array.from(brandSelect.options).forEach(option => {
-                if (option.value === brand) {
-                    option.selected = true;
-                } else {
-                    option.selected = false;
-                }
-            });
-            // Cập nhật trường image nếu cần, có thể hiển thị hình ảnh hiện tại
-            const imagePreview = document.getElementById('image-preview'); // Tạo 1 thẻ img để hiển thị
-            imagePreview.src = imageUrl; // Cập nhật đường dẫn hình ảnh
-            const typeSelect = document.getElementById('oType');
-            Array.from(typeSelect.options).forEach(option => {
-                if (option.value === categoryId) {
-                    option.selected = true;
-                } else {
-                    option.selected = false;
-                }
-            });
+        function doUpdate() {
         }
 
         function openDeleteModal(productId) {

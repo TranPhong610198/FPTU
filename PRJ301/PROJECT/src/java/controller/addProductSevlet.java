@@ -17,16 +17,19 @@ import java.io.File;
 import java.math.BigDecimal;
 import model.Product;
 import jakarta.servlet.annotation.MultipartConfig;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
 /**
  *
  * @author tphon
  */
 @WebServlet(name = "addProductSevlet", urlPatterns = {"/addProduct"})
 @MultipartConfig(
-    fileSizeThreshold = 1024 * 1024 * 2,  // 2MB
-    maxFileSize = 1024 * 1024 * 10,       // 10MB
-    maxRequestSize = 1024 * 1024 * 50     // 50MB
+        fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+        maxFileSize = 1024 * 1024 * 10, // 10MB
+        maxRequestSize = 1024 * 1024 * 50 // 50MB
 )
 
 public class addProductSevlet extends HttpServlet {
@@ -90,36 +93,61 @@ public class addProductSevlet extends HttpServlet {
         String descrip = request.getParameter("description");
         String price_raw = request.getParameter("price");
         String stock_raw = request.getParameter("stock");
-        String brand = request.getParameter("brand").toUpperCase();
+        String brandId_raw = request.getParameter("brandId");
         String categoryId_raw = request.getParameter("categoryId");
 
-        // Nhận file ảnh từ form
-        Part filePart = request.getPart("image");
-        String fileName = extractFileName(filePart);
-        String newFileName = UUID.randomUUID().toString()+fileName;
-        
-        // Đường dẫn lưu file ảnh (lưu vào thư mục 'images' trong server)
-        String savePath = "D:/CODING/FPTU/PRJ301/PROJECT/web/imagesDB" + File.separator + newFileName;
-        File fileSaveDir = new File(savePath);
-        filePart.write(savePath); // Lưu ảnh vào thư mục
-
-        // Tạo URL của ảnh (ví dụ URL sẽ là "/images/filename.jpg")
-        String imageUrl = "imagesDB/" + newFileName;
-
+        //-- cái này làm trước khi thêm ảnh phụ nên phải sửa lại --
+        // Nhận file ảnh từ form 
+        //        Part filePart = request.getPart("image");
+        //        String fileName = extractFileName(filePart);
+        //        String newFileName = UUID.randomUUID().toString()+fileName;
+                // Đường dẫn lưu file ảnh (lưu vào thư mục 'images' trong server)
+        //        String savePath = "D:/CODING/FPTU/PRJ301/PROJECT/web/imagesDB" + File.separator + newFileName;
+        //        File fileSaveDir = new File(savePath);
+        //        filePart.write(savePath); // Lưu ảnh vào thư mục
+                // Tạo URL của ảnh (ví dụ URL sẽ là "/images/filename.jpg")
+        //         String imageUrl = "imagesDB/" + newFileName;
+        //_____________________________________________________________________________
+        // Nhận file ảnh chính từ form
+        Part mainImagePart = request.getPart("image");
+        String mainImageFileName = saveImageToServer(mainImagePart);
+        String mainImageUrl = "imagesDB/" + mainImageFileName;
+        // Nhận file ảnh phụ từ form (nếu có)
+        List<String> subImageUrls = new ArrayList<>();
+        for (int i = 1; i <= 4; i++) {
+            Part subImagePart = request.getPart("subImage" + i);
+            if (subImagePart != null && subImagePart.getSize() > 0) {
+                String subImageFileName = saveImageToServer(subImagePart);
+                subImageUrls.add("imagesDB/" + subImageFileName);
+            }
+        }
         try {
-//            int id = Integer.parseInt(id_raw);
+        //        int id = Integer.parseInt(id_raw);
+        //-- cái này làm trước khi thêm ảnh phụ nên phải sửa lại --
+        //        BigDecimal price = new BigDecimal(price_raw);
+        //        int stock = Integer.parseInt(stock_raw);
+        //        int categoryId = Integer.parseInt(categoryId_raw);
+        //        Product temp = new Product(name, descrip, price, stock, brand, categoryId, imageUrl);
+        //        ProductDAO pd = new ProductDAO();
+        //        pd.addProduct(temp);
+        //        response.sendRedirect("listProduct");
+        //------------------------------------------------------------
             BigDecimal price = new BigDecimal(price_raw);
             int stock = Integer.parseInt(stock_raw);
             int categoryId = Integer.parseInt(categoryId_raw);
-            Product temp = new Product(name, descrip, price, stock, brand, categoryId, imageUrl);
+            int brandId = Integer.parseInt(brandId_raw);
+
+            Product temp = new Product(name, descrip, price, stock, brandId, categoryId, mainImageUrl);
             ProductDAO pd = new ProductDAO();
-            pd.addProduct(temp);
+            pd.addProduct(temp, subImageUrls);
 
             response.sendRedirect("listProduct");
         } catch (NumberFormatException e) {
+            System.out.println(e);
         }
     }
 
+    // Phương thức để lấy tên file từ part
     private String extractFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         String[] items = contentDisp.split(";");
@@ -129,6 +157,16 @@ public class addProductSevlet extends HttpServlet {
             }
         }
         return "";
+    }
+
+    // Phương thức để lưu file ảnh vào server và trả về tên file
+    private String saveImageToServer(Part imagePart) throws IOException {
+        String fileName = extractFileName(imagePart);
+        String newFileName = UUID.randomUUID().toString() + "_" + fileName;
+        String savePath = "D:/CODING/FPTU/PRJ301/PROJECT/web/imagesDB" + File.separator + newFileName;
+        File fileSaveDir = new File(savePath);
+        imagePart.write(savePath);  // Lưu ảnh vào folder server
+        return newFileName;         // Trả về tên file đã lưu
     }
 
     /**

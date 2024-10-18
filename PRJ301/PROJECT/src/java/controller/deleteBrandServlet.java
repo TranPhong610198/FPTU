@@ -5,6 +5,7 @@
 
 package controller;
 
+import dal.BrandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,8 +18,8 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author tphon
  */
-@WebServlet(name="addUserServlet", urlPatterns={"/addUser"})
-public class addUserServlet extends HttpServlet {
+@WebServlet(name="deleteBrandServlet", urlPatterns={"/deleteBrand"})
+public class deleteBrandServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,10 +36,10 @@ public class addUserServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet addUserServlet</title>");  
+            out.println("<title>Servlet deleteBrandServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet addUserServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet deleteBrandServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,7 +56,16 @@ public class addUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+        String id_raw = request.getParameter("id");
+        try {
+            int id = Integer.parseInt(id_raw);
+            BrandDAO bd = new BrandDAO();
+            bd.deleteBrand(id);
+            response.sendRedirect("listBrand");
+        } catch (IOException | NumberFormatException e) {
+            System.out.println(e);
+        }
     } 
 
     /** 

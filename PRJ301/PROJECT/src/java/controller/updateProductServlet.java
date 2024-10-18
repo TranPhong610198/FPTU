@@ -16,6 +16,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import model.Product;
 
@@ -42,18 +44,31 @@ public class updateProductServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet updateProductServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet updateProductServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+//        response.setContentType("text/html;charset=UTF-8");
+//        try (PrintWriter out = response.getWriter()) {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet updateProductServlet</title>");
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet updateProductServlet at " + request.getContextPath() + "</h1>");
+//            out.println("</body>");
+//            out.println("</html>");
+//        }
+        String id_raw = request.getParameter("id");
+        try {
+            int id = Integer.parseInt(id_raw);
+            ProductDAO pd = new ProductDAO();
+            Product temp = pd.getProductByID(id);
+            List<String> subImages = pd.getSubImagesByProductId(id);
+            request.setAttribute("oldProduct", temp);
+            request.setAttribute("subImages", subImages);
+            request.getRequestDispatcher("productCRUD.jsp").forward(request, response);
+
+        } catch (ServletException | IOException | NumberFormatException e) {
+            System.out.println(e);
         }
     }
 
@@ -69,19 +84,8 @@ public class updateProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-////        processRequest(request, response);
-//        String id_raw = request.getParameter("id");
-//        try {
-//            int id = Integer.parseInt(id_raw);
-//            ProductDAO pd = new ProductDAO();
-//            Product temp = pd.getProductByID(id);
-//            request.setAttribute("oldProduct", temp);
-////            request.getRequestDispatcher("updateProduct.jsp").forward(request, response);
-//            request.getRequestDispatcher("productCRUD.jsp").forward(request, response);
-//
-//        } catch (ServletException | IOException | NumberFormatException e) {
-//            System.out.println(e);
-//        }
+//        processRequest(request, response);
+//       
     }
 
     /**
@@ -105,7 +109,7 @@ public class updateProductServlet extends HttpServlet {
         String descrip = request.getParameter("description");
         String price_raw = request.getParameter("price");
         String stock_raw = request.getParameter("stock");
-        String brand = request.getParameter("brand");
+        String brand_raw = request.getParameter("brandId");
         String categoryId_raw = request.getParameter("categoryId");
 
 //        // Nhận file ảnh từ form
@@ -133,7 +137,7 @@ public class updateProductServlet extends HttpServlet {
             BigDecimal price = new BigDecimal(price_raw);
             int stock = Integer.parseInt(stock_raw);
             int categoryId = Integer.parseInt(categoryId_raw);
-
+            int brandId = Integer.parseInt(brand_raw);
             // Lấy thông tin sản phẩm cũ từ DB (bao gồm URL ảnh cũ)
             ProductDAO pd = new ProductDAO();
 //            Product oldProduct = pd.getProductByID(id);
@@ -145,9 +149,9 @@ public class updateProductServlet extends HttpServlet {
             String fileName = filePart.getSubmittedFileName();
 
             String imageUrl;
+            String uploadPath = "D:/CODING/FPTU/PRJ301/PROJECT/web/";
             if (fileName != null && !fileName.isEmpty()) {
                 // Nếu có ảnh mới, xóa ảnh cũ và lưu ảnh mới
-                String uploadPath = "D:/CODING/FPTU/PRJ301/PROJECT/web/";
 
                 // Xóa ảnh cũ
                 File oldImageFile = new File(uploadPath + File.separator + oldImageUrl);
@@ -156,7 +160,7 @@ public class updateProductServlet extends HttpServlet {
                 }
 
                 // Tạo tên mới cho ảnh
-                String newFileName = UUID.randomUUID().toString();
+                String newFileName = UUID.randomUUID().toString()+fileName;
                 imageUrl = "imagesDB/" + newFileName; // URL của ảnh mới
 
                 // Lưu ảnh mới vào thư mục
@@ -166,7 +170,8 @@ public class updateProductServlet extends HttpServlet {
                 imageUrl = oldImageUrl;
             }
 //-------------------------------------------------------------------------------------------------------------------------------
-            Product temp = new Product(id, name, descrip, price, stock, brand, categoryId, imageUrl);
+
+            Product temp = new Product(id, name, descrip, price, stock, brandId, categoryId, imageUrl);
             pd.updateProduct(temp);
             response.sendRedirect("listProduct");
         } catch (IOException | NumberFormatException e) {
