@@ -12,11 +12,12 @@ public class User {
 
     int id;
     String username, password, email, phone, address, role, avtUrl;
+    boolean blocked;
     
     public User() {
     }
 
-    public User(int id, String username, String password, String email, String phone, String address, String role, String avtUrl) {
+    public User(int id, String username, String password, String email, String phone, String address, String role, String avtUrl, boolean blocked) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -25,6 +26,7 @@ public class User {
         this.address = address;
         this.role = role;
         this.avtUrl = avtUrl;
+        this.blocked = blocked;
     }
 
     public User(String username, String password, String email, String phone, String address, String role) {
@@ -68,6 +70,11 @@ public class User {
         return avtUrl;
     }
 
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    
     public void setAddress(String address) {
         this.address = address;
     }
@@ -99,5 +106,10 @@ public class User {
     public void setAvtUrl(String avtUrl) {
         this.avtUrl = avtUrl;
     }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+   
     
 }

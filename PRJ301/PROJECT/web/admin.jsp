@@ -25,43 +25,11 @@
         </style>
     </head>
     <body class="bg-gray-900 text-gray-300">
-        <header class="bg-gray-800 shadow-md ">
-            <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-                <div class="text-xl font-bold text-gray-800">
-                    <img src="images/FondevJSLogo1.svg" alt="alt" height="10px" />
-                </div>
-                <div class="hidden md:flex space-x-4 mr-20">
-                    <a href="home" class="text-cyan-300 hover:text-white">Home</a>
-                    <a href="listProduct" class="text-cyan-300 hover:text-white">Shop</a>
-                    <a href="./admin.jsp" class="text-cyan-300 hover:text-white">Admin</a>
-                    <a href="#" class="text-cyan-300 hover:text-white">Contact</a>
-                </div>
-                <div class="flex items-center space-x-4 mr-10">
-                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-search"></i></a>
-                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-shopping-cart"></i></a>
-                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-user"></i></a>
-
-                </div>
-                <button id="mobile-menu-button" class="md:hidden text-cyan-300">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div id="mobile-menu" class="md:hidden hidden mt-4">
-                    <a href="home" class="block py-2 text-cyan-300 hover:text-white">Home</a>
-                    <a href="listProduct" class="block py-2 text-cyan-300 hover:text-white">Shop</a>
-                    <a href="./admin.jsp" class="block py-2 text-cyan-300 hover:text-white">Admin</a>
-                    <a href="#" class="block py-2 text-cyan-300 hover:text-white">Contact</a>
-                </div>
-            </nav>
-        </header>
-
         <div class="flex">
             <!-- Sidebar -->
             <div class="w-64 bg-gray-800 h-screen p-4  sticky top-0">
-                <div class="flex items-center mb-6">
-
-                </div>
                 <div class="mb-4">
-                    <input class="w-full p-2 bg-gray-700 text-gray-300 rounded" placeholder="Search" type="text"/>
+                    <img src="images/FondevJSLogo1.svg" alt="alt" height="10px" />
                 </div>
                 <nav>
                     <ul>

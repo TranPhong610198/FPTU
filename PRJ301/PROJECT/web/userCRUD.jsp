@@ -21,45 +21,11 @@
         </style> 
     </head>
     <body class="bg-gray-900 text-gray-300">
-        <!-- Header -->
-        <header class="bg-gray-800 shadow-md ">
-            <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-                <div class="text-xl font-bold text-gray-800">
-                    <img src="images/FondevJSLogo1.svg" alt="alt" height="10px" />
-                </div>
-                <div class="hidden md:flex space-x-4 mr-20">
-                    <a href="home" class="text-cyan-300 hover:text-white">Home</a>
-                    <a href="listProduct" class="text-cyan-300 hover:text-white">Shop</a>
-                    <a href="./admin.jsp" class="text-cyan-300 hover:text-white">Admin</a>
-                    <a href="#" class="text-cyan-300 hover:text-white">Contact</a>
-                </div>
-                <div class="flex items-center space-x-4 mr-10">
-                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-search"></i></a>
-                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-shopping-cart"></i></a>
-                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-user"></i></a>
-
-                </div>
-                <button id="mobile-menu-button" class="md:hidden text-cyan-300">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div id="mobile-menu" class="md:hidden hidden mt-4">
-                    <a href="home" class="block py-2 text-cyan-300 hover:text-white">Home</a>
-                    <a href="listProduct" class="block py-2 text-cyan-300 hover:text-white">Shop</a>
-                    <a href="./admin.jsp" class="block py-2 text-cyan-300 hover:text-white">Admin</a>
-                    <a href="#" class="block py-2 text-cyan-300 hover:text-white">Contact</a>
-                </div>
-            </nav>
-        </header>
-
         <div class="flex">
-
             <!-- Sidebar -->
             <div class="w-64 bg-gray-800 h-screen p-4  sticky top-0">
-                <div class="flex items-center mb-6">
-
-                </div>
                 <div class="mb-4">
-                    <input class="w-full p-2 bg-gray-700 text-gray-300 rounded" placeholder="Search" type="text"/>
+                    <a href="home"><img src="images/FondevJSLogo1.svg" alt="alt" height="10px" /></a>
                 </div>
                 <nav>
                     <ul>
@@ -128,6 +94,8 @@
                                 </th>
                                 <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Role
                                 </th>
+                                <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Block status
+                                </th>
                                 <th scope="col" class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Actions
                                 </th>
                             </tr>
@@ -146,8 +114,10 @@
                                     <td class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">${c.address}</td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">${c.phone}</td>
                                     <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">${c.role}</td>
+                                    <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">${c.blocked}</td>
+                                    
                                     <td class="p-4 space-x-2 whitespace-nowrap">
-                                        <button onclick="doUpdate()" type="button" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                        <button onclick="doUpdate(${c.id}, '${c.role}', '${c.blocked}', '${c.password}')" type="button" data-modal-toggle="edit-user-modal" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
                                             <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path>
@@ -185,27 +155,28 @@
                     </div>
                     <!-- Modal body -->
                     <div class="p-6 space-y-6">
-                        <form action="#">
+                        <form action="updateUser" method="post">
                             <div class="grid grid-cols-6 gap-6">
+                                <input hidden type="text" value="" name="ouid" id="ouid">
                                 <div class="col-span-6 sm:col-span-3">
-                                    <label for="first-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
-                                    <input type="text" name="first-name" value="Bonnie" id="first-name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 " placeholder="Bonnie " required>
+                                    <label for="newPass" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Reset Password</label>
+                                    <input value="" type="password" name="newPass" id="newPass" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 " placeholder="Input new password">
                                 </div>
-                                <div class="col-span-6 sm:col-span-3 ">
-                                    <label for="last-name " class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Last Name</label>
-                                    <input type="text " name="last-name " value="Green " id="last-name " class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 " placeholder="Green " required>
+                                <div class="col-span-6 sm:col-span-3">
+                                    <label for="oRole" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
+                                    <select id="oRole" name="role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                        <option value="admin">admin</option>
+                                        <option value="customer">customer</option>
+                                    </select>
                                 </div>
-                                <div class="col-span-6 sm:col-span-3 ">
-                                    <label for="email " class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Email</label>
-                                    <input type="email " name="email " value="bonnie@flowbite.com " id="email " class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 " placeholder="example@company.com " required>
-                                </div>
-                                <div class="col-span-6 sm:col-span-3 ">
-                                    <label for="position " class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Position</label>
-                                    <input type="text " name="position " value="React Developer " id="position " class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 " placeholder="e.g.React developer " required>
-                                </div>
+
+
                                 <div class="col-span-6 ">
-                                    <label for="biography " class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Biography</label>
-                                    <textarea id="biography " rows="4 " class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 " placeholder="👨‍💻Full-stack web developer.Open-source contributor.">👨‍💻Full-stack web developer. Open-source contributor.</textarea>
+                                    <label for="oBlocked" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Block status</label>
+                                    <select id="oBlocked" name="blocked" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                        <option value="false">Unblocked</option>
+                                        <option value="true">Blocked</option>
+                                    </select>
                                 </div>
                             </div> 
 
@@ -249,7 +220,25 @@
 
     <script type="text/javascript">
 
-        function doUpdate() {
+        function doUpdate(id, role, blocked, password) {
+            document.getElementById('ouid').value = id;
+             document.getElementById('newPass').value = password;
+            const roleSelect = document.getElementById('oRole');
+            Array.from(roleSelect.options).forEach(optionRole => {
+                if (optionRole.value === role) {
+                    optionRole.selected = true;
+                } else {
+                    optionRole.selected = false;
+                }
+            });
+            const blockSelect = document.getElementById('oBlocked');
+            Array.from(blockSelect.options).forEach(optionBlock => {
+                if (optionBlock.value === blocked) {
+                    optionBlock.selected = true;
+                } else {
+                    optionBlock.selected = false;
+                }
+            });
         }
 
         function openDeleteModal(productId) {

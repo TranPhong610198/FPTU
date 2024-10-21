@@ -196,6 +196,7 @@ public class ProductDAO extends DBContext {
         String query1 = "SELECT * FROM products where product_id=?";
         String query2 = "SELECT * FROM brands";
         String query3 = "SELECT * FROM categories";
+        String query4 = "SELECT * FROM sub_images";
         try {
             Statement statement = connection.createStatement();
 
@@ -218,6 +219,16 @@ public class ProductDAO extends DBContext {
                 cate.setCategoryName(rsCate.getString("category_name"));
                 tempCate.add(cate);
             }
+            //get listSubImages
+            List<SubImage> tempListSubIm = new ArrayList<>();
+            ResultSet rsListSubIm = statement.executeQuery(query4);
+            while (rsListSubIm.next()) {
+                SubImage subImage = new SubImage();
+                subImage.setSubImageId(rsListSubIm.getInt("sub_image_id"));
+                subImage.setProductId(rsListSubIm.getInt("product_id"));
+                subImage.setSubImagePath(rsListSubIm.getString("sub_image_url"));
+                tempListSubIm.add(subImage);
+            }
             PreparedStatement statementQ = connection.prepareStatement(query1);
             statementQ.setInt(1, id);
             ResultSet resultSet = statementQ.executeQuery();
@@ -234,6 +245,7 @@ public class ProductDAO extends DBContext {
                 product.setImageUrl(resultSet.getString("image_url"));
                 product.setListBrand(tempBrands);
                 product.setListCategory(tempCate);
+                product.setListSubImages(tempListSubIm);
             }
             return product;
         } catch (SQLException e) {

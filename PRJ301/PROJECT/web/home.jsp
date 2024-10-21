@@ -13,6 +13,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Online Shop</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     </head>
     <body class="font-sans">
@@ -23,25 +24,69 @@
                 </div>
                 <div class="hidden md:flex space-x-4 justify-center flex-grow mr-20">
                     <a href="home" class="text-cyan-300 hover:text-white">Home</a>
-                    <a href="listProduct" class="text-cyan-300 hover:text-white">Shop</a>
+                    <!-- Brands -->
+                    <button id="dropBrandsHoverButton" data-dropdown-toggle="dropBrandsHover" data-dropdown-trigger="hover" class="text-cyan-300 hover:text-white type="button">Brands
+                    </button>
+                    <div id="dropBrandsHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
+                            <c:set var="brands" value="${requestScope.data.get(0).getListBrand()}"/>
+                            <c:forEach var="brand" items="${brands}">
+                                <li>
+                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">${brand.brandName}</a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                    <!------------------------------------------------------------->        
                     <a href="./admin.jsp" class="text-cyan-300 hover:text-white">Admin</a>
-                    <a href="#" class="text-cyan-300 hover:text-white">Contact</a>
+                    <!-- Category -->
+                    <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="text-cyan-300 hover:text-white type="button">Categories
+                    </button>
+                    <div id="dropdownHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
+                            <c:set var="cates" value="${requestScope.data.get(0).getListCategory()}"/>
+                            <c:forEach var="cate" items="${cates}">
+                                <li>
+                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">${cate.categoryName}</a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                    <!------------------------------------------------------------->   
                 </div>
+
                 <div class="flex items-center space-x-4 ml-auto mr-10">
                     <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-search"></i></a>
                     <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-shopping-cart"></i></a>
-                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-user"></i></a>
+                    <!--<a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-user"></i></a>-->
 
-                </div>
-                <button id="mobile-menu-button" class="md:hidden text-cyan-300">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div id="mobile-menu" class="md:hidden hidden mt-4">
-                    <a href="home" class="block py-2 text-cyan-300 hover:text-white">Home</a>
-                    <a href="listProduct" class="block py-2 text-cyan-300 hover:text-white">Shop</a>
-                    <a href="./admin.jsp" class="block py-2 text-cyan-300 hover:text-white">Admin</a>
-                    <a href="#" class="block py-2 text-cyan-300 hover:text-white">Contact</a>
-                </div>
+                    <!--User-->
+                    <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
+                        <span class="sr-only">Open user menu</span>
+                        <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo">
+                    </button>
+                    <div id="dropdownAvatar" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                            <div>Bonnie Green</div>
+                            <div class="font-medium truncate">name@flowbite.com</div>
+                        </div>
+                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+                            </li>
+                            <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+                            </li>
+                        </ul>
+                        <div class="py-2">
+                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                        </div>
+                    </div>
+                    <!------------------------------------------------------------------------------------>
+
             </nav>
         </header>
 
@@ -76,9 +121,9 @@
                         <c:forEach var="product" items="${requestScope.data}">
                             <div class="border p-4 rounded-lg">
                                 <a href="home?action=view&id=${product.id}">
-                                <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-40 object-cover mb-4">
-                                <h3 class="font-semibold">${product.name}</h3>
-                                <p class="text-gray-600">$${product.price}</p>
+                                    <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-40 object-cover mb-4">
+                                    <h3 class="font-semibold">${product.name}</h3>
+                                    <p class="text-gray-600">$${product.price}</p>
                                 </a>
                             </div>  
                         </c:forEach>
@@ -165,5 +210,6 @@
                 mobileMenu.classList.toggle('hidden');
             });
         </script>
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     </body>
 </html>

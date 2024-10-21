@@ -35,7 +35,8 @@ public class UserDAO extends DBContext {
                             resultSet.getString("phone"),
                             resultSet.getString("address"),
                             resultSet.getString("role"),
-                            resultSet.getString("avt_url")
+                            resultSet.getString("avt_url"),
+                            resultSet.getBoolean("isBlocked")
                     );
                 }
             }
@@ -80,7 +81,8 @@ public class UserDAO extends DBContext {
                         resultSet.getString("phone"),
                         resultSet.getString("address"),
                         resultSet.getString("role"),
-                        resultSet.getString("avt_url")
+                        resultSet.getString("avt_url"),
+                        resultSet.getBoolean("isBlocked")
                 ));
             }
         } catch (SQLException e) {
@@ -118,14 +120,14 @@ public class UserDAO extends DBContext {
             System.out.println(e);
         }
     }
-    
-    public User getUserById(int id){
+
+    public User getUserById(int id) {
         String sql = "SELECT * FROM users WHERE user_id=?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()){
+            if (resultSet.next()) {
                 return new User(
                         resultSet.getInt("user_id"),
                         resultSet.getString("username"),
@@ -134,13 +136,49 @@ public class UserDAO extends DBContext {
                         resultSet.getString("phone"),
                         resultSet.getString("address"),
                         resultSet.getString("role"),
-                        resultSet.getString("avt_url")
+                        resultSet.getString("avt_url"),
+                        resultSet.getBoolean("isBlocked")
                 );
             }
-            
-        } catch (Exception e) {
+
+        } catch (SQLException e) {
         }
         return null;
+    }
+
+    public void blockUser(int userId, boolean block) {
+        String query = "UPDATE users SET isBlocked = ? WHERE user_id = ?";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setBoolean(1, block);
+            pstmt.setInt(2, userId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+
+    public void updateRole(int userId, String newRole) {
+        String query = "UPDATE users SET role = ? WHERE user_id = ?";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, newRole);
+            pstmt.setInt(2, userId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+
+    public void resetPassword(int userId, String newPassword) {
+        // Giả sử bạn đã sử dụng Bcrypt để mã hóa mật khẩu
+        String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+        String query = "UPDATE users SET password = ? WHERE user_id = ?";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            pstmt.setString(1, hashedPassword);
+            pstmt.setInt(2, userId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+        }
     }
 
 }

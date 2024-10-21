@@ -21,45 +21,12 @@
         </style>
     </head>
     <body class="bg-gray-900 text-gray-300">
-        <!-- Header -->
-        <header class="bg-gray-800 shadow-md ">
-            <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-                <div class="text-xl font-bold text-gray-800">
-                    <img src="images/FondevJSLogo1.svg" alt="alt" height="10px" />
-                </div>
-                <div class="hidden md:flex space-x-4 mr-20">
-                    <a href="home" class="text-cyan-300 hover:text-white">Home</a>
-                    <a href="listProduct" class="text-cyan-300 hover:text-white">Shop</a>
-                    <a href="./admin.jsp" class="text-cyan-300 hover:text-white">Admin</a>
-                    <a href="#" class="text-cyan-300 hover:text-white">Contact</a>
-                </div>
-                <div class="flex items-center space-x-4 mr-10">
-                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-search"></i></a>
-                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-shopping-cart"></i></a>
-                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-user"></i></a>
-
-                </div>
-                <button id="mobile-menu-button" class="md:hidden text-cyan-300">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div id="mobile-menu" class="md:hidden hidden mt-4">
-                    <a href="home" class="block py-2 text-cyan-300 hover:text-white">Home</a>
-                    <a href="listProduct" class="block py-2 text-cyan-300 hover:text-white">Shop</a>
-                    <a href="./admin.jsp" class="block py-2 text-cyan-300 hover:text-white">Admin</a>
-                    <a href="#" class="block py-2 text-cyan-300 hover:text-white">Contact</a>
-                </div>
-            </nav>
-        </header>
-
         <div class="flex">
 
             <!-- Sidebar -->
             <div class="w-64 bg-gray-800 h-screen p-4  sticky top-0">
-                <div class="flex items-center mb-6">
-
-                </div>
                 <div class="mb-4">
-                    <input class="w-full p-2 bg-gray-700 text-gray-300 rounded" placeholder="Search" type="text"/>
+                    <a href="home"><img src="images/FondevJSLogo1.svg" alt="alt" height="10px" /></a>
                 </div>
                 <nav>
                     <ul>
@@ -130,7 +97,7 @@
                                     <td class="py-2">${c.brandId}</td>
                                     <td class="py-2">${c.brandName}</td>
                                     <td class="py-2">
-                                        <button onclick="doUpdate(${c.brandId},'${c.brandName}')" type="button" id="updateProductButton" data-drawer-target="drawer-update-product-default" data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default" data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                        <button onclick="doUpdate(${c.brandId}, '${c.brandName}')" type="button" id="updateProductButton" data-drawer-target="drawer-update-product-default" data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default" data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
                                             <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path>
