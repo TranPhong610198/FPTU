@@ -29,13 +29,10 @@ public class User {
         this.blocked = blocked;
     }
 
-    public User(String username, String password, String email, String phone, String address, String role) {
+    public User(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.role = role;
     }
 
     public String getAddress() {

@@ -111,7 +111,6 @@ public class listSubImages extends HttpServlet {
         //        processRequest(request, response);
         String productId_raw = request.getParameter("pId");
         String[] oldImgUrls = request.getParameterValues("oldIMG");
-        System.out.println(productId_raw);
         int productId = 0;
         try {
             productId = Integer.parseInt(productId_raw);

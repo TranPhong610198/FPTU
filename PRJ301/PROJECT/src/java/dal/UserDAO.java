@@ -50,15 +50,12 @@ public class UserDAO extends DBContext {
 
     // Phương thức đăng ký người dùng
     public void register(User user) throws SQLException {
-        String sql = "INSERT INTO users (username, password, email, phone, address, role) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (username, password, email) VALUES (?, ?, ?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, user.getUsername());
             statement.setString(2, BCrypt.hashpw(user.getPassword(), BCrypt.gensalt())); // Mã hóa mật khẩu
             statement.setString(3, user.getEmail());
-            statement.setString(4, user.getPhone());
-            statement.setString(5, user.getAddress());
-            statement.setString(6, user.getRole());
             statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
