@@ -83,7 +83,7 @@ public class registerServlet extends HttpServlet {
         String username = request.getParameter("username");
         String pass1 = request.getParameter("pass1");
         String pass2 = request.getParameter("pass2");
-        String errPass = "", errMail = "", errUser = "";
+        String errPass = "", errMail = "", errUser = "", success="" ;
         boolean check = true;
         try {
             if (!pass1.equals(pass2)) {
@@ -109,6 +109,8 @@ public class registerServlet extends HttpServlet {
             if (check) {
                 User result = new User(username, pass2, email);
                 ud.register(result);
+                success = "Register account successful!!!";
+                request.setAttribute("success", success);
             }
             request.getRequestDispatcher("register.jsp").forward(request, response);
         } catch (Exception e) {

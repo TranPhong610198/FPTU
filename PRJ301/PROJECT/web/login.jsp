@@ -9,16 +9,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <title>JSP Page</title>
         <link rel="stylesheet" href="https://flowbite-admin-dashboard.vercel.app//app.css">
         <script>
 
-    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark')
-    }
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark')
+            }
         </script>
     </head>
     <body class="bg-gray-50 dark:bg-gray-900">
@@ -27,14 +27,15 @@
             <div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900">
                 <a href="https://flowbite-admin-dashboard.vercel.app/" class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
                     <a href="home" class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
-                    <img src="images/FondevJSLogo1.svg" class="mr-4 h-25" alt="Logo">
-                </a> 
+                        <img src="images/FondevJSLogo1.svg" class="mr-4 h-25" alt="Logo">
+                    </a> 
                 </a>
                 <!-- Card -->
                 <div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
                     <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
                         Sign in
                     </h2>
+                    <p style="color: red">${!(requestScope.error==null || requestScope.error.isEmpty())?requestScope.error:''}</p>
                     <form class="mt-8 space-y-6" action="login" method="post">
                         <div>
                             <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
@@ -46,7 +47,7 @@
                         </div>
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
-                                <input id="remember" aria-describedby="remember" name="remember" type="checkbox" class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600" required>
+                                <input id="remember" aria-describedby="remember" name="remember" type="checkbox" class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
                             </div>
                             <div class="ml-3 text-sm">
                                 <label for="remember" class="font-medium text-gray-900 dark:text-white">Remember me</label>

@@ -38,7 +38,7 @@
                         </ul>
                     </div>
                     <!------------------------------------------------------------->        
-                    <a href="./admin.jsp" class="text-cyan-300 hover:text-white">Admin</a>
+                    <a href="${(sessionScope.account.role=='admin')?'admin.jsp':'404pages.html'}" class="text-cyan-300 hover:text-white">Admin</a>
                     <!-- Category -->
                     <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="text-cyan-300 hover:text-white type="button">Categories
                     </button>
@@ -58,35 +58,74 @@
                 <div class="flex items-center space-x-4 ml-auto mr-10">
                     <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-search"></i></a>
                     <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-shopping-cart"></i></a>
-                    <!--<a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-user"></i></a>-->
-
-                    <!--User-->
-                    <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
-                        <span class="sr-only">Open user menu</span>
-                        <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo">
-                    </button>
-                    <div id="dropdownAvatar" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                        <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
-                            <div>Bonnie Green</div>
-                            <div class="font-medium truncate">name@flowbite.com</div>
+                        <c:if test="${sessionScope.account == null}">
+                        <!--User dropdawn -->
+                        <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
+                            <i class="fas fa-user text-cyan-300 hover:text-white"></i>
+                        </button>
+                        <div id="dropdownAvatar" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                            <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                <div>Not Logged In</div>
+                            </div>
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+                                <li>
+                                    <a href="login" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Login</a>
+                                </li>
+                                <li>
+                                    <a href="register" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Register</a>
+                                </li>
+                            </ul>
                         </div>
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-                            </li>
-                            <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                            </li>
-                        </ul>
-                        <div class="py-2">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
-                        </div>
-                    </div>
-                    <!------------------------------------------------------------------------------------>
-
+                        <!------------------------------------------------------------------------------------>
+                    </c:if>
+                    <c:if test="${sessionScope.account != null}">
+                        <c:set value="${sessionScope.account}" var="acc"/>
+                        <c:if test="${acc.getRole().equals('admin')}">
+                            <!--User dropdawn -->
+                            <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
+                                <img class="w-8 h-8 rounded-full" src="${(acc.getAvtUrl()==null||acc.getAvtUrl().isEmpty())?'images/avatar-trang-4.jpg':acc.getAvtUrl()}" alt="user photo">
+                            </button>
+                            <div id="dropdownAvatar" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                    <div>${acc.getUsername()}</div>
+                                    <div class="font-medium truncate">${acc.getEmail()}</div>
+                                </div>
+                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+                                    <li>
+                                        <a href="admin.jsp" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Setting</a>
+                                    </li>
+                                </ul>
+                                <div class="py-2">
+                                    <a href="logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Logout</a>
+                                </div>
+                            </div>
+                            <!------------------------------------------------------------------------------------>
+                        </c:if>
+                        <c:if test="${!acc.getRole().equals('admin')}">
+                            <!--User dropdawn -->
+                            <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
+                                <img class="w-8 h-8 rounded-full" src="${(acc.getAvtUrl()==null||acc.getAvtUrl().isEmpty())?'images/avatar-trang-4.jpg':acc.getAvtUrl()}" alt="user photo">
+                            </button>
+                            <div id="dropdownAvatar" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                                <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                                    <div>${acc.getUsername()}</div>
+                                    <div class="font-medium truncate">${acc.getEmail()}</div>
+                                </div>
+                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
+                                    <li>
+                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
+                                    </li>
+                                </ul>
+                                <div class="py-2">
+                                    <a href="logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Logout</a>
+                                </div>
+                            </div>
+                            <!------------------------------------------------------------------------------------>
+                        </c:if>    
+                    </c:if>
             </nav>
         </header>
 

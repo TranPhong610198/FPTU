@@ -16,16 +16,16 @@
         <title>Register Page</title>
         <link rel="canonical" href="https://flowbite-admin-dashboard.vercel.app/authentication/sign-in/">
         <link rel="stylesheet" href="https://flowbite-admin-dashboard.vercel.app//app.css">
-<!--        <script>
-
-            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark')
-            }
-        </script>-->
+        <!--        <script>
+        
+                    if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                        document.documentElement.classList.add('dark');
+                    } else {
+                        document.documentElement.classList.remove('dark')
+                    }
+                </script>-->
     </head>
-    <body class="bg-gray-50 dark:bg-gray-800">
+    <body class="bg-gray-50 dark:bg-gray-900">
         <main class="bg-gray-50 dark:bg-gray-900">
             <div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900">
                 <a href="home" class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
@@ -61,6 +61,7 @@
                         <button type="submit" class="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                             Create account
                         </button>
+                            <p style="color: #00ff33">${!(requestScope.success==null || requestScope.success.isEmpty())?requestScope.success:''}</p>
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
                             Already have an account? <a href="login" class="text-primary-700 hover:underline dark:text-primary-500">Login here</a>
                         </div>
