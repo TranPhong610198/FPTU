@@ -59,7 +59,7 @@
                     <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-search"></i></a>
                     <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-shopping-cart"></i></a>
                         <c:if test="${sessionScope.account == null}">
-                        <!--User dropdawn -->
+                        <!--User dropdawn if notLogin-->
                         <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
                             <i class="fas fa-user text-cyan-300 hover:text-white"></i>
                         </button>
@@ -81,7 +81,7 @@
                     <c:if test="${sessionScope.account != null}">
                         <c:set value="${sessionScope.account}" var="acc"/>
                         <c:if test="${acc.getRole().equals('admin')}">
-                            <!--User dropdawn -->
+                            <!--User dropdawn with admin-->
                             <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
                                 <img class="w-8 h-8 rounded-full" src="${(acc.getAvtUrl()==null||acc.getAvtUrl().isEmpty())?'images/avatar-trang-4.jpg':acc.getAvtUrl()}" alt="user photo">
                             </button>
@@ -105,7 +105,7 @@
                             <!------------------------------------------------------------------------------------>
                         </c:if>
                         <c:if test="${!acc.getRole().equals('admin')}">
-                            <!--User dropdawn -->
+                            <!--User dropdawn with customer-->
                             <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
                                 <img class="w-8 h-8 rounded-full" src="${(acc.getAvtUrl()==null||acc.getAvtUrl().isEmpty())?'images/avatar-trang-4.jpg':acc.getAvtUrl()}" alt="user photo">
                             </button>

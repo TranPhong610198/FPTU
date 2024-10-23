@@ -52,7 +52,7 @@
                             <div class="ml-3 text-sm">
                                 <label for="remember" class="font-medium text-gray-900 dark:text-white">Remember me</label>
                             </div>
-                            <a href="#" class="ml-auto text-sm text-primary-700 hover:underline dark:text-primary-500">Lost Password?</a>
+                            <!--<a href="#" class="ml-auto text-sm text-primary-700 hover:underline dark:text-primary-500">Lost Password?</a>-->
                         </div>
                         <button type="submit" class="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Login account</button>
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">

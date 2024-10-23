@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -78,21 +79,44 @@ public class loginServlet extends HttpServlet {
 //        processRequest(request, response);
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String rememberMe = request.getParameter("remember");
         UserDAO ud = new UserDAO();
         User user = ud.login(username, password);
-        String error="";
+        String error = "";
         if (user == null) {
             error = "Username or password is incorrect!!!";
             request.setAttribute("error", error);
             request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else if (user.isBlocked()){
+        } else if (user.isBlocked()) {
             error = "Your account was blocked by admin!!!";
             request.setAttribute("error", error);
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("account", user);
-            response.sendRedirect("home.jsp");
+            
+            // Remember function
+            if ("on".equals(rememberMe)) {
+                Cookie usernameCookie = new Cookie("username", username);
+                Cookie passwordCookie = new Cookie("password", password); // Chú ý không lưu mật khẩu thô vào cookie trong thực tế!
+                usernameCookie.setMaxAge(60 * 60 * 24 * 7); // 7 ngày
+                passwordCookie.setMaxAge(60 * 60 * 24 * 7); // 7 ngày
+                response.addCookie(usernameCookie);
+                response.addCookie(passwordCookie);
+            } else {
+                // Xóa cookie nếu không chọn Remember Me
+                Cookie[] cookies = request.getCookies();
+                if (cookies != null) {
+                    for (Cookie cookie : cookies) {
+                        if ("username".equals(cookie.getName()) || "password".equals(cookie.getName())) {
+                            cookie.setMaxAge(0);
+                            response.addCookie(cookie);
+                        }
+                    }
+                }
+            }
+            //____________________________________________________________________________________________
+            response.sendRedirect("home");
         }
     }
 
