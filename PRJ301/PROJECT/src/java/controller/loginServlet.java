@@ -98,11 +98,11 @@ public class loginServlet extends HttpServlet {
             // Remember function
             if ("on".equals(rememberMe)) {
                 Cookie usernameCookie = new Cookie("username", username);
-                Cookie passwordCookie = new Cookie("password", password); // Chú ý không lưu mật khẩu thô vào cookie trong thực tế!
+//                Cookie passwordCookie = new Cookie("password", password); // Chú ý không lưu mật khẩu thô vào cookie trong thực tế!
                 usernameCookie.setMaxAge(60 * 60 * 24 * 7); // 7 ngày
-                passwordCookie.setMaxAge(60 * 60 * 24 * 7); // 7 ngày
+//                passwordCookie.setMaxAge(60 * 60 * 24 * 7); // 7 ngày
                 response.addCookie(usernameCookie);
-                response.addCookie(passwordCookie);
+//                response.addCookie(passwordCookie);
             } else {
                 // Xóa cookie nếu không chọn Remember Me
                 Cookie[] cookies = request.getCookies();

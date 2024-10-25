@@ -101,17 +101,29 @@ public class UserDAO extends DBContext {
     }
 
     // Phương thức cập nhật thông tin người dùng
-    public void updateUser(User user) throws SQLException {
-        String sql = "UPDATE users SET username = ?, email = ?, phone = ?, address = ?, role = ?, avt_url = ? WHERE user_id = ?";
+    public void updateUser(String email, String phone, String address, int id, String name) {
+        String sql = "UPDATE users SET email = ?, phone = ?, address = ?, username = ? WHERE user_id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getEmail());
-            statement.setString(3, user.getPhone());
-            statement.setString(4, user.getAddress());
-            statement.setString(5, user.getRole());
-            statement.setString(6, user.getAvtUrl());
-            statement.setInt(7, user.getId());
+            statement.setString(1, email);
+            statement.setString(2, phone);
+            statement.setString(3, address);
+            statement.setString(4, name);
+
+            statement.setInt(5, id);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public void updateAvt(String avtUrl, int id) {
+        String sql = "UPDATE users SET avt_url = ? WHERE user_id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, avtUrl);
+            statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
@@ -123,6 +135,31 @@ public class UserDAO extends DBContext {
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return new User(
+                        resultSet.getInt("user_id"),
+                        resultSet.getString("username"),
+                        resultSet.getString("password"),
+                        resultSet.getString("email"),
+                        resultSet.getString("phone"),
+                        resultSet.getString("address"),
+                        resultSet.getString("role"),
+                        resultSet.getString("avt_url"),
+                        resultSet.getBoolean("isBlocked")
+                );
+            }
+
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
+    public User getUserByName(String name) {
+        String sql = "SELECT * FROM users WHERE username=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, name);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return new User(

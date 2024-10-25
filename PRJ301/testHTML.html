@@ -1,124 +1,130 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flowbite Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <title>Chọn địa chỉ Việt Nam</title>
 </head>
-<body class="bg-gray-900 text-gray-300">
-    <div class="flex">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-gray-800 h-screen p-4">
-            <div class="text-white text-2xl font-bold mb-6">Flowbite</div>
-            <nav>
-                <ul>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center text-gray-400 hover:text-white">
-                            <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center text-gray-400 hover:text-white">
-                            <i class="fas fa-layer-group mr-3"></i> Layouts
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center text-gray-400 hover:text-white">
-                            <i class="fas fa-database mr-3"></i> CRUD
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center text-gray-400 hover:text-white">
-                            <i class="fas fa-cogs mr-3"></i> Settings
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center text-gray-400 hover:text-white">
-                            <i class="fas fa-file-alt mr-3"></i> Pages
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center text-gray-400 hover:text-white">
-                            <i class="fas fa-user-shield mr-3"></i> Authentication
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center text-gray-400 hover:text-white">
-                            <i class="fas fa-gamepad mr-3"></i> Playground
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center text-gray-400 hover:text-white">
-                            <i class="fab fa-github mr-3"></i> GitHub Repository
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center text-gray-400 hover:text-white">
-                            <i class="fas fa-book mr-3"></i> Flowbite Docs
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center text-gray-400 hover:text-white">
-                            <i class="fas fa-cubes mr-3"></i> Components
-                        </a>
-                    </li>
-                    <li class="mb-4">
-                        <a href="#" class="flex items-center text-gray-400 hover:text-white">
-                            <i class="fas fa-life-ring mr-3"></i> Support
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
-        <!-- Main content -->
-        <main class="flex-1 p-6">
-            <div class="flex justify-between items-center mb-6">
-                <div class="text-2xl font-bold text-white">All products</div>
-                <button class="bg-blue-600 text-white px-4 py-2 rounded">Add new product</button>
-            </div>
-            <div class="bg-gray-800 p-4 rounded-lg">
-                <div class="flex justify-between items-center mb-4">
-                    <input type="text" placeholder="Search for products" class="bg-gray-700 text-gray-300 px-4 py-2 rounded w-full max-w-xs">
-                    <div class="flex items-center space-x-4">
-                        <i class="fas fa-cog text-gray-400"></i>
-                        <i class="fas fa-filter text-gray-400"></i>
-                        <i class="fas fa-ellipsis-v text-gray-400"></i>
-                    </div>
-                </div>
-                <table class="w-full text-left">
-                    <thead>
-                        <tr class="text-gray-400">
-                            <th class="py-2">PRODUCT NAME</th>
-                            <th class="py-2">TECHNOLOGY</th>
-                            <th class="py-2">DESCRIPTION</th>
-                            <th class="py-2">ID</th>
-                            <th class="py-2">PRICE</th>
-                            <th class="py-2">DISCOUNT</th>
-                            <th class="py-2">ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Repeat for each product -->
-                        <tr class="border-b border-gray-700">
-                            <td class="py-2">
-                                <div class="text-white">Education Dashboard</div>
-                                <div class="text-gray-400 text-sm">Html templates</div>
-                            </td>
-                            <td class="py-2">Angular</td>
-                            <td class="py-2">Start developing with an open-source ...</td>
-                            <td class="py-2">#194856</td>
-                            <td class="py-2">$149</td>
-                            <td class="py-2">25%</td>
-                            <td class="py-2">
-                                <button class="bg-blue-600 text-white px-2 py-1 rounded">Update</button>
-                                <button class="bg-red-600 text-white px-2 py-1 rounded">Delete item</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </main>
-    </div>
+<body>
+
+<h3>Chọn địa chỉ</h3>
+
+<!-- Dropdown chọn tỉnh -->
+<label for="province">Tỉnh/Thành phố:</label>
+<select id="province" onchange="loadDistricts()">
+    <option value="">Chọn Tỉnh/Thành phố</option>
+    <option value="hanoi">Hà Nội</option>
+    <option value="danang">Đà Nẵng</option>
+    <option value="hochiminh">Hồ Chí Minh</option>
+</select>
+
+<br><br>
+
+<!-- Dropdown chọn huyện -->
+<label for="district">Quận/Huyện:</label>
+<select id="district" onchange="loadWards()" disabled>
+    <option value="">Chọn Quận/Huyện</option>
+</select>
+
+<br><br>
+
+<!-- Dropdown chọn xã -->
+<label for="ward">Xã/Phường:</label>
+<select id="ward" disabled>
+    <option value="">Chọn Xã/Phường</option>
+</select>
+
+<script>
+// Dữ liệu mẫu: Danh sách huyện theo tỉnh và xã theo huyện
+const data = {
+    hanoi: {
+        districts: {
+            ba_dinh: ['Phường Cống Vị', 'Phường Điện Biên', 'Phường Giảng Võ'],
+            dong_da: ['Phường Cát Linh', 'Phường Hàng Bột', 'Phường Khâm Thiên']
+        }
+    },
+    danang: {
+        districts: {
+            hai_chau: ['Phường Hải Châu 1', 'Phường Hải Châu 2', 'Phường Bình Thuận'],
+            cam_le: ['Phường Hòa An', 'Phường Hòa Thọ Đông', 'Phường Khuê Trung']
+        }
+    },
+    hochiminh: {
+        districts: {
+            quan_1: ['Phường Bến Nghé', 'Phường Bến Thành', 'Phường Nguyễn Thái Bình'],
+            quan_3: ['Phường Võ Thị Sáu', 'Phường Phạm Ngọc Thạch', 'Phường Quận 3']
+        }
+    }
+};
+
+// Dữ liệu người dùng có sẵn từ server
+const userData = {
+    province: "hanoi",   // Hà Nội
+    district: "dong_da", // Quận Đống Đa
+    ward: "Phường Khâm Thiên"   // Xã Khâm Thiên
+};
+
+// Khi trang tải, gọi hàm để chọn sẵn tỉnh/huyện/xã dựa vào dữ liệu người dùng
+document.addEventListener('DOMContentLoaded', function() {
+    const provinceSelect = document.getElementById('province');
+    const districtSelect = document.getElementById('district');
+    const wardSelect = document.getElementById('ward');
+
+    // Chọn tỉnh sẵn
+    provinceSelect.value = userData.province;
+    loadDistricts();
+
+    // Sau khi huyện được tải, chọn sẵn huyện
+    districtSelect.value = userData.district;
+    loadWards();
+
+    // Sau khi xã được tải, chọn sẵn xã
+    wardSelect.value = userData.ward;
+});
+
+// Load danh sách huyện khi chọn tỉnh
+function loadDistricts() {
+    const province = document.getElementById('province').value;
+    const districtSelect = document.getElementById('district');
+    const wardSelect = document.getElementById('ward');
+
+    // Reset dropdown huyện và xã
+    districtSelect.innerHTML = '<option value="">Chọn Quận/Huyện</option>';
+    wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
+    wardSelect.disabled = true;
+
+    if (province) {
+        const districts = data[province].districts;
+        for (let district in districts) {
+            districtSelect.innerHTML += `<option value="${district}">${district.replace(/_/g, ' ').toUpperCase()}</option>`;
+        }
+        districtSelect.disabled = false;
+    } else {
+        districtSelect.disabled = true;
+        wardSelect.disabled = true;
+    }
+}
+
+// Load danh sách xã khi chọn huyện
+function loadWards() {
+    const province = document.getElementById('province').value;
+    const district = document.getElementById('district').value;
+    const wardSelect = document.getElementById('ward');
+
+    // Reset dropdown xã
+    wardSelect.innerHTML = '<option value="">Chọn Xã/Phường</option>';
+
+    if (province && district) {
+        const wards = data[province].districts[district];
+        for (let ward of wards) {
+            wardSelect.innerHTML += `<option value="${ward}">${ward}</option>`;
+        }
+        wardSelect.disabled = false;
+    } else {
+        wardSelect.disabled = true;
+    }
+}
+</script>
+
 </body>
 </html>

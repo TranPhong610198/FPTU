@@ -5,15 +5,19 @@
 package controller;
 
 import dal.ProductDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Product;
+import model.User;
 
 /**
  *
@@ -60,6 +64,7 @@ public class homeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
 //        processRequest(request, response);
         String action = request.getParameter("action");
         if ("view".equals(action)) {
@@ -75,6 +80,28 @@ public class homeServlet extends HttpServlet {
             request.getRequestDispatcher("getDetail.jsp").forward(request, response);
 
         } else {
+            //CHỨC NĂNG TỰ ĐĂNG NHẬP
+            // Kiểm tra cookie khi người dùng quay lại
+            Cookie[] cookies = request.getCookies();
+            String username = null;
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if ("username".equals(cookie.getName())) {
+                        username = cookie.getValue();
+                        break;
+                    }
+                }
+            }
+            // Nếu có cookie username, tự động đăng nhập
+            if (username != null) {
+                UserDAO userDao = new UserDAO();
+                User user = userDao.getUserByName(username);  // Lấy thông tin user từ username
+                if (user != null) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("account", user);  // Đặt user vào session
+                }
+            }
+            //_____________________________________________________________________________
             // Xử lý logic khác cho trang home
             ProductDAO pd = new ProductDAO();
             List<Product> list = pd.getAllProducts();
@@ -83,7 +110,6 @@ public class homeServlet extends HttpServlet {
 //            request.getRequestDispatcher("header.jsp").forward(request, response);
         }
 
-        
     }
 
     /**
