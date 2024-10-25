@@ -29,10 +29,10 @@
                     </button>
                     <div id="dropBrandsHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
-                            <c:set var="brands" value="${requestScope.data.get(0).getListBrand()}"/>
+                            <c:set var="brands" value="${requestScope.product.getListBrand()}"/>
                             <c:forEach var="brand" items="${brands}">
                                 <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">${brand.brandName}</a>
+                                    <a href="showBrand?brand=${brand.brandId}&productId=${product.id}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">${brand.brandName}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -44,10 +44,10 @@
                     </button>
                     <div id="dropdownHover" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
-                            <c:set var="cates" value="${requestScope.data.get(0).getListCategory()}"/>
+                            <c:set var="cates" value="${requestScope.product.getListCategory()}"/>
                             <c:forEach var="cate" items="${cates}">
                                 <li>
-                                    <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">${cate.categoryName}</a>
+                                    <a href="showCate?cate=${cate.categoryId}&productId=${product.id}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">${cate.categoryName}</a>
                                 </li>
                             </c:forEach>
                         </ul>

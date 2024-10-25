@@ -64,48 +64,49 @@ public class homeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-//        processRequest(request, response);
+        //CHỨC NĂNG TỰ ĐĂNG NHẬP
+        // Kiểm tra cookie khi người dùng quay lại
+        Cookie[] cookies = request.getCookies();
+        String username = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("username".equals(cookie.getName())) {
+                    username = cookie.getValue();
+                    break;
+                }
+            }
+        }
+        // Nếu có cookie username, tự động đăng nhập
+        if (username != null) {
+            UserDAO userDao = new UserDAO();
+            User user = userDao.getUserByName(username);  // Lấy thông tin user từ username
+            if (user != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("account", user);  // Đặt user vào session
+            }
+        }
+        //_____________________________________________________________________________
         String action = request.getParameter("action");
         if ("view".equals(action)) {
             int productId = Integer.parseInt(request.getParameter("id"));
             ProductDAO pd = new ProductDAO();
-
             Product product = pd.getProductByID(productId);
-            List<String> subImages = pd.getSubImagesByProductId(productId);
 
+            List<String> subImages = pd.getSubImagesByProductId(productId);
+            List<Product> samelist = pd.getSameProducts(product.getCategoryId());
             request.setAttribute("product", product);
             request.setAttribute("subImages", subImages);
-
+            request.setAttribute("samelist", samelist);
             request.getRequestDispatcher("getDetail.jsp").forward(request, response);
 
         } else {
-            //CHỨC NĂNG TỰ ĐĂNG NHẬP
-            // Kiểm tra cookie khi người dùng quay lại
-            Cookie[] cookies = request.getCookies();
-            String username = null;
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if ("username".equals(cookie.getName())) {
-                        username = cookie.getValue();
-                        break;
-                    }
-                }
-            }
-            // Nếu có cookie username, tự động đăng nhập
-            if (username != null) {
-                UserDAO userDao = new UserDAO();
-                User user = userDao.getUserByName(username);  // Lấy thông tin user từ username
-                if (user != null) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("account", user);  // Đặt user vào session
-                }
-            }
-            //_____________________________________________________________________________
+
             // Xử lý logic khác cho trang home
             ProductDAO pd = new ProductDAO();
             List<Product> list = pd.getAllProducts();
+            Product temp = list.get(0);
             request.setAttribute("data", list);
+            request.setAttribute("product", temp);
             request.getRequestDispatcher("home.jsp").forward(request, response);
 //            request.getRequestDispatcher("header.jsp").forward(request, response);
         }

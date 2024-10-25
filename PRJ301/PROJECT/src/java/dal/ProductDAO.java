@@ -18,6 +18,34 @@ import model.SubImage;
 
 public class ProductDAO extends DBContext {
 
+    // Lấy sản phẩm tương tự
+    public List<Product> getSameProducts(int category_id) {
+        List<Product> products = new ArrayList<>();
+        String query = "select p.* from products p, categories c\n"
+                + "where  ? = c.category_id";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            // get product
+            statement.setInt(1, category_id);
+            ResultSet resultSet1 = statement.executeQuery();
+            while (resultSet1.next()) {
+                Product product = new Product();
+                product.setId(resultSet1.getInt("product_id"));
+                product.setName(resultSet1.getString("name"));
+                product.setDescription(resultSet1.getString("description"));
+                product.setPrice(resultSet1.getBigDecimal("price"));
+                product.setStock(resultSet1.getInt("stock"));
+                product.setBrandId(resultSet1.getInt("brand_id"));
+                product.setCategoryId(resultSet1.getInt("category_id"));
+                product.setImageUrl(resultSet1.getString("image_url"));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
     //update SubImage
     public void updateSubImages(int productId, List<String> subImageUrls) {
         // Xóa tất cả ảnh phụ cũ
@@ -127,7 +155,6 @@ public class ProductDAO extends DBContext {
 
     }
     //___________________________________________________________________________________________________________________
-
     // Lấy tất cả các sản phẩm từ cơ sở dữ liệu
     public List<Product> getAllProducts() {
         List<Product> products = new ArrayList<>();
@@ -190,7 +217,7 @@ public class ProductDAO extends DBContext {
 
         return products;
     }
-
+    //________________________________________________________________________________
     // Lấy thông tin sản phẩm từ ID
     public Product getProductByID(int id) {
         String query1 = "SELECT * FROM products where product_id=?";
@@ -209,7 +236,6 @@ public class ProductDAO extends DBContext {
                 brand.setBrandName(rsBrand.getString("brand_name"));
                 tempBrands.add(brand);
             }
-
             //get listCategoris
             List<Category> tempCate = new ArrayList<>();
             ResultSet rsCate = statement.executeQuery(query3);
@@ -234,7 +260,6 @@ public class ProductDAO extends DBContext {
             ResultSet resultSet = statementQ.executeQuery();
             Product product = new Product();
             if (resultSet.next()) {
-
                 product.setId(resultSet.getInt("product_id"));
                 product.setName(resultSet.getString("name"));
                 product.setDescription(resultSet.getString("description"));
@@ -254,11 +279,9 @@ public class ProductDAO extends DBContext {
         return null;
     }
     //___________________________________________________________________________________________________________________
-
     // Cập nhật thông tin sản phẩm
     public void updateProduct(Product product) {
         String query = "UPDATE products SET name = ?, description = ?, price = ?, stock = ?, brand_id = ?, category_id = ?, image_url = ? WHERE product_id = ?";
-
         try (PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setString(1, product.getName());
@@ -275,6 +298,7 @@ public class ProductDAO extends DBContext {
             e.printStackTrace();
         }
     }
+
     //___________________________________________________________________________________________________________________
     // Xóa sản phẩm khỏi cơ sở dữ liệu
     public void deleteProduct(int productId) {
@@ -288,4 +312,112 @@ public class ProductDAO extends DBContext {
             e.printStackTrace();
         }
     }
+
+    //____________________________________________________________________________
+    //Lấy Products Chung Brand
+    public List<Product> getProductsByBrand(int brandId) {
+        List<Product> products = new ArrayList<>();
+        String query1 = "select * from products\n"
+                + "where  ? = brand_id";
+        String query2 = "SELECT * FROM brands";
+        String query3 = "SELECT * FROM categories";
+        try {
+            Statement statement = connection.createStatement();
+
+            //get listBrands
+            List<Brand> tempBrands = new ArrayList<>();
+            ResultSet rsBrand = statement.executeQuery(query2);
+            while (rsBrand.next()) {
+                Brand brand = new Brand();
+                brand.setBrandId(rsBrand.getInt("brand_id"));
+                brand.setBrandName(rsBrand.getString("brand_name"));
+                tempBrands.add(brand);
+            }
+
+            //get listCategoris
+            List<Category> tempCate = new ArrayList<>();
+            ResultSet rsCate = statement.executeQuery(query3);
+            while (rsCate.next()) {
+                Category cate = new Category();
+                cate.setCategoryId(rsCate.getInt("category_id"));
+                cate.setCategoryName(rsCate.getString("category_name"));
+                tempCate.add(cate);
+            }
+            // get product
+            PreparedStatement statement1 = connection.prepareStatement(query1);
+            statement1.setInt(1, brandId);
+            ResultSet resultSet1 = statement1.executeQuery();
+            while (resultSet1.next()) {
+                Product product = new Product();
+                product.setId(resultSet1.getInt("product_id"));
+                product.setName(resultSet1.getString("name"));
+                product.setDescription(resultSet1.getString("description"));
+                product.setPrice(resultSet1.getBigDecimal("price"));
+                product.setStock(resultSet1.getInt("stock"));
+                product.setBrandId(resultSet1.getInt("brand_id"));
+                product.setCategoryId(resultSet1.getInt("category_id"));
+                product.setImageUrl(resultSet1.getString("image_url"));
+                product.setListBrand(tempBrands);
+                product.setListCategory(tempCate);
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+    //_____________________________________________________________________________________
+    //Lấy Products Chung Danh Mục
+    public List<Product> getProductsByCate(int categoryId) {
+        List<Product> products = new ArrayList<>();
+        String query1 = "select * from products\n"
+                + "where  ? = category_id";
+        String query2 = "SELECT * FROM brands";
+        String query3 = "SELECT * FROM categories";
+        try {
+            Statement statement = connection.createStatement();
+
+            //get listBrands
+            List<Brand> tempBrands = new ArrayList<>();
+            ResultSet rsBrand = statement.executeQuery(query2);
+            while (rsBrand.next()) {
+                Brand brand = new Brand();
+                brand.setBrandId(rsBrand.getInt("brand_id"));
+                brand.setBrandName(rsBrand.getString("brand_name"));
+                tempBrands.add(brand);
+            }
+            //get listCategoris
+            List<Category> tempCate = new ArrayList<>();
+            ResultSet rsCate = statement.executeQuery(query3);
+            while (rsCate.next()) {
+                Category cate = new Category();
+                cate.setCategoryId(rsCate.getInt("category_id"));
+                cate.setCategoryName(rsCate.getString("category_name"));
+                tempCate.add(cate);
+            }
+            //get product
+            PreparedStatement statement1 = connection.prepareStatement(query1);
+            statement1.setInt(1, categoryId);
+            ResultSet resultSet1 = statement1.executeQuery();
+            while (resultSet1.next()) {
+                Product product = new Product();
+                product.setId(resultSet1.getInt("product_id"));
+                product.setName(resultSet1.getString("name"));
+                product.setDescription(resultSet1.getString("description"));
+                product.setPrice(resultSet1.getBigDecimal("price"));
+                product.setStock(resultSet1.getInt("stock"));
+                product.setBrandId(resultSet1.getInt("brand_id"));
+                product.setCategoryId(resultSet1.getInt("category_id"));
+                product.setImageUrl(resultSet1.getString("image_url"));
+                product.setListBrand(tempBrands);
+                product.setListCategory(tempCate);
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+    //_______________________________________________________________________________
 }

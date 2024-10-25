@@ -235,7 +235,7 @@
                         "TP Thanh Hóa": ["Ba Đình", "Điện Biên", "Đông Cương"],
                         "Sầm Sơn": ["Bắc Sơn", "Trường Sơn", "Quảng Tiến"],
                         "Thiệu Hóa": ["Thọ Lâm", "Thọ Cường", "Thọ Ngọc"],
-                        "Hoàng Hóa": ["Hoằng Đông", "Hoằng Hà", "Hoằng Phong"],
+                        "Hoàng Hóa": ["Hoằng Đông", "Hoằng Hà", "Hoằng Phong", "Hoằng Đồng"],
                         "Hậu Lộc": ["Hòa Lộc", "Minh Lộc", "Ngư Lộc", "Phú Lộc"]
                     }
                 },
@@ -245,7 +245,7 @@
                         "Hiệp Hòa": ["Đoan Bái", "Đông Lỗ", "Thường Thắng"],
                         "Lạng Giang": ["Đại Lâm", "Nghĩa Hòa", "Tân Thịnh"],
                         "Lục Ngạn": ["Biên Sơn", "Quý Sơn", "Phượng Sơn"],
-                        "Việt Yên": ["Bích Động", "Ninh Sơn", "Tự Lạn"]
+                        "Việt Yên": ["Bích Động", "Ninh Sơn", "Tự Lạn", "Nếnh", "Vân Trung"]
                     }
                 }
             };

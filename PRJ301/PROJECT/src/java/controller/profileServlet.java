@@ -190,7 +190,7 @@ public class profileServlet extends HttpServlet {
         //__________________________________________________________________________________
         // CHỨC NĂNG HIỂN THỊ
         User temp = ud.getUserById(id);
-        if (temp.getAddress() != null && !temp.getAddress().isEmpty()) {
+        if (temp.getAddress() != null && !temp.getAddress().trim().isEmpty()) {
             String[] address = splitAddress(temp.getAddress());
             request.setAttribute("provinceUser", address[2]);
             request.setAttribute("districtUser", address[1]);
