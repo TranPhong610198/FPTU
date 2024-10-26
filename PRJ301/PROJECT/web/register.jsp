@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html lang="en" class="dark">
     <head>
@@ -46,6 +47,15 @@
                             <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
                             <input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required>
                             <p style="color: red">${!(requestScope.errUser==null || requestScope.errUser.isEmpty())?requestScope.errUser:''}</p>
+                            <c:if test="${errUser.equals('invalid')}">
+                                <ul style="list-style-type: none; padding: 0; color: red;">
+                                    <li id="length" >Độ dài từ 6 đến 20 ký tự</li>
+                                    <li id="noSpaces" >Không có dấu cách</li>
+                                    <li id="validChars" >Chỉ chứa chữ cái, số và dấu gạch dưới (_)</li>
+                                    <li id="noConsecutiveUnderscores">Không có hai dấu gạch dưới liên tiếp</li>
+                                    <li id="startEndWithLetterOrNumber">Bắt đầu và kết thúc bằng chữ cái hoặc số</li>
+                                </ul> 
+                            </c:if>
                         </div>
 
                         <div>
@@ -61,7 +71,7 @@
                         <button type="submit" class="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                             Create account
                         </button>
-                            <p style="color: #00ff33">${!(requestScope.success==null || requestScope.success.isEmpty())?requestScope.success:''}</p>
+                        <p style="color: #00ff33">${!(requestScope.success==null || requestScope.success.isEmpty())?requestScope.success:''}</p>
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">
                             Already have an account? <a href="login" class="text-primary-700 hover:underline dark:text-primary-500">Login here</a>
                         </div>

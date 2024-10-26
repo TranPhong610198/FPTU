@@ -166,6 +166,10 @@ public class profileServlet extends HttpServlet {
                 errPhone = "Phone Error!!!";
                 check = false;
             }
+            if (!isValidUsername(name)){
+                errName = "invalid";
+                check = false;
+            }
             List<User> allUser = ud.getAll();
             for (User temp : allUser) {
                 if (temp.getEmail().equals(email) && temp.getId() != id) {
@@ -243,5 +247,17 @@ public class profileServlet extends HttpServlet {
             // Trường hợp chuỗi không đúng định dạng
             throw new IllegalArgumentException("Chuỗi nhập không đúng định dạng Xã - Huyện - Tỉnh");
         }
+    }
+
+    public static boolean isValidUsername(String username) {
+        // Kiểm tra nếu username là null hoặc độ dài không nằm trong khoảng 6-20
+        if (username == null || username.length() < 6 || username.length() > 20) {
+            return false;
+        }
+
+        // Sử dụng biểu thức chính quy (regex) để kiểm tra các ký tự
+        String regex = "^[a-zA-Z0-9](?!.*__)[a-zA-Z0-9_]{4,18}[a-zA-Z0-9]$";
+
+        return username.matches(regex);
     }
 }

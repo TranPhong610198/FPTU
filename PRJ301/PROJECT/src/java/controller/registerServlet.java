@@ -83,11 +83,15 @@ public class registerServlet extends HttpServlet {
         String username = request.getParameter("username");
         String pass1 = request.getParameter("pass1");
         String pass2 = request.getParameter("pass2");
-        String errPass = "", errMail = "", errUser = "", success="" ;
+        String errPass = "", errMail = "", errUser = "", success = "";
         boolean check = true;
         try {
             if (!pass1.equals(pass2)) {
                 errPass = "Password confirm not match!!!";
+                check = false;
+            }
+            if (!isValidUsername(username)){
+                errUser = "invalid";
                 check = false;
             }
             UserDAO ud = new UserDAO();
@@ -127,22 +131,16 @@ public class registerServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    // Phương thức để kiểm tra email có đúng định dạng hay không
-    public static boolean isValidEmail(String email) {
-        // Biểu thức chính quy để kiểm tra email
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-
-        // Tạo đối tượng Pattern từ regex
-        Pattern pattern = Pattern.compile(emailRegex);
-
-        // Nếu email là null, trả về false
-        if (email == null) {
+    public static boolean isValidUsername(String username) {
+        // Kiểm tra nếu username là null hoặc độ dài không nằm trong khoảng 6-20
+        if (username == null || username.length() < 6 || username.length() > 20) {
             return false;
         }
 
-        // So khớp email với biểu thức chính quy
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
+        // Sử dụng biểu thức chính quy (regex) để kiểm tra các ký tự
+        String regex = "^[a-zA-Z0-9](?!.*__)[a-zA-Z0-9_]{4,18}[a-zA-Z0-9]$";
+
+        return username.matches(regex);
     }
 
 }

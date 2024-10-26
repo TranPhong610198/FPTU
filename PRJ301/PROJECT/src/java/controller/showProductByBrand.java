@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.Brand;
 import model.Product;
 
 /**
@@ -73,6 +74,14 @@ public class showProductByBrand extends HttpServlet {
         ProductDAO pd = new ProductDAO();
         List<Product> list = pd.getProductsByBrand(brandId);
         Product temp = pd.getProductByID(productId);
+        String brandName = "";
+        for (Brand brand : temp.getListBrand()) {
+            if (brand.getBrandId() == brandId) {
+                brandName = brand.getBrandName();
+            }
+        }
+
+        request.setAttribute("nameOfList", brandName);
         request.setAttribute("product", temp);
         request.setAttribute("data", list);
         request.getRequestDispatcher("home.jsp").forward(request, response);

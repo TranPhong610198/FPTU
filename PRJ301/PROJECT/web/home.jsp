@@ -160,7 +160,7 @@
             </section>
 
             <section class="container mx-auto px-20 py-8">
-                <h2 class="text-2xl font-bold mb-8">All Products</h2>
+                <h2 class="text-2xl font-bold mb-8">All Products ${(nameOfList.isEmpty())?'':nameOfList}:</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                     <c:if test="${not empty requestScope.data}">
                         <c:forEach var="product" items="${requestScope.data}">

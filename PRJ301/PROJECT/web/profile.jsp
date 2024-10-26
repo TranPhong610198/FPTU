@@ -98,6 +98,15 @@
                                         <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">User Name</label>
                                         <input type="text" name=username id="username" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value="${user.username}">
                                         <p style="font-style: italic; color: red">${(errName==null||errName.isEmpty())?'':errName}</p>
+                                        <c:if test="${errName.equals('invalid')}">
+                                            <ul style="list-style-type: none; padding: 0; color: red;">
+                                                <li id="length" >Độ dài từ 6 đến 20 ký tự</li>
+                                                <li id="noSpaces" >Không có dấu cách</li>
+                                                <li id="validChars" >Chỉ chứa chữ cái, số và dấu gạch dưới (_)</li>
+                                                <li id="noConsecutiveUnderscores">Không có hai dấu gạch dưới liên tiếp</li>
+                                                <li id="startEndWithLetterOrNumber">Bắt đầu và kết thúc bằng chữ cái hoặc số</li>
+                                            </ul> 
+                                        </c:if>
                                     </div>
                                     <!--Tỉnh-->
                                     <div class="col-span-6 sm:col-span-3">

@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.Category;
 import model.Product;
 
 /**
@@ -72,7 +73,14 @@ public class showProductByCate extends HttpServlet {
         ProductDAO pd = new ProductDAO();
         List<Product> list = pd.getProductsByCate(categoryId);
         Product temp = pd.getProductByID(productId);
-        System.out.println(temp.getName());
+        String cateName = "";
+        for (Category cate : temp.getListCategory()) {
+            if (cate.getCategoryId() == categoryId) {
+                cateName = cate.getCategoryName();
+            }
+        }
+
+        request.setAttribute("nameOfList", cateName);
         request.setAttribute("product", temp);
         request.setAttribute("data", list);
         request.getRequestDispatcher("home.jsp").forward(request, response);
