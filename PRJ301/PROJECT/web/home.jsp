@@ -178,7 +178,7 @@
 
                 <form action="search" method="get">
                     <input type="text" name="searchKey" value="${searchKeyword}" hidden=""/>
-                    <div class="grid grid-cols-3 gap-6 w-2/4 text-left">
+                    <div class="grid grid-cols-3 gap-6 w-2/4 justify-items-start">
                         <select name="priceRange" class="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
                             <option value="">Tất cả</option>
                             <option value="under1000" ${priceRange == "under1000" ? "selected" : ""}>Dưới 1000$</option>
@@ -191,7 +191,7 @@
                             <option value="asc" ${sortOrder == "asc" ? "selected" : ""}>Giá tăng dần</option>
                             <option value="desc" ${sortOrder == "desc" ? "selected" : ""}>Giá giảm dần</option>
                         </select>
-                        <button type="submit">
+                        <button type="submit" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py- me-2 mb-2 w-1/2">
                             Filter</button>
                     </div>
 

@@ -587,7 +587,7 @@ public class ProductDAO extends DBContext {
     public List<Product> getProductsAndFilter(String priceRange, String sortOrder, int pageSize, int offset) {
         List<Product> products = new ArrayList<>();
 //        String query = "SELECT * FROM products WHERE name LIKE ? ORDER BY product_id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
-        String query = "SELECT * FROM products ";
+        String query = "SELECT * FROM products where 1=1";
 
         // Thêm điều kiện khoảng giá vào query
         if (priceRange != null && !priceRange.isEmpty()) {

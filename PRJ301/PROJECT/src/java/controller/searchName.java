@@ -83,13 +83,13 @@ public class searchName extends HttpServlet {
         } else {
             // Nếu không có từ khóa tìm kiếm, lấy tất cả sản phẩm
             list = pd.getProductsAndFilter(priceRange, sortOrder, pageSize, offset);
-            totalProducts = pd.getTotalProducts();
+            totalProducts = pd.getTotalProductsBySearchAndFilter("", priceRange);
         }
         Product temp = pd.getProductByID(41);
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
         request.setAttribute("priceRange", priceRange);
         request.setAttribute("sortOrder", sortOrder);
-        request.setAttribute("typeServlet", "search?searchKey=" + searchKeyword + "&");
+        request.setAttribute("typeServlet", "search?searchKey=" + searchKeyword + "&priceRange="+priceRange+"&sortOrder="+sortOrder+"&");
         request.setAttribute("searchKeyword", searchKeyword);
         request.setAttribute("product", temp);
         request.setAttribute("data", list);
