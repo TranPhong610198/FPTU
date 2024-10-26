@@ -661,5 +661,60 @@ public class ProductDAO extends DBContext {
         }
         return products;
     }
+
     //____________________________________________________________________________________________
+    //Search trong CRUD
+    public List<Product> getSearchCRUD(String keyword, int pageSize, int offset) {
+        List<Product> products = new ArrayList<>();
+        String query = "SELECT * FROM products WHERE name LIKE ? ORDER BY product_id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String query2 = "SELECT * FROM brands";
+        String query3 = "SELECT * FROM categories";
+        try {
+            Statement statement = connection.createStatement();
+
+            //get listBrands
+            List<Brand> tempBrands = new ArrayList<>();
+            ResultSet rsBrand = statement.executeQuery(query2);
+            while (rsBrand.next()) {
+                Brand brand = new Brand();
+                brand.setBrandId(rsBrand.getInt("brand_id"));
+                brand.setBrandName(rsBrand.getString("brand_name"));
+                tempBrands.add(brand);
+            }
+            //get listCategoris
+            List<Category> tempCate = new ArrayList<>();
+            ResultSet rsCate = statement.executeQuery(query3);
+            while (rsCate.next()) {
+                Category cate = new Category();
+                cate.setCategoryId(rsCate.getInt("category_id"));
+                cate.setCategoryName(rsCate.getString("category_name"));
+                tempCate.add(cate);
+            }
+
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, "%" + keyword + "%");
+            stmt.setInt(2, offset);
+            stmt.setInt(3, pageSize);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setId(rs.getInt("product_id"));
+                product.setName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setPrice(rs.getBigDecimal("price"));
+                product.setStock(rs.getInt("stock"));
+                product.setBrandId(rs.getInt("brand_id"));
+                product.setCategoryId(rs.getInt("category_id"));
+                product.setImageUrl(rs.getString("image_url"));
+                product.setListBrand(tempBrands);
+                product.setListCategory(tempCate);
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+    //____________________________________________________________________________________________________________
+
 }

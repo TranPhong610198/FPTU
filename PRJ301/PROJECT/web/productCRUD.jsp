@@ -77,14 +77,11 @@
 
                 </div>
                 <div class="bg-gray-800 p-4 rounded-lg">
-                    <div class="flex justify-between items-center mb-4">
-                        <input type="text" placeholder="Search for products" class="bg-gray-700 text-gray-300 px-4 py-2 rounded w-full max-w-xs">
-                        <div class="flex items-center space-x-4">
-                            <i class="fas fa-cog text-gray-400"></i>
-                            <i class="fas fa-filter text-gray-400"></i>
-                            <i class="fas fa-ellipsis-v text-gray-400"></i>
+                    <form >
+                        <div class="flex justify-between items-center mb-4">
+                            <input value="${requestScope.searchKey}" onchange="this.form.submit()" name="searchKey" type="text" placeholder="Search for products" class="bg-gray-700 text-gray-300 px-4 py-2 rounded w-full max-w-xs">
                         </div>
-                    </div>
+                    </form>
                     <table class="w-full text-center">
                         <thead>
                             <tr class="text-gray-400">
@@ -155,7 +152,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <li>    
-                                        <a href="listProduct?page=${i}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                                        <a href="${(link!=null && !link.isEmpty())?link:'listProduct?'}page=${i}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                                             ${i}</a>
                                     </li>
                                 </c:otherwise>
