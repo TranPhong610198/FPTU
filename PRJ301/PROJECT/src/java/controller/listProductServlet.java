@@ -63,8 +63,22 @@ public class listProductServlet extends HttpServlet {
 //        processRequest(request, response);
         request.setCharacterEncoding("UTF-8");
         ProductDAO pd = new ProductDAO();
-        List<Product> list = pd.getAllProducts();
+        int pageSize = 10; // Số sản phẩm trên mỗi trang
+        int page = 1; // Trang hiện tại, mặc định là 1
+        // Nếu có tham số 'page' trong request, cập nhật giá trị của trang hiện tại
+        String pageParam = request.getParameter("page");
+        if (pageParam != null && !pageParam.isEmpty()) {
+            page = Integer.parseInt(pageParam);
+        }
+        // Tính offset dựa trên trang hiện tại
+        int offset = (page - 1) * pageSize;
+        // Tính tổng số trang
+        int totalProducts = pd.getTotalProducts();
+        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+        List<Product> list = pd.getAllProducts(pageSize, offset);
         request.setAttribute("listProduct", list);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", page);
         request.getRequestDispatcher("productCRUD.jsp").forward(request, response);
     }
 

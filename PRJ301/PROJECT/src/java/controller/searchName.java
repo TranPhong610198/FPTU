@@ -13,15 +13,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Brand;
 import model.Product;
 
 /**
  *
  * @author tphon
  */
-@WebServlet(name = "showBrand", urlPatterns = {"/showBrand"})
-public class showProductByBrand extends HttpServlet {
+@WebServlet(name = "searchName", urlPatterns = {"/search"})
+public class searchName extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +39,10 @@ public class showProductByBrand extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet showBrand</title>");
+            out.println("<title>Servlet searchName</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet showBrand at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet searchName at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,16 +60,9 @@ public class showProductByBrand extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
-        String productId_raw = request.getParameter("productId");
-        String brandId_raw = request.getParameter("brand");
-        int brandId = -1, productId = -1;
-        try {
-            brandId = Integer.parseInt(brandId_raw);
-            productId = Integer.parseInt(productId_raw);
-        } catch (NumberFormatException e) {
-            System.out.println(e);
-        }
+        String searchKeyword = request.getParameter("searchKey"); // Lấy từ khóa tìm kiếm
+        String priceRange = request.getParameter("priceRange"); // Khoảng giá
+        String sortOrder = request.getParameter("sortOrder"); // Sắp xếp (asc/desc)
         ProductDAO pd = new ProductDAO();
         int pageSize = 8; // Số sản phẩm trên mỗi trang
         int page = 1; // Trang hiện tại, mặc định là 1
@@ -82,25 +74,28 @@ public class showProductByBrand extends HttpServlet {
         // Tính offset dựa trên trang hiện tại
         int offset = (page - 1) * pageSize;
         // Tính tổng số trang
-        int totalProducts = pd.getTotalProducts("and brand_id=" + brandId);
-        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
-        List<Product> list = pd.getProductsByBrand(brandId, pageSize, offset);
-        Product temp = pd.getProductByID(productId);
-        String brandName = "";
-        for (Brand brand : temp.getListBrand()) {
-            if (brand.getBrandId() == brandId) {
-                brandName = brand.getBrandName();
-            }
+        int totalProducts = -1;
+        List<Product> list = null;
+        if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
+            // Nếu có từ khóa tìm kiếm, lọc sản phẩm theo từ khóa
+            list = pd.getProductsBySearch(searchKeyword, priceRange, sortOrder, pageSize, offset);
+            totalProducts = pd.getTotalProductsBySearchAndFilter(searchKeyword, priceRange);
+        } else {
+            // Nếu không có từ khóa tìm kiếm, lấy tất cả sản phẩm
+            list = pd.getProductsAndFilter(priceRange, sortOrder, pageSize, offset);
+            totalProducts = pd.getTotalProducts();
         }
-
-        request.setAttribute("nameOfList", brandName);
-        request.setAttribute("typeServlet", "showBrand?brand="+brandId+"&productId="+productId+"&");
+        Product temp = pd.getProductByID(41);
+        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+        request.setAttribute("priceRange", priceRange);
+        request.setAttribute("sortOrder", sortOrder);
+        request.setAttribute("typeServlet", "search?searchKey=" + searchKeyword + "&");
+        request.setAttribute("searchKeyword", searchKeyword);
         request.setAttribute("product", temp);
         request.setAttribute("data", list);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);
         request.getRequestDispatcher("home.jsp").forward(request, response);
-
     }
 
     /**
@@ -114,7 +109,8 @@ public class showProductByBrand extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        processRequest(request, response);
+
     }
 
     /**

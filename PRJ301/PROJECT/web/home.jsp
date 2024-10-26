@@ -56,7 +56,21 @@
                 </div>
 
                 <div class="flex items-center space-x-4 ml-auto mr-10">
-                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-search"></i></a>
+                    <a href="#" class="text-cyan-300 hover:text-white"></a>
+                    <!--Searching-->
+
+                    <form class="max-w-md mx-auto" action="search">
+                        <div class="flex">
+                            <label for="location-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"></label>
+                            <div class="relative w-full">
+                                <input value="${searchKeyword}" name="searchKey" type="search" id="location-search" class="block p-2 w-full z-20 text-sm rounded-lg border-s-2 border focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-s-gray-700  border-gray-600 placeholder-gray-400 text-white focus:border-blue-500" placeholder="Search" required />
+                                <button type="submit" class="absolute top-0 end-0 h-full p-2 text-cyan-300 hover:text-white">
+                                    <i class="w-4 h-4 fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!--_____________________________________________________________________________________________________________-->
                     <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-shopping-cart"></i></a>
                         <c:if test="${sessionScope.account == null}">
                         <!--User dropdawn if notLogin-->
@@ -134,7 +148,7 @@
                     </c:if>
             </nav>
         </header>
-
+        <!--__________________________________________________________________________________________________________________________________________________________________________________________________________________-->
         <main>
             <section class="bg-gradient-to-r from-purple-500 to-teal-500 text-white py-20">
                 <div class="container mx-auto px-6">
@@ -160,7 +174,28 @@
             </section>
 
             <section class="container mx-auto px-20 py-8">
-                <h2 class="text-2xl font-bold mb-8">All Products ${(nameOfList.isEmpty())?'':nameOfList}:</h2>
+                <h2 class="text-2xl font-bold mb-8">All Products ${searchKeyword} ${(nameOfList.isEmpty())?'':nameOfList}:</h2>
+
+                <form action="search" method="get">
+                    <input type="text" name="searchKey" value="${searchKeyword}" hidden=""/>
+                    <div class="grid grid-cols-3 gap-6 w-2/4 text-left">
+                        <select name="priceRange" class="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
+                            <option value="">Tất cả</option>
+                            <option value="under1000" ${priceRange == "under1000" ? "selected" : ""}>Dưới 1000$</option>
+                            <option value="1000to2000" ${priceRange == "1000to2000" ? "selected" : ""}>1000$ - 2000$</option>
+                            <option value="2000to2500" ${priceRange == "2000to2500" ? "selected" : ""}>2000$ - 2500$</option>
+                            <option value="above2500" ${priceRange == "above2500" ? "selected" : ""}>Trên 2500$</option>
+                        </select>
+                        <select name="sortOrder" class="bg-gray-50 border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
+                            <option value="">Giá ngẫu nhiên</option>
+                            <option value="asc" ${sortOrder == "asc" ? "selected" : ""}>Giá tăng dần</option>
+                            <option value="desc" ${sortOrder == "desc" ? "selected" : ""}>Giá giảm dần</option>
+                        </select>
+                        <button type="submit">
+                            Filter</button>
+                    </div>
+
+                </form>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                     <c:if test="${not empty requestScope.data}">
                         <c:forEach var="product" items="${requestScope.data}">
@@ -178,6 +213,26 @@
                     </c:if>
 
                 </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="inline-flex -space-x-px text-sm">
+                        <c:forEach var="i" begin="1" end="${totalPages}">
+                            <c:choose>
+                                <c:when test="${i == currentPage}">
+                                    <li>
+                                        <span class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">
+                                            ${i}</span> <!-- Trang hiện tại -->
+                                    </li> 
+                                </c:when>
+                                <c:otherwise>
+                                    <li>    
+                                        <a href="${(typeServlet!=null && !typeServlet.isEmpty())?typeServlet:'home?'}page=${i}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                                            ${i}</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </ul>
+                </nav>
             </section>
 
             <section class="bg-gray-100 py-12">

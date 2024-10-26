@@ -18,15 +18,81 @@ import model.SubImage;
 
 public class ProductDAO extends DBContext {
 
+    //Tính tổng số trang
+    public int getTotalProducts() {
+        String countQuery = "SELECT COUNT(*) FROM products where 1=1";
+        try {
+            PreparedStatement countStmt = connection.prepareStatement(countQuery);
+            ResultSet countRs = countStmt.executeQuery();
+            int totalProducts = 0;
+            if (countRs.next()) {
+                totalProducts = countRs.getInt(1);
+            }
+            return totalProducts;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+
+    public int getTotalProducts(String collumn) {
+        String countQuery = "SELECT COUNT(*) FROM products where 1=1" + collumn;
+        try {
+            PreparedStatement countStmt = connection.prepareStatement(countQuery);
+            ResultSet countRs = countStmt.executeQuery();
+            int totalProducts = 0;
+            if (countRs.next()) {
+                totalProducts = countRs.getInt(1);
+            }
+            return totalProducts;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+
+    public int getTotalProductsBySearchAndFilter(String keyword, String priceRange) {
+        String query = "SELECT COUNT(*) FROM products WHERE name LIKE ?";
+        if (priceRange != null && !priceRange.isEmpty()) {
+            switch (priceRange) {
+                case "under1000":
+                    query += " AND price < 1000";
+                    break;
+                case "1000to2000":
+                    query += " AND price BETWEEN 1000 AND 2000";
+                    break;
+                case "2000to2500":
+                    query += " AND price BETWEEN 2000 AND 2500";
+                    break;
+                case "above2500":
+                    query += " AND price > 2500";
+                    break;
+            }
+        }
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, "%" + keyword + "%");
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     // Lấy sản phẩm tương tự
-    public List<Product> getSameProducts(int category_id) {
+    public List<Product> getSameProducts(int category_id, int pageSize, int offset) {
         List<Product> products = new ArrayList<>();
-        String query = "select p.* from products p, categories c\n"
-                + "where  ? = c.category_id";
+        String query = "SELECT * FROM products WHERE category_id = ? ORDER BY product_id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try {
             PreparedStatement statement = connection.prepareStatement(query);
             // get product
             statement.setInt(1, category_id);
+            statement.setInt(2, offset);
+            statement.setInt(3, pageSize);
+
             ResultSet resultSet1 = statement.executeQuery();
             while (resultSet1.next()) {
                 Product product = new Product();
@@ -154,11 +220,13 @@ public class ProductDAO extends DBContext {
         }
 
     }
+
     //___________________________________________________________________________________________________________________
     // Lấy tất cả các sản phẩm từ cơ sở dữ liệu
-    public List<Product> getAllProducts() {
+    public List<Product> getAllProducts(int pageSize, int offset) {
         List<Product> products = new ArrayList<>();
-        String query1 = "SELECT * FROM products";
+//        String query1 = "SELECT * FROM products";
+
         String query2 = "SELECT * FROM brands";
         String query3 = "SELECT * FROM categories";
         String query4 = "SELECT * FROM sub_images";
@@ -195,7 +263,12 @@ public class ProductDAO extends DBContext {
                 subImage.setSubImagePath(rsListSubIm.getString("sub_image_url"));
             }
             // get product
-            ResultSet resultSet1 = statement.executeQuery(query1);
+//            ResultSet resultSet1 = statement.executeQuery(query1);
+            String query1 = "SELECT * FROM products ORDER BY product_id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+            PreparedStatement stmt = connection.prepareStatement(query1);
+            stmt.setInt(2, pageSize); // Số sản phẩm trên mỗi trang
+            stmt.setInt(1, offset); // Vị trí bắt đầu
+            ResultSet resultSet1 = stmt.executeQuery();
             while (resultSet1.next()) {
                 Product product = new Product();
                 product.setId(resultSet1.getInt("product_id"));
@@ -217,6 +290,7 @@ public class ProductDAO extends DBContext {
 
         return products;
     }
+
     //________________________________________________________________________________
     // Lấy thông tin sản phẩm từ ID
     public Product getProductByID(int id) {
@@ -278,6 +352,7 @@ public class ProductDAO extends DBContext {
         }
         return null;
     }
+
     //___________________________________________________________________________________________________________________
     // Cập nhật thông tin sản phẩm
     public void updateProduct(Product product) {
@@ -315,10 +390,9 @@ public class ProductDAO extends DBContext {
 
     //____________________________________________________________________________
     //Lấy Products Chung Brand
-    public List<Product> getProductsByBrand(int brandId) {
+    public List<Product> getProductsByBrand(int brandId, int pageSize, int offset) {
         List<Product> products = new ArrayList<>();
-        String query1 = "select * from products\n"
-                + "where  ? = brand_id";
+        String query1 = "SELECT * FROM products WHERE brand_id = ? ORDER BY product_id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         String query2 = "SELECT * FROM brands";
         String query3 = "SELECT * FROM categories";
         try {
@@ -346,6 +420,8 @@ public class ProductDAO extends DBContext {
             // get product
             PreparedStatement statement1 = connection.prepareStatement(query1);
             statement1.setInt(1, brandId);
+            statement1.setInt(2, offset);
+            statement1.setInt(3, pageSize);
             ResultSet resultSet1 = statement1.executeQuery();
             while (resultSet1.next()) {
                 Product product = new Product();
@@ -369,10 +445,11 @@ public class ProductDAO extends DBContext {
 
     //_____________________________________________________________________________________
     //Lấy Products Chung Danh Mục
-    public List<Product> getProductsByCate(int categoryId) {
+    public List<Product> getProductsByCate(int categoryId, int pageSize, int offset) {
         List<Product> products = new ArrayList<>();
-        String query1 = "select * from products\n"
-                + "where  ? = category_id";
+//        String query1 = "select * from products\n"
+//                + "where  ? = category_id";
+        String query1 = "SELECT * FROM products WHERE category_id = ? ORDER BY product_id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         String query2 = "SELECT * FROM brands";
         String query3 = "SELECT * FROM categories";
         try {
@@ -399,6 +476,9 @@ public class ProductDAO extends DBContext {
             //get product
             PreparedStatement statement1 = connection.prepareStatement(query1);
             statement1.setInt(1, categoryId);
+            statement1.setInt(2, offset);
+            statement1.setInt(3, pageSize);
+
             ResultSet resultSet1 = statement1.executeQuery();
             while (resultSet1.next()) {
                 Product product = new Product();
@@ -419,5 +499,167 @@ public class ProductDAO extends DBContext {
         }
         return products;
     }
+
     //_______________________________________________________________________________
+    //Lấy Products từ Search rồi Filter
+    public List<Product> getProductsBySearch(String keyword, String priceRange, String sortOrder, int pageSize, int offset) {
+        List<Product> products = new ArrayList<>();
+//        String query = "SELECT * FROM products WHERE name LIKE ? ORDER BY product_id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String query = "SELECT * FROM products WHERE name LIKE ?";
+
+        // Thêm điều kiện khoảng giá vào query
+        if (priceRange != null && !priceRange.isEmpty()) {
+            switch (priceRange) {
+                case "under1000":
+                    query += " AND price < 1000";
+                    break;
+                case "1000to2000":
+                    query += " AND price BETWEEN 1000 AND 2000";
+                    break;
+                case "2000to2500":
+                    query += " AND price BETWEEN 2000 AND 2500";
+                    break;
+                case "above2500":
+                    query += " AND price > 2500";
+                    break;
+                default:
+                    break;
+            }
+        }
+        // Thêm điều kiện sắp xếp
+        if (sortOrder != null && !sortOrder.isEmpty()) {
+            query += " ORDER BY price " + (sortOrder.equals("asc") ? "ASC" : "DESC");
+        } else {
+            query += " ORDER BY product_id ";
+        }
+        query += " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String query2 = "SELECT * FROM brands";
+        String query3 = "SELECT * FROM categories";
+        try {
+            Statement statement = connection.createStatement();
+
+            //get listBrands
+            List<Brand> tempBrands = new ArrayList<>();
+            ResultSet rsBrand = statement.executeQuery(query2);
+            while (rsBrand.next()) {
+                Brand brand = new Brand();
+                brand.setBrandId(rsBrand.getInt("brand_id"));
+                brand.setBrandName(rsBrand.getString("brand_name"));
+                tempBrands.add(brand);
+            }
+            //get listCategoris
+            List<Category> tempCate = new ArrayList<>();
+            ResultSet rsCate = statement.executeQuery(query3);
+            while (rsCate.next()) {
+                Category cate = new Category();
+                cate.setCategoryId(rsCate.getInt("category_id"));
+                cate.setCategoryName(rsCate.getString("category_name"));
+                tempCate.add(cate);
+            }
+
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, "%" + keyword + "%");
+            stmt.setInt(2, offset);
+            stmt.setInt(3, pageSize);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setId(rs.getInt("product_id"));
+                product.setName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setPrice(rs.getBigDecimal("price"));
+                product.setStock(rs.getInt("stock"));
+                product.setBrandId(rs.getInt("brand_id"));
+                product.setCategoryId(rs.getInt("category_id"));
+                product.setImageUrl(rs.getString("image_url"));
+                product.setListBrand(tempBrands);
+                product.setListCategory(tempCate);
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+    //____________________________________________________________________________________________
+    //Lấy Products rồi Filter
+    public List<Product> getProductsAndFilter(String priceRange, String sortOrder, int pageSize, int offset) {
+        List<Product> products = new ArrayList<>();
+//        String query = "SELECT * FROM products WHERE name LIKE ? ORDER BY product_id OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String query = "SELECT * FROM products ";
+
+        // Thêm điều kiện khoảng giá vào query
+        if (priceRange != null && !priceRange.isEmpty()) {
+            switch (priceRange) {
+                case "under1000":
+                    query += " AND price < 1000";
+                    break;
+                case "1000to2000":
+                    query += " AND price BETWEEN 1000 AND 2000";
+                    break;
+                case "2000to2500":
+                    query += " AND price BETWEEN 2000 AND 2500";
+                    break;
+                case "above2500":
+                    query += " AND price > 2500";
+                    break;
+            }
+        }
+        // Thêm điều kiện sắp xếp
+        if (sortOrder != null && !sortOrder.isEmpty()) {
+            query += " ORDER BY price " + (sortOrder.equals("asc") ? "ASC" : "DESC");
+        } else {
+            query += " ORDER BY product_id ";
+        }
+
+        query += " OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String query2 = "SELECT * FROM brands";
+        String query3 = "SELECT * FROM categories";
+        try {
+            Statement statement = connection.createStatement();
+
+            //get listBrands
+            List<Brand> tempBrands = new ArrayList<>();
+            ResultSet rsBrand = statement.executeQuery(query2);
+            while (rsBrand.next()) {
+                Brand brand = new Brand();
+                brand.setBrandId(rsBrand.getInt("brand_id"));
+                brand.setBrandName(rsBrand.getString("brand_name"));
+                tempBrands.add(brand);
+            }
+            //get listCategoris
+            List<Category> tempCate = new ArrayList<>();
+            ResultSet rsCate = statement.executeQuery(query3);
+            while (rsCate.next()) {
+                Category cate = new Category();
+                cate.setCategoryId(rsCate.getInt("category_id"));
+                cate.setCategoryName(rsCate.getString("category_name"));
+                tempCate.add(cate);
+            }
+
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, offset);
+            stmt.setInt(2, pageSize);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setId(rs.getInt("product_id"));
+                product.setName(rs.getString("name"));
+                product.setDescription(rs.getString("description"));
+                product.setPrice(rs.getBigDecimal("price"));
+                product.setStock(rs.getInt("stock"));
+                product.setBrandId(rs.getInt("brand_id"));
+                product.setCategoryId(rs.getInt("category_id"));
+                product.setImageUrl(rs.getString("image_url"));
+                product.setListBrand(tempBrands);
+                product.setListCategory(tempCate);
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+    //____________________________________________________________________________________________
 }

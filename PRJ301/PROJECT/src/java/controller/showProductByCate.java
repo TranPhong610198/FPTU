@@ -71,7 +71,19 @@ public class showProductByCate extends HttpServlet {
             System.out.println(e);
         }
         ProductDAO pd = new ProductDAO();
-        List<Product> list = pd.getProductsByCate(categoryId);
+        int pageSize = 8; // Số sản phẩm trên mỗi trang
+        int page = 1; // Trang hiện tại, mặc định là 1
+        // Nếu có tham số 'page' trong request, cập nhật giá trị của trang hiện tại
+        String pageParam = request.getParameter("page");
+        if (pageParam != null && !pageParam.isEmpty()) {
+            page = Integer.parseInt(pageParam);
+        }
+        // Tính offset dựa trên trang hiện tại
+        int offset = (page - 1) * pageSize;
+        // Tính tổng số trang
+        int totalProducts = pd.getTotalProducts("and category_id=" + categoryId);
+        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+        List<Product> list = pd.getProductsByCate(categoryId, pageSize, offset);
         Product temp = pd.getProductByID(productId);
         String cateName = "";
         for (Category cate : temp.getListCategory()) {
@@ -81,7 +93,10 @@ public class showProductByCate extends HttpServlet {
         }
 
         request.setAttribute("nameOfList", cateName);
+        request.setAttribute("typeServlet", "showCate?cate="+categoryId+"&productId="+productId+"&");
         request.setAttribute("product", temp);
+        request.setAttribute("totalPages", totalPages);
+        request.setAttribute("currentPage", page);
         request.setAttribute("data", list);
         request.getRequestDispatcher("home.jsp").forward(request, response);
     }

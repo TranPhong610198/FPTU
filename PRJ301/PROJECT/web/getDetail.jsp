@@ -66,7 +66,21 @@
                 </div>
 
                 <div class="flex items-center space-x-4 ml-auto mr-10">
-                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-search"></i></a>
+                    <!--<a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-search"></i></a>-->
+                    <!--Searching-->
+
+                    <form class="max-w-md mx-auto" action="search">
+                        <div class="flex">
+                            <label for="location-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"></label>
+                            <div class="relative w-full">
+                                <input value="${searchKeyword}" name="searchKey" type="search" id="location-search" class="block p-2 w-full z-20 text-sm rounded-lg border-s-2 border focus:ring-blue-500 focus:border-blue-500 bg-gray-700 border-s-gray-700  border-gray-600 placeholder-gray-400 text-white focus:border-blue-500" placeholder="Search" required />
+                                <button type="submit" class="absolute top-0 end-0 h-full p-2 text-cyan-300 hover:text-white">
+                                    <i class="w-4 h-4 fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!--_____________________________________________________________________________________________________________-->
                     <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-shopping-cart"></i></a>
                         <c:if test="${sessionScope.account == null}">
                         <!--User dropdawn if notLogin-->
@@ -144,6 +158,7 @@
                     </c:if>
             </nav>
         </header>
+        <!--_____________________________________________________________________________________________________________________________________________________________________________________-->                            
         <div class="bg-gray-100">
             <div class="container mx-auto px-4 py-8">
                 <div class="flex flex-wrap -mx-4">
@@ -219,6 +234,26 @@
                             <p>Không có sản phẩm nào để hiển thị.</p>
                         </c:if>
                     </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="inline-flex -space-x-px text-sm">
+                            <c:forEach var="i" begin="1" end="${totalPages}">
+                                <c:choose>
+                                    <c:when test="${i == currentPage}">
+                                        <li>
+                                            <span class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700">
+                                                ${i}</span> <!-- Trang hiện tại -->
+                                        </li> 
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li>    
+                                            <a href="home?page=${i}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                                                ${i}</a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </ul>
+                    </nav>
                 </section>
             </div>
         </div>

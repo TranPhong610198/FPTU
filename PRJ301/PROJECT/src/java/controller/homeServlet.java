@@ -91,22 +91,49 @@ public class homeServlet extends HttpServlet {
             int productId = Integer.parseInt(request.getParameter("id"));
             ProductDAO pd = new ProductDAO();
             Product product = pd.getProductByID(productId);
-
+            int pageSize = 8; // Số sản phẩm trên mỗi trang
+            int page = 1; // Trang hiện tại, mặc định là 1
+            // Nếu có tham số 'page' trong request, cập nhật giá trị của trang hiện tại
+            String pageParam = request.getParameter("page");
+            if (pageParam != null && !pageParam.isEmpty()) {
+                page = Integer.parseInt(pageParam);
+            }
+            // Tính offset dựa trên trang hiện tại
+            int offset = (page - 1) * pageSize;
+            // Tính tổng số trang
+            int totalProducts = pd.getTotalProducts("and category_id="+product.getCategoryId());
+            int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
             List<String> subImages = pd.getSubImagesByProductId(productId);
-            List<Product> samelist = pd.getSameProducts(product.getCategoryId());
+            List<Product> samelist = pd.getSameProducts(product.getCategoryId(), pageSize, offset);
             request.setAttribute("product", product);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("currentPage", page);
             request.setAttribute("subImages", subImages);
             request.setAttribute("samelist", samelist);
             request.getRequestDispatcher("getDetail.jsp").forward(request, response);
 
         } else {
-
-            // Xử lý logic khác cho trang home
             ProductDAO pd = new ProductDAO();
-            List<Product> list = pd.getAllProducts();
+            // Xử lý logic khác cho trang home
+            int pageSize = 8; // Số sản phẩm trên mỗi trang
+            int page = 1; // Trang hiện tại, mặc định là 1
+            // Nếu có tham số 'page' trong request, cập nhật giá trị của trang hiện tại
+            String pageParam = request.getParameter("page");
+            if (pageParam != null && !pageParam.isEmpty()) {
+                page = Integer.parseInt(pageParam);
+            }
+            // Tính offset dựa trên trang hiện tại
+            int offset = (page - 1) * pageSize;
+            // Tính tổng số trang
+            int totalProducts = pd.getTotalProducts();
+            int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+
+            List<Product> list = pd.getAllProducts(pageSize, offset);
             Product temp = list.get(0);
             request.setAttribute("data", list);
             request.setAttribute("product", temp);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("currentPage", page);
             request.getRequestDispatcher("home.jsp").forward(request, response);
 //            request.getRequestDispatcher("header.jsp").forward(request, response);
         }
