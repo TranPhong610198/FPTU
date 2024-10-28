@@ -101,7 +101,7 @@ public class homeServlet extends HttpServlet {
             // Tính offset dựa trên trang hiện tại
             int offset = (page - 1) * pageSize;
             // Tính tổng số trang
-            int totalProducts = pd.getTotalProducts("and category_id="+product.getCategoryId());
+            int totalProducts = pd.getTotalProducts("and category_id=" + product.getCategoryId());
             int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
             List<String> subImages = pd.getSubImagesByProductId(productId);
             List<Product> samelist = pd.getSameProducts(product.getCategoryId(), pageSize, offset);
@@ -110,6 +110,37 @@ public class homeServlet extends HttpServlet {
             request.setAttribute("currentPage", page);
             request.setAttribute("subImages", subImages);
             request.setAttribute("samelist", samelist);
+
+            // Thêm id sản phẩm vào cookie
+            String valueCookieSP = "";
+            boolean isCookie = false, isId = false;
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if ("selectedP".equals(cookie.getName())) {
+                        isCookie = true;
+                        valueCookieSP = cookie.getValue();
+                        String[] listId = valueCookieSP.split("/");
+                        for (String id : listId) {
+                            if (id.equals(String.valueOf(productId))) {
+                                isId = true;
+                                break;
+                            }
+                        }
+                        if (!isId) {
+                            valueCookieSP += productId + "/";
+                            cookie.setValue(valueCookieSP);
+                            response.addCookie(cookie);
+                        }
+                    }
+                }
+                if (!isCookie) {
+                    valueCookieSP += productId + "/";
+                    Cookie selectedProduct = new Cookie("selectedP", valueCookieSP);
+                    selectedProduct.setMaxAge(60 * 60 * 24 * 7); // 7 ngày
+                    response.addCookie(selectedProduct);
+                }
+            }
+            //_____________________________________________________________________________________________________________
             request.getRequestDispatcher("getDetail.jsp").forward(request, response);
 
         } else {

@@ -286,7 +286,6 @@
         if (province) {
             const districts = data[province].districts;
             for (let district in districts) {
-//                districtSelect.innerHTML += '<option value="${district}">${district}</option>';
                 let option = document.createElement('option');
                 option.value = district;
                 option.text = district;

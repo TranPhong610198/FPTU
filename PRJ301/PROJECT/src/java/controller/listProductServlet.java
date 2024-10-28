@@ -64,7 +64,7 @@ public class listProductServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         ProductDAO pd = new ProductDAO();
         String searchKeyword = request.getParameter("searchKey"); // Lấy từ khóa tìm kiếm
-        int pageSize = 6; // Số sản phẩm trên mỗi trang
+        int pageSize = 10; // Số sản phẩm trên mỗi trang
         int page = 1; // Trang hiện tại, mặc định là 1
         // Nếu có tham số 'page' trong request, cập nhật giá trị của trang hiện tại
         String pageParam = request.getParameter("page");
@@ -74,21 +74,21 @@ public class listProductServlet extends HttpServlet {
         // Tính offset dựa trên trang hiện tại
         int offset = (page - 1) * pageSize;
         List<Product> list;
-
+        String link="";
         int totalProducts;
         if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
             // Nếu có từ khóa tìm kiếm, lọc sản phẩm theo từ khóa
             list = pd.getSearchCRUD(searchKeyword, pageSize, offset);
             totalProducts = pd.getTotalProducts("and name like '%" + searchKeyword + "%'");
+            link = "listProduct?searchKey=" + searchKeyword + "&";
         } else {
             // Nếu không có từ khóa tìm kiếm, lấy tất cả sản phẩm
             list = pd.getAllProducts(pageSize, offset);
             totalProducts = pd.getTotalProducts();
         }
-        System.out.println(totalProducts);
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
         request.setAttribute("searchKey", searchKeyword);
-        request.setAttribute("link", "listProduct?searchKey="+searchKeyword+"&");
+        request.setAttribute("link", link);
         request.setAttribute("listProduct", list);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);

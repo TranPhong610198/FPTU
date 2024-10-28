@@ -56,9 +56,7 @@
                 </div>
 
                 <div class="flex items-center space-x-4 ml-auto mr-10">
-                    <a href="#" class="text-cyan-300 hover:text-white"></a>
                     <!--Searching-->
-
                     <form class="max-w-md mx-auto" action="search">
                         <div class="flex">
                             <label for="location-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"></label>
@@ -71,8 +69,12 @@
                         </div>
                     </form>
                     <!--_____________________________________________________________________________________________________________-->
-                    <a href="#" class="text-cyan-300 hover:text-white"><i class="fas fa-shopping-cart"></i></a>
-                        <c:if test="${sessionScope.account == null}">
+
+                    <!--Cart-->
+                    <a href="cart" class="text-cyan-300 hover:text-white"><i class="fas fa-shopping-cart"></i></a>
+                    <!--__________________________________________________________________________________________________________________________-->
+
+                    <c:if test="${sessionScope.account == null}">
                         <!--User dropdawn if notLogin-->
                         <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" type="button">
                             <i class="fas fa-user text-cyan-300 hover:text-white"></i>
