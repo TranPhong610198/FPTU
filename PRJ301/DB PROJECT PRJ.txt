@@ -81,7 +81,7 @@ CREATE TABLE reviews (
 );
 
 
-CREATE TABLE product_statistics (
+CREATE TABLE statisticsTable (
     stat_id INT PRIMARY KEY IDENTITY(1,1),
     product_id INT, -- liên kết với bảng products
     total_sales INT, -- tổng số lượng bán ra của sản phẩm

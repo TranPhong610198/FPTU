@@ -172,7 +172,10 @@ public class CartServlet extends HttpServlet {
                     case "checkout":
                         double total = Double.parseDouble(request.getParameter("total"));
                         int orderId = cd.transferCartToOrder(userId, total);
-                        response.sendRedirect("payment?orderId=" + orderId);
+//                        request.setAttribute("orderId", orderId);
+//                        request.setAttribute("total", total);
+//                        request.getRequestDispatcher("payment").forward(request, response);
+                        response.sendRedirect("payment?orderId="+orderId+"&total="+total);
                         break;
 
                     default:
