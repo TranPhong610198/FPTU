@@ -172,23 +172,7 @@
                         </div>
                     </div>
                 </div>
-                <footer class="bg-gray-800 text-white py-8">
-                    <div class="container mx-auto px-6">
-                        <div class="flex justify-between items-center">
-                            <div class="text-xl font-bold">
-                                <a href="home"> <img src="./images/FondevJSLogo2.svg" alt="alt"/></a>
-                            </div>
-                            <div class="flex space-x-4">
-                                <a href="https://www.facebook.com/Moriaty11" class="hover:text-gray-300"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="hover:text-gray-300"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="hover:text-gray-300"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                        <div class="mt-4 text-center text-sm">
-                            &copy; 2024 FondevJS . Reference from Sublime.
-                        </div>
-                    </div>
-                </footer>
+
                 <!-- Delete User Modal -->
                 <div class="fixed left-0 right-0 z-50 items-center justify-center hidden overflow-x-hidden overflow-y-auto top-4 md:inset-0 h-modal sm:h-full" id="delete-user-modal">
                     <div class="relative w-full h-full max-w-md px-4 md:h-auto ">
@@ -214,9 +198,90 @@
                         </div>
                     </div>
                 </div>
+                <div class="bg-gray-800 p-4 rounded-lg mb-8 w-3/4 mx-auto">
+                    <div class="text-lg font-semibold text-white mb-4">
+                        Transactions
+                    </div>
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="text-gray-400">
+
+                                <th class="py-2">
+                                    DATE &amp; TIME
+                                </th>
+                                <th class="py-2">
+                                    AMOUNT
+                                </th>
+                                <th class="py-2">
+                                    STATUS
+                                </th>
+                                <th class="py-2 text-center">
+                                    ACTION
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:if test="${not empty requestScope.orderList}">
+                                <c:forEach items="${requestScope.orderList}" var="order">
+                                    <tr class="border-t border-gray-700  text-gray-200">
+                                        <td class="py-2">
+                                            ${order.getDate()}
+                                        </td>
+                                        <td class="py-2">
+                                            $${order.getTotal()}
+                                        </td>
+                                        <c:if test="${order.getOrderStatus()=='Pending'}">
+                                            <td class="py-2 text-red-500">
+                                                ${order.getOrderStatus()}
+                                            </td>
+                                        </c:if>
+                                        <c:if test="${order.getOrderStatus()=='Completed'}">
+                                            <td class="py-2 text-green-500">
+                                                ${order.getOrderStatus()}
+                                            </td>
+                                        </c:if>
+                                            <td class="text-center">
+                                            <c:if test="${order.getOrderStatus()=='Pending'}">
+                                                <a href="payment?orderId=${order.getOrderId()}&total=${order.getTotal()}"
+                                                   class="text-gray-400 bg-gray-800 bg-gray-700 hover:text-white focus:ring-4 focus:ring-gray-700 border border-gray-600 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center">Pay</a>
+                                                <a href="deleteOrder?orderId=${order.getOrderId()}"
+                                                   class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2">Delete</a>
+                                            </c:if>
+                                            <c:if test="${order.getOrderStatus()=='Completed'}">
+                                                <a href="orderDetail?orderId=${order.getOrderId()}&total=${order.getTotal()}"
+                                                   class="text-gray-400 bg-gray-800 bg-gray-700 hover:text-white focus:ring-4 focus:ring-gray-700 border border-gray-600 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center">Detail</a>
+                                            </c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
+                            </c:if>
+                            <c:if test="${empty requestScope.orderList}">
+                            <p class="text-gray-200">Không có đơn hàng nào để hiển thị.</p>
+                        </c:if>
+                        </tbody>
+                    </table>
+                </div>
         </div>
     </main>
 </div>
+
+<footer class="bg-gray-800 text-white py-8">
+    <div class="container mx-auto px-6">
+        <div class="flex justify-between items-center">
+            <div class="text-xl font-bold">
+                <a href="home"> <img src="./images/FondevJSLogo2.svg" alt="alt"/></a>
+            </div>
+            <div class="flex space-x-4">
+                <a href="https://www.facebook.com/Moriaty11" class="hover:text-gray-300"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="hover:text-gray-300"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="hover:text-gray-300"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        <div class="mt-4 text-center text-sm">
+            &copy; 2024 FondevJS . Reference from Sublime.
+        </div>
+    </div>
+</footer>
 <script>
 // Dữ liệu mẫu: Danh sách huyện theo tỉnh và xã theo huyện
     const data =

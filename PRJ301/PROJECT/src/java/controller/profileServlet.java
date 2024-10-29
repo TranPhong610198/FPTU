@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dal.OrderDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import model.Order;
 import model.User;
 
 /**
@@ -192,7 +194,7 @@ public class profileServlet extends HttpServlet {
 //            response.sendRedirect("home");
         }
         //__________________________________________________________________________________
-        // CHỨC NĂNG HIỂN THỊ
+        // CHỨC NĂNG HIỂN THỊ THÔNG TIN CÁ NHÂN
         User temp = ud.getUserById(id);
         if (temp.getAddress() != null && !temp.getAddress().trim().isEmpty()) {
             String[] address = splitAddress(temp.getAddress());
@@ -201,7 +203,15 @@ public class profileServlet extends HttpServlet {
             request.setAttribute("wardUser", address[0]);
         }
         request.setAttribute("user", temp);
-
+        //___________________________________________________________________________________
+        // CHỨC NĂNG HIỂN THỊ LIST ORDER
+        OrderDAO od = new OrderDAO();
+        List<Order> orderList = od.getAllOrder(id);
+        for (Order oder : orderList){
+            System.out.println(oder.getOrderId());
+        }
+        request.setAttribute("orderList", orderList);
+        
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 

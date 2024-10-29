@@ -12,7 +12,7 @@ public class Order {
     int orderId, userId;
     double total;
     String orderStatus;
-
+    String date;
     public Order() {
     }
 
@@ -23,6 +23,24 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
+    public Order(int orderId, int userId, double total, String orderStatus, String date) {
+        this.orderId = orderId;
+        this.userId = userId;
+        this.total = total;
+        this.orderStatus = orderStatus;
+        this.date = date;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+ 
+    
+    
     public int getOrderId() {
         return orderId;
     }

@@ -11,6 +11,8 @@ package model;
 public class OrderItem {
     int orderItemId, orderId, productId, quantity;
     double price;
+    
+    Product product;
 
     public OrderItem() {
     }
@@ -21,6 +23,23 @@ public class OrderItem {
         this.productId = productId;
         this.quantity = quantity;
         this.price = price;
+    }
+
+    public OrderItem(int orderItemId, int orderId, int productId, int quantity, double price, Product product) {
+        this.orderItemId = orderItemId;
+        this.orderId = orderId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.price = price;
+        this.product = product;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getOrderId() {
