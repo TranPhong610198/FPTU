@@ -29,7 +29,7 @@
             <!-- Sidebar -->
             <div class="w-64 bg-gray-800 h-screen p-4  sticky top-0">
                 <div class="mb-4">
-                    <img src="images/FondevJSLogo1.svg" alt="alt" height="10px" />
+                    <a href="home"><img src="images/FondevJSLogoSmal.svg" alt="alt" height="10px" /></a>
                 </div>
                 <nav>
                     <ul>
@@ -82,62 +82,6 @@
                                 </li>
                             </ul>
                         </li>
-                        <!--                        <li class="mb-2">
-                                                    <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="#">
-                                                        <i class="fas fa-cogs mr-2">
-                                                        </i>
-                                                        Settings
-                                                    </a>
-                                                </li>
-                                                <li class="mb-2">
-                                                    <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="#">
-                                                        <i class="fas fa-file-alt mr-2">
-                                                        </i>
-                                                        Pages
-                                                    </a>
-                                                </li>
-                                                <li class="mb-2">
-                                                    <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="#">
-                                                        <i class="fas fa-lock mr-2">
-                                                        </i>
-                                                        Authentication
-                                                    </a>
-                                                </li>
-                                                <li class="mb-2">
-                                                    <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="#">
-                                                        <i class="fas fa-play-circle mr-2">
-                                                        </i>
-                                                        Playground
-                                                    </a>
-                                                </li>
-                                                <li class="mb-2">
-                                                    <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="#">
-                                                        <i class="fab fa-github mr-2">
-                                                        </i>
-                                                        GitHub Repository
-                                                    </a>
-                                                </li>
-                                                <li class="mb-2">
-                                                    <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="#">
-                                                        <i class="fas fa-book mr-2">
-                                                        </i>
-                                                        Flowbite Docs
-                                                    </a>
-                                                </li>
-                                                <li class="mb-2">
-                                                    <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="#">
-                                                        <i class="fas fa-cubes mr-2">
-                                                        </i>
-                                                        Components
-                                                    </a>
-                                                </li>
-                                                <li class="mb-2">
-                                                    <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="#">
-                                                        <i class="fas fa-life-ring mr-2">
-                                                        </i>
-                                                        Support
-                                                    </a>
-                                                </li>-->
                     </ul>
                 </nav>
             </div>
@@ -508,16 +452,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-gray-800 p-4 rounded-lg">
+                <div class="bg-gray-800 p-4 rounded-lg mb-8 w-full">
                     <div class="text-lg font-semibold text-white mb-4">
                         Transactions
                     </div>
                     <table class="w-full text-left">
                         <thead>
                             <tr class="text-gray-400">
-                                <th class="py-2">
-                                    TRANSACTION
-                                </th>
+
                                 <th class="py-2">
                                     DATE &amp; TIME
                                 </th>
@@ -525,44 +467,38 @@
                                     AMOUNT
                                 </th>
                                 <th class="py-2">
-                                    REFERENCE NUMBER
-                                </th>
-                                <th class="py-2">
-                                    PAYMENT METHOD
-                                </th>
-                                <th class="py-2">
                                     STATUS
                                 </th>
+                                
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="border-t border-gray-700">
-                                <td class="py-2">
-                                    Payment from Bonnie Green
-                                </td>
-                                <td class="py-2">
-                                    Apr 23, 2021
-                                </td>
-                                <td class="py-2">
-                                    $2300
-                                </td>
-                                <td class="py-2">
-                                    0047995989
-                                </td>
-                                <td class="py-2">
-                                    <i class="fab fa-cc-mastercard">
-                                    </i>
-                                    475
-                                </td>
-                                <td class="py-2 text-green-500">
-                                    Completed
-                                </td>
-                            </tr>
-                            <tr class="border-t border-gray-700">
-                                <td class="py-2">
-                                    Payment refund #00910
-                                </td>
-                            </tr>
+                            <c:if test="${not empty requestScope.orderList}">
+                                <c:forEach items="${requestScope.orderList}" var="order">
+                                    <tr class="border-t border-gray-700  text-gray-200">
+                                        <td class="py-2">
+                                            ${order.getDate()}
+                                        </td>
+                                        <td class="py-2">
+                                            $${order.getTotal()}
+                                        </td>
+                                        <c:if test="${order.getOrderStatus()=='Pending'}">
+                                            <td class="py-2 text-red-500">
+                                                ${order.getOrderStatus()}
+                                            </td>
+                                        </c:if>
+                                        <c:if test="${order.getOrderStatus()=='Completed'}">
+                                            <td class="py-2 text-green-500">
+                                                ${order.getOrderStatus()}
+                                            </td>
+                                        </c:if>
+
+                                    </tr>
+                                </c:forEach>
+                            </c:if>
+                            <c:if test="${empty requestScope.orderList}">
+                            <p class="text-gray-200">Không có đơn hàng nào để hiển thị.</p>
+                        </c:if>
                         </tbody>
                     </table>
                 </div>

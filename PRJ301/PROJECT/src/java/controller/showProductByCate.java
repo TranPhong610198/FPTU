@@ -91,9 +91,17 @@ public class showProductByCate extends HttpServlet {
                 cateName = cate.getCategoryName();
             }
         }
+        Product outstandP = pd.getOutstandProduct();
+        request.setAttribute("outstandP", outstandP);
 
+        List<Product> top5new = pd.getTop5New();
+        request.setAttribute("top5new", top5new);
+
+        List<Product> top5sale = pd.getTop5Sale();
+        request.setAttribute("top5sale", top5sale);
+        
         request.setAttribute("nameOfList", cateName);
-        request.setAttribute("typeServlet", "showCate?cate="+categoryId+"&productId="+productId+"&");
+        request.setAttribute("typeServlet", "showCate?cate=" + categoryId + "&productId=" + productId + "&");
         request.setAttribute("product", temp);
         request.setAttribute("totalPages", totalPages);
         request.setAttribute("currentPage", page);

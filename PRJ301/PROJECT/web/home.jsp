@@ -15,12 +15,33 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css"  rel="stylesheet" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            inter: ['Inter', 'sans-serif'],
+                        },
+                        animation: {
+                            'infinite-scroll': 'infinite-scroll 25s linear infinite',
+                        },
+                        keyframes: {
+                            'infinite-scroll': {
+                                from: {transform: 'translateX(0)'},
+                                to: {transform: 'translateX(-100%)'},
+                            }
+                        }
+                    },
+                },
+            };
+        </script>
     </head>
     <body class="font-sans">
         <header class="bg-gray-800 shadow-md text-gray-300">
             <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
                 <div class="text-xl font-bold text-gray-800">
-                    <img src="images/FondevJSLogo1.svg" alt="alt"/>
+                    <img src="images/FondevJSLogoSmal.svg" alt="alt"/>
                 </div>
                 <div class="hidden md:flex space-x-4 justify-center flex-grow mr-20">
                     <a href="home" class="text-cyan-300 hover:text-white">Home</a>
@@ -38,7 +59,7 @@
                         </ul>
                     </div>
                     <!------------------------------------------------------------->        
-                    <a href="${(sessionScope.account.role=='admin')?'admin.jsp':'404pages.html'}" class="text-cyan-300 hover:text-white">Admin</a>
+                    <a href="${(sessionScope.account.role=='admin')?'admin':'404pages.html'}" class="text-cyan-300 hover:text-white">Admin</a>
                     <!-- Category -->
                     <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="text-cyan-300 hover:text-white type="button">Categories
                     </button>
@@ -108,7 +129,7 @@
                                 </div>
                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
                                     <li>
-                                        <a href="admin.jsp" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                        <a href="admin" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                                     </li>
                                     <li>
                                         <form action="profile" method="post">
@@ -152,26 +173,68 @@
         </header>
         <!--__________________________________________________________________________________________________________________________________________________________________________________________________________________-->
         <main>
-            <section class="bg-gradient-to-r from-purple-500 to-teal-500 text-white py-20">
-                <div class="container mx-auto px-6">
-                    <h1 class="text-4xl font-bold mb-2">A new product.</h1>
-                    <p class="mb-8">Discover amazing products and unbeatable deals.</p>
-                    <button class="bg-white text-purple-500 px-6 py-2 rounded-full hover:bg-gray-100">Shop Now</button>
+            <section class="bg-gradient-to-r from-purple-500 to-teal-500 text-white py-6">
+                <div class="container mx-auto px-4">
+                    <h1 class="text-4xl font-bold mb-6">Outstanding Product</h1>
+                    <div class="flex">
+                        <div class="w-1/3 flex justify-center">
+                            <img alt="Main product image" class="w-96 h-auto mb-4 rounded-lg" height="200" src="${outstandP.imageUrl}" width="200"/>
+                        </div>
+                        <div class="w-2/3 pl-6">
+                            <div class="grid content-center grid-cols-4 gap-2 justify-items-center">
+                                <c:forEach items="${outstandP.subImages}" var="image">
+                                    <div>
+                                        <img alt="Sub Image 1" class="w-full h-auto rounded-lg" height="75" src="${image}" width="75"/>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                            <div class="flex justify-center mt-8">
+                                <a  href="home?action=view&id=${outstandP.id}" class="cursor-pointer px-4 py-2 bg-gray-700 hover:bg-gray-800 text-white rounded-full">View DeTail</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <section class="container mx-auto px-6 py-8">
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="bg-yellow-400 p-6 rounded-lg">
-                        <h2 class="text-2xl font-bold mb-2">Sản phẩm bán chạy</h2>
-                        <p class="mb-4">Get the latest smartphones at unbeatable prices.</p>
-                        <span class="text-3xl font-bold">20% OFF</span>
-                    </div>
-                    <div class="bg-gray-800 text-white p-6 rounded-lg">
-                        <h2 class="text-2xl font-bold mb-2">sản phẩm nổi bật</h2>
-                        <p class="mb-4">Capture life's moments with crystal clarity.</p>
-                        <button class="bg-white text-gray-800 px-4 py-2 rounded">Learn More</button>
-                    </div>
+            <section class="container mx-auto px-8 py-8 ">
+                <h2 class="text-2xl font-bold mb-8 border-gray-300">Top 5 Best Sales:</h2>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+                    <c:if test="${not empty requestScope.top5sale}">
+                        <c:forEach var="product" items="${requestScope.top5sale}">
+                            <div class="border p-4 rounded-lg">
+                                <a href="home?action=view&id=${product.id}">
+                                    <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-40 object-cover mb-4">
+                                    <h3 class="font-semibold">${product.name}</h3>
+                                    <p class="text-gray-600">$${product.price}</p>
+                                </a>
+                            </div>  
+                        </c:forEach>
+                    </c:if>
+                    <c:if test="${empty requestScope.top5sale}">
+                        <p>Không có sản phẩm nào để hiển thị.</p>
+                    </c:if>
+
+                </div>
+            </section>
+
+            <section class="container mx-auto px-8 py-8 ">
+                <h2 class="text-2xl font-bold mb-8 border-gray-300">Top 5 New Products:</h2>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+                    <c:if test="${not empty requestScope.top5new}">
+                        <c:forEach var="product" items="${requestScope.top5new}">
+                            <div class="border p-4 rounded-lg">
+                                <a href="home?action=view&id=${product.id}">
+                                    <img src="${product.imageUrl}" alt="${product.name}" class="w-full h-40 object-cover mb-4">
+                                    <h3 class="font-semibold">${product.name}</h3>
+                                    <p class="text-gray-600">$${product.price}</p>
+                                </a>
+                            </div>  
+                        </c:forEach>
+                    </c:if>
+                    <c:if test="${empty requestScope.top5new}">
+                        <p>Không có sản phẩm nào để hiển thị.</p>
+                    </c:if>
+
                 </div>
             </section>
 
@@ -237,81 +300,120 @@
                 </nav>
             </section>
 
-            <section class="bg-gray-100 py-12">
-                <div class="container mx-auto px-6">
-                    <h2 class="text-2xl font-bold mb-8">Amazing Devices</h2>
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div>
-                            <img src="/api/placeholder/500/300" alt="Amazing Devices" class="w-full h-64 object-cover rounded-lg">
-                        </div>
-                        <div class="flex flex-col justify-center">
-                            <h3 class="text-xl font-semibold mb-4">Discover Our Latest Tech</h3>
-                            <p class="mb-4">Experience cutting-edge technology with our amazing devices.</p>
-                            <button class="bg-purple-500 text-white px-6 py-2 rounded-full hover:bg-purple-600 self-start">Learn More</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <main class="relative h-[300px] flex flex-col justify-center bg-gray-100 overflow-hidden">
+                <div class="w-full max-w-5xl mx-auto px-4 md:px-6 py-24">
+                    <div class="text-center">
 
-            <section class="container mx-auto px-6 py-12">
-                <div class="grid md:grid-cols-3 gap-8 text-center">
-                    <div>
-                        <i class="fas fa-truck text-4xl mb-4 text-purple-500"></i>
-                        <h3 class="font-semibold mb-2">Free Shipping Worldwide</h3>
-                        <p class="text-gray-600">On orders over $50</p>
-                    </div>
-                    <div>
-                        <i class="fas fa-undo text-4xl mb-4 text-purple-500"></i>
-                        <h3 class="font-semibold mb-2">30 Days Return</h3>
-                        <p class="text-gray-600">No questions asked</p>
-                    </div>
-                    <div>
-                        <i class="fas fa-headset text-4xl mb-4 text-purple-500"></i>
-                        <h3 class="font-semibold mb-2">24/7 Customer Support</h3>
-                        <p class="text-gray-600">Always here to help</p>
-                    </div>
-                </div>
-            </section>
-
-            <section class="bg-gray-100 py-12">
-                <div class="container mx-auto px-6">
-                    <h2 class="text-2xl font-bold mb-8 text-center">Subscribe to our newsletter</h2>
-                    <form class="max-w-md mx-auto">
-                        <div class="flex">
-                            <input type="email" placeholder="Your email address" class="flex-grow px-4 py-2 rounded-l-full focus:outline-none">
-                            <button type="submit" class="bg-purple-500 text-white px-6 py-2 rounded-r-full hover:bg-purple-600">Subscribe</button>
+                        <!-- Logo Carousel animation -->
+                        <div
+                            x-data="{}"
+                            x-init="$nextTick(() => {
+                            let ul = $refs.logos;
+                            ul.insertAdjacentHTML('afterend', ul.outerHTML);
+                            ul.nextSibling.setAttribute('aria-hidden', 'true');
+                            })"
+                            class="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-128px),transparent_100%)]"
+                            >
+                            <ul x-ref="logos" class="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll">
+                                <li>
+                                    <img src="images/logoMSI.png" alt="MSI" class="h-40"/>
+                                </li>
+                                <li>
+                                    <img src="images/logoASUS.png" alt="ASUS" class="h-40" />
+                                </li>
+                                <li>
+                                    <img src="images/logoACER.png" alt="ACER" class="h-40"/>
+                                </li>
+                                <li>
+                                    <img src="images/logoDell.png" alt="DELL" class="h-40"/>
+                                </li>
+                                <li>
+                                    <img src="images/logoHP.png" alt="HP" class="h-40"/>
+                                </li>
+                                <li>
+                                    <img src="images/logoLenovo.png" alt="LENOVO" class="h-40"/>
+                                </li>
+                                <li>
+                                    <img src="images/logoPredator.png" alt="PREDATOR" class="h-40"/>
+                                </li>
+                                <li>
+                                    <img src="images/logoROG.png" alt="ROG" class="h-40"/>
+                                </li>
+                                <li>
+                                    <img src="images/logoThinkPad.png" alt="ThinkPad" class="h-40"/>
+                                </li>
+                                <li>
+                                    <img src="images/FondevJSLogoDark.svg" alt="FondevJs" class="h-40"/>
+                                </li>
+                            </ul>                
                         </div>
-                    </form>
-                </div>
-            </section>
-        </main>
+                        <!-- End: Logo Carousel animation -->
 
-        <footer class="bg-gray-800 text-white py-8">
-            <div class="container mx-auto px-6">
-                <div class="flex justify-between items-center">
-                    <div class="text-xl font-bold">
-                        <a href="home"> <img src="./images/FondevJSLogo2.svg" alt="alt"/></a>
                     </div>
-                    <div class="flex space-x-4">
-                        <a href="https://www.facebook.com/Moriaty11" class="hover:text-gray-300"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="hover:text-gray-300"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="hover:text-gray-300"><i class="fab fa-instagram"></i></a>
-                    </div>
+
                 </div>
-                <div class="mt-4 text-center text-sm">
-                    &copy; 2024 FondevJS . Reference from Sublime.
+            </main>
+        </section>
+
+        <section class="container mx-auto px-6 py-12">
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div>
+                    <i class="fas fa-truck text-4xl mb-4 text-purple-500"></i>
+                    <h3 class="font-semibold mb-2">Free Shipping Worldwide</h3>
+                    <p class="text-gray-600">On orders over $50</p>
+                </div>
+                <div>
+                    <i class="fas fa-undo text-4xl mb-4 text-purple-500"></i>
+                    <h3 class="font-semibold mb-2">30 Days Return</h3>
+                    <p class="text-gray-600">No questions asked</p>
+                </div>
+                <div>
+                    <i class="fas fa-headset text-4xl mb-4 text-purple-500"></i>
+                    <h3 class="font-semibold mb-2">24/7 Customer Support</h3>
+                    <p class="text-gray-600">Always here to help</p>
                 </div>
             </div>
-        </footer>
+        </section>
 
-        <script>
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
+        <section class="bg-gray-100 py-12">
+            <div class="container mx-auto px-6">
+                <h2 class="text-2xl font-bold mb-8 text-center">Subscribe to our newsletter</h2>
+                <form class="max-w-md mx-auto">
+                    <div class="flex">
+                        <input type="email" placeholder="Your email address" class="flex-grow px-4 py-2 rounded-l-full focus:outline-none">
+                        <button type="submit" class="bg-purple-500 text-white px-6 py-2 rounded-r-full hover:bg-purple-600">Subscribe</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
 
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-    </body>
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center">
+                <div class="text-xl font-bold">
+                    <a href="home"> <img src="./images/FondevJSLogoBig.svg" alt="alt"/></a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="https://www.facebook.com/Moriaty11" class="hover:text-gray-300"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="hover:text-gray-300"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="hover:text-gray-300"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            <div class="mt-4 text-center text-sm">
+                &copy; 2024 FondevJS . Reference from Sublime.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+</body>
 </html>

@@ -26,12 +26,12 @@
             <!-- Sidebar -->
             <div class="w-64 bg-gray-800 h-screen p-4  sticky top-0">
                 <div class="mb-4">
-                    <a href="home"><img src="images/FondevJSLogo1.svg" alt="alt" height="10px" /></a>
+                    <a href="home"><img src="images/FondevJSLogoSmal.svg" alt="alt" height="10px" /></a>
                 </div>
                 <nav>
                     <ul>
                         <li class="mb-2">
-                            <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="./admin.jsp">
+                            <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="admin">
                                 <i class="fas fa-tachometer-alt mr-2">
                                 </i>
                                 Dashboard

@@ -269,7 +269,7 @@
     <div class="container mx-auto px-6">
         <div class="flex justify-between items-center">
             <div class="text-xl font-bold">
-                <a href="home"> <img src="./images/FondevJSLogo2.svg" alt="alt"/></a>
+                <a href="home"> <img src="./images/FondevJSLogoBig.svg" alt="alt"/></a>
             </div>
             <div class="flex space-x-4">
                 <a href="https://www.facebook.com/Moriaty11" class="hover:text-gray-300"><i class="fab fa-facebook"></i></a>

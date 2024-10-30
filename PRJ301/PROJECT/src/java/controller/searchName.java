@@ -87,9 +87,19 @@ public class searchName extends HttpServlet {
         }
         Product temp = pd.getProductByID(41);
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+
+        Product outstandP = pd.getOutstandProduct();
+        request.setAttribute("outstandP", outstandP);
+
+        List<Product> top5new = pd.getTop5New();
+        request.setAttribute("top5new", top5new);
+
+        List<Product> top5sale = pd.getTop5Sale();
+        request.setAttribute("top5sale", top5sale);
+
         request.setAttribute("priceRange", priceRange);
         request.setAttribute("sortOrder", sortOrder);
-        request.setAttribute("typeServlet", "search?searchKey=" + searchKeyword + "&priceRange="+priceRange+"&sortOrder="+sortOrder+"&");
+        request.setAttribute("typeServlet", "search?searchKey=" + searchKeyword + "&priceRange=" + priceRange + "&sortOrder=" + sortOrder + "&");
         request.setAttribute("searchKeyword", searchKeyword);
         request.setAttribute("product", temp);
         request.setAttribute("data", list);

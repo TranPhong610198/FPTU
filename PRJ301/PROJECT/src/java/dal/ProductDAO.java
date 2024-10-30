@@ -18,6 +18,126 @@ import model.SubImage;
 
 public class ProductDAO extends DBContext {
 
+    //Lấy ra 5 sản phẩm bán chạy nhất
+    public List<Product> getTop5Sale() {
+        List<Product> products = new ArrayList<>();
+        String query = "SELECT Top(5) p.*, s.total_sales FROM products p, statisticsTable s\n"
+                + "WHERE p.product_id = s.product_id\n"
+                + "ORDER BY s.total_sales DESC\n";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet resultSet1 = statement.executeQuery();
+            while (resultSet1.next()) {
+                Product product = new Product();
+                product.setId(resultSet1.getInt("product_id"));
+                product.setName(resultSet1.getString("name"));
+                product.setDescription(resultSet1.getString("description"));
+                product.setPrice(resultSet1.getBigDecimal("price"));
+                product.setStock(resultSet1.getInt("stock"));
+                product.setBrandId(resultSet1.getInt("brand_id"));
+                product.setCategoryId(resultSet1.getInt("category_id"));
+                product.setImageUrl(resultSet1.getString("image_url"));
+                product.setTotalSale(resultSet1.getInt("total_sales"));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+    //Lấy ra 5 sản phẩm mới nhất
+    public List<Product> getTop5New() {
+        List<Product> products = new ArrayList<>();
+        String query = "SELECT Top(5) * FROM products ORDER BY product_id DESC";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+
+            ResultSet resultSet1 = statement.executeQuery();
+            while (resultSet1.next()) {
+                Product product = new Product();
+                product.setId(resultSet1.getInt("product_id"));
+                product.setName(resultSet1.getString("name"));
+                product.setDescription(resultSet1.getString("description"));
+                product.setPrice(resultSet1.getBigDecimal("price"));
+                product.setStock(resultSet1.getInt("stock"));
+                product.setBrandId(resultSet1.getInt("brand_id"));
+                product.setCategoryId(resultSet1.getInt("category_id"));
+                product.setImageUrl(resultSet1.getString("image_url"));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
+
+    //Lấy ra sản phẩm nổi bật(giá cao nhất)
+    public Product getOutstandProduct() {
+        String query = "SELECT * FROM products WHERE price = (SELECT MAX(price) FROM products)";
+        String query2 = "SELECT * FROM brands";
+        String query3 = "SELECT * FROM categories";
+        String query4 = "SELECT * FROM sub_images";
+
+        try {
+            Statement statement = connection.createStatement();
+
+            //get listBrands
+            List<Brand> tempBrands = new ArrayList<>();
+            ResultSet rsBrand = statement.executeQuery(query2);
+            while (rsBrand.next()) {
+                Brand brand = new Brand();
+                brand.setBrandId(rsBrand.getInt("brand_id"));
+                brand.setBrandName(rsBrand.getString("brand_name"));
+                tempBrands.add(brand);
+            }
+            //get listCategoris
+            List<Category> tempCate = new ArrayList<>();
+            ResultSet rsCate = statement.executeQuery(query3);
+            while (rsCate.next()) {
+                Category cate = new Category();
+                cate.setCategoryId(rsCate.getInt("category_id"));
+                cate.setCategoryName(rsCate.getString("category_name"));
+                tempCate.add(cate);
+            }
+            //get listSubImages
+            List<SubImage> tempListSubIm = new ArrayList<>();
+            ResultSet rsListSubIm = statement.executeQuery(query4);
+            while (rsListSubIm.next()) {
+                SubImage subImage = new SubImage();
+                subImage.setSubImageId(rsListSubIm.getInt("sub_image_id"));
+                subImage.setProductId(rsListSubIm.getInt("product_id"));
+                subImage.setSubImagePath(rsListSubIm.getString("sub_image_url"));
+                tempListSubIm.add(subImage);
+            }
+
+            PreparedStatement countStmt = connection.prepareStatement(query);
+            ResultSet resultSet = countStmt.executeQuery();
+            Product product = new Product();
+            if (resultSet.next()) {
+                product.setId(resultSet.getInt("product_id"));
+                product.setName(resultSet.getString("name"));
+                product.setDescription(resultSet.getString("description"));
+                product.setPrice(resultSet.getBigDecimal("price"));
+                product.setStock(resultSet.getInt("stock"));
+                product.setBrandId(resultSet.getInt("brand_id"));
+                product.setCategoryId(resultSet.getInt("category_id"));
+                product.setImageUrl(resultSet.getString("image_url"));
+                product.setListBrand(tempBrands);
+                product.setListCategory(tempCate);
+                product.setListSubImages(tempListSubIm);
+
+                List<String> subImages = getSubImagesByProductId(resultSet.getInt("product_id"));
+                product.setSubImages(subImages);
+            }
+            return product;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
     //Tính tổng số trang
     public int getTotalProducts() {
         String countQuery = "SELECT COUNT(*) FROM products where 1=1";

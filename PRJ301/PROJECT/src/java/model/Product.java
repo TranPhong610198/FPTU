@@ -25,6 +25,7 @@ public class Product {
     private List<Brand> listBrand;
     private List<Category> listCategory;
     private List<SubImage> listSubImages;
+    private int totalSale;
 
     
 
@@ -67,6 +68,24 @@ public class Product {
         this.listBrand = listBrand;
         this.listCategory = listCategory;
     }
+
+    public Product(int id, String name, String description, BigDecimal price, int stock, int brandId, int categoryId, String imageUrl, List<String> subImages, List<Brand> listBrand, List<Category> listCategory, List<SubImage> listSubImages, int totalSale) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.brandId = brandId;
+        this.categoryId = categoryId;
+        this.imageUrl = imageUrl;
+        this.subImages = subImages;
+        this.listBrand = listBrand;
+        this.listCategory = listCategory;
+        this.listSubImages = listSubImages;
+        this.totalSale = totalSale;
+    }
+    
+    
     
     public List<String> getSubImagesInList() {
         List<String> result = null;
@@ -83,6 +102,14 @@ public class Product {
         return id;
     }
 
+    public int getTotalSale() {
+        return totalSale;
+    }
+
+    public void setTotalSale(int totalSale) {
+        this.totalSale = totalSale;
+    }
+    
     public void setId(int id) {
         this.id = id;
     }

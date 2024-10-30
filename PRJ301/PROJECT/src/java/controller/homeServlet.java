@@ -161,12 +161,21 @@ public class homeServlet extends HttpServlet {
 
             List<Product> list = pd.getAllProducts(pageSize, offset);
             Product temp = list.get(0);
+            
+            Product outstandP = pd.getOutstandProduct();
+            request.setAttribute("outstandP", outstandP);
+            
+            List<Product> top5new = pd.getTop5New();
+            request.setAttribute("top5new", top5new);
+            
+            List<Product> top5sale = pd.getTop5Sale();
+            request.setAttribute("top5sale", top5sale);
+            
             request.setAttribute("data", list);
             request.setAttribute("product", temp);
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("currentPage", page);
             request.getRequestDispatcher("home.jsp").forward(request, response);
-//            request.getRequestDispatcher("header.jsp").forward(request, response);
         }
 
     }

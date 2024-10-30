@@ -92,9 +92,17 @@ public class showProductByBrand extends HttpServlet {
                 brandName = brand.getBrandName();
             }
         }
+        Product outstandP = pd.getOutstandProduct();
+        request.setAttribute("outstandP", outstandP);
+
+        List<Product> top5new = pd.getTop5New();
+        request.setAttribute("top5new", top5new);
+
+        List<Product> top5sale = pd.getTop5Sale();
+        request.setAttribute("top5sale", top5sale);
 
         request.setAttribute("nameOfList", brandName);
-        request.setAttribute("typeServlet", "showBrand?brand="+brandId+"&productId="+productId+"&");
+        request.setAttribute("typeServlet", "showBrand?brand=" + brandId + "&productId=" + productId + "&");
         request.setAttribute("product", temp);
         request.setAttribute("data", list);
         request.setAttribute("totalPages", totalPages);

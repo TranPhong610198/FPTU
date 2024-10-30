@@ -1,93 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .brand-slider {
-            overflow: hidden;
-            white-space: nowrap;
-            width: 100%;
-            background-color: #f5f5f5;
-            /* Màu nền cho slider */
-            padding: 10px 0;
-        }
-
-        .slider {
-            display: inline-flex;
-            animation: slide 20s linear infinite;
-        }
-
-        .slider img {
-            width: 150px;
-            /* Kích thước logo */
-            margin: 0 20px;
-            /* Khoảng cách giữa các logo */
-        }
-
-        @keyframes slide {
-            from {
-                transform: translateX(0);
-            }
-
-            to {
-                transform: translateX(-100%);
-            }
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<body>
-    <div class="brand-slider">
-        <div class="slider">
-            <!-- Lặp lại logo để hiệu ứng mượt hơn -->
-            <img src="path/to/msi_logo.png" alt="MSI">
-            <img src="path/to/asus_logo.png" alt="ASUS">
-            <img src="path/to/acer_logo.png" alt="Acer">
-            <img src="path/to/dell_logo.png" alt="Dell">
-            <img src="path/to/hp_logo.png" alt="HP">
-            <img src="path/to/lenovo_logo.png" alt="Lenovo">
-            <!-- Lặp lại -->
-            <img src="path/to/msi_logo.png" alt="MSI">
-            <img src="path/to/asus_logo.png" alt="ASUS">
-            <img src="path/to/acer_logo.png" alt="Acer">
-            <img src="path/to/dell_logo.png" alt="Dell">
-            <img src="path/to/hp_logo.png" alt="HP">
-            <img src="path/to/lenovo_logo.png" alt="Lenovo">
-            <!-- Lặp lại -->
-            <img src="path/to/msi_logo.png" alt="MSI">
-            <img src="path/to/asus_logo.png" alt="ASUS">
-            <img src="path/to/acer_logo.png" alt="Acer">
-            <img src="path/to/dell_logo.png" alt="Dell">
-            <img src="path/to/hp_logo.png" alt="HP">
-            <img src="path/to/lenovo_logo.png" alt="Lenovo">
-            <!-- Lặp lại -->
-            <img src="path/to/msi_logo.png" alt="MSI">
-            <img src="path/to/asus_logo.png" alt="ASUS">
-            <img src="path/to/acer_logo.png" alt="Acer">
-            <img src="path/to/dell_logo.png" alt="Dell">
-            <img src="path/to/hp_logo.png" alt="HP">
-            <img src="path/to/lenovo_logo.png" alt="Lenovo">
-            <!-- Lặp lại -->
-            <img src="path/to/msi_logo.png" alt="MSI">
-            <img src="path/to/asus_logo.png" alt="ASUS">
-            <img src="path/to/acer_logo.png" alt="Acer">
-            <img src="path/to/dell_logo.png" alt="Dell">
-            <img src="path/to/hp_logo.png" alt="HP">
-            <img src="path/to/lenovo_logo.png" alt="Lenovo">
-            <!-- Lặp lại -->
-            <img src="path/to/msi_logo.png" alt="MSI">
-            <img src="path/to/asus_logo.png" alt="ASUS">
-            <img src="path/to/acer_logo.png" alt="Acer">
-            <img src="path/to/dell_logo.png" alt="Dell">
-            <img src="path/to/hp_logo.png" alt="HP">
-            <img src="path/to/lenovo_logo.png" alt="Lenovo">
-     
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h1 class="text-2xl font-bold mb-4">Outstanding Product</h1>
+        <div class="flex">
+            <div class="w-1/2 flex">
+                <img alt="Main product image" class="w-1/2 h-auto mb-4" height="200" src="https://storage.googleapis.com/a1aa/image/nI8aRCvamIbbEBVUyEZtyri5aEq4tfEOX6h16Ux4lderGjrTA.jpg" width="200"/>
+                <div class="pl-4">
+                    <div class="text-lg font-semibold">Name</div>
+                    <div class="text-gray-600">Price</div>
+                    <div class="text-gray-600">Detail</div>
+                </div>
+            </div>
+            <div class="w-1/2 pl-6">
+                <div class="grid grid-cols-4 gap-2">
+                    <div>
+                        <img alt="Sub Image 1" class="w-full h-auto" height="75" src="https://storage.googleapis.com/a1aa/image/QqHCDkt2zHJnPJ6I9V0todMOAonQF9QQVLSba2WjVlsqx46E.jpg" width="75"/>
+                        <div class="text-center mt-2 text-xs">Sub Image 1</div>
+                    </div>
+                    <div>
+                        <img alt="Sub Image 2" class="w-full h-auto" height="75" src="https://storage.googleapis.com/a1aa/image/m5ePC7TipiyQdiCBOI1cnV6jwoKk9CHZNLqP6lCRkqCUjx1JA.jpg" width="75"/>
+                        <div class="text-center mt-2 text-xs">Sub Image 2</div>
+                    </div>
+                    <div>
+                        <img alt="Sub Image 3" class="w-full h-auto" height="75" src="https://storage.googleapis.com/a1aa/image/2ES1AhQ5j660Jxhdi9ksyzWiTopvnEHRLM1iukSEMaypx46E.jpg" width="75"/>
+                        <div class="text-center mt-2 text-xs">Sub Image 3</div>
+                    </div>
+                    <div>
+                        <img alt="Sub Image 4" class="w-full h-auto" height="75" src="https://storage.googleapis.com/a1aa/image/GJYeNXsVRvyPciLuTq6z8PZU8aLisMuR7xtzgARse3VmGjrTA.jpg" width="75"/>
+                        <div class="text-center mt-2 text-xs">Sub Image 4</div>
+                    </div>
+                </div>
+                <div class="flex justify-center mt-8">
+                    <button class="px-4 py-2 bg-blue-500 text-white rounded-lg">View Full</button>
+                </div>
+            </div>
         </div>
     </div>
-
 </body>
-
 </html>

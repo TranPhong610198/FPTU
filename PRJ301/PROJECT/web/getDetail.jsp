@@ -30,7 +30,7 @@
         <header class="bg-gray-800 shadow-md text-gray-300">
             <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
                 <div class="text-xl font-bold text-gray-800">
-                    <img src="images/FondevJSLogo1.svg" alt="alt"/>
+                    <img src="images/FondevJSLogoSmal.svg" alt="alt"/>
                 </div>
                 <div class="hidden md:flex space-x-4 justify-center flex-grow mr-20">
                     <a href="home" class="text-cyan-300 hover:text-white">Home</a>
@@ -48,7 +48,7 @@
                         </ul>
                     </div>
                     <!------------------------------------------------------------->        
-                    <a href="${(sessionScope.account.role=='admin')?'admin.jsp':'404pages.html'}" class="text-cyan-300 hover:text-white">Admin</a>
+                    <a href="${(sessionScope.account.role=='admin')?'admin':'404pages.html'}" class="text-cyan-300 hover:text-white">Admin</a>
                     <!-- Category -->
                     <button id="dropdownHoverButton" data-dropdown-toggle="dropdownHover" data-dropdown-trigger="hover" class="text-cyan-300 hover:text-white type="button">Categories
                     </button>
@@ -119,7 +119,7 @@
                                 </div>
                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownUserAvatarButton">
                                     <li>
-                                        <a href="admin.jsp" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+                                        <a href="admin" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
                                     </li>
                                     <li>
                                         <form action="profile" method="post">
@@ -257,7 +257,7 @@
                                     </c:when>
                                     <c:otherwise>
                                         <li>    
-                                            <a href="home?page=${i}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                                            <a href="home?action=view&id=${product.id}&page=${i}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
                                                 ${i}</a>
                                         </li>
                                     </c:otherwise>
