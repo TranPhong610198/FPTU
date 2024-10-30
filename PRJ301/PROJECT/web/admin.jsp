@@ -452,6 +452,7 @@
                         </div>
                     </div>
                 </div>
+                <!--List Order-->
                 <div class="bg-gray-800 p-4 rounded-lg mb-8 w-full">
                     <div class="text-lg font-semibold text-white mb-4">
                         Transactions
@@ -459,7 +460,9 @@
                     <table class="w-full text-left">
                         <thead>
                             <tr class="text-gray-400">
-
+                                <th class="py-2">
+                                    USER
+                                </th>
                                 <th class="py-2">
                                     DATE &amp; TIME
                                 </th>
@@ -467,23 +470,46 @@
                                     AMOUNT
                                 </th>
                                 <th class="py-2">
+                                    NUMBER
+                                </th>
+                                <th class="py-2">
                                     STATUS
                                 </th>
-                                
+                                <th class="py-2">
+                                    ACTION
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <c:if test="${not empty requestScope.orderList}">
-                                <c:forEach items="${requestScope.orderList}" var="order">
+                            <c:if test="${not empty requestScope.listOrder}">
+                                <c:forEach items="${requestScope.listOrder}" var="order">
                                     <tr class="border-t border-gray-700  text-gray-200">
+
+                                        <c:forEach items="${requestScope.listUser}" var="user">
+                                            <c:if test="${user.id == order.userId}">
+                                                <td class="py-2">
+                                                    ${user.username}
+                                                </td>
+                                            </c:if>
+                                        </c:forEach>
+
                                         <td class="py-2">
                                             ${order.getDate()}
                                         </td>
                                         <td class="py-2">
                                             $${order.getTotal()}
                                         </td>
+                                        
+                                        <c:forEach items="${requestScope.listUser}" var="user">
+                                            <c:if test="${user.id == order.userId}">
+                                                <td class="py-2">
+                                                    ${user.phone}
+                                                </td>
+                                            </c:if>
+                                        </c:forEach>
+                                                
                                         <c:if test="${order.getOrderStatus()=='Pending'}">
-                                            <td class="py-2 text-red-500">
+                                            <td class="py-2 text-yellow-500">
                                                 ${order.getOrderStatus()}
                                             </td>
                                         </c:if>
@@ -496,12 +522,13 @@
                                     </tr>
                                 </c:forEach>
                             </c:if>
-                            <c:if test="${empty requestScope.orderList}">
+                            <c:if test="${empty requestScope.listOrder}">
                             <p class="text-gray-200">Không có đơn hàng nào để hiển thị.</p>
                         </c:if>
                         </tbody>
                     </table>
                 </div>
+                <!--_______________________________________________________________________________________________________-->
             </div>
         </div>
 

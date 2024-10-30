@@ -19,6 +19,8 @@
                 font-family: 'Inter', sans-serif;
             }
         </style>
+        <script src="ckeditor/ckeditor.js"></script>
+
     </head>
     <body class="bg-gray-900 text-gray-300">
         <div class="flex">
@@ -121,7 +123,9 @@
                                         <a href="listSubImages?id=${c.id}" class="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 border border-gray-200 font-medium inline-flex items-center rounded-lg text-sm px-3 py-2.5 text-center dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                                             List Sub Images
                                         </a>
-                                        <button onclick="doUpdate('${c.id}', '${c.name}', '${c.price}', '${c.description}', '${c.brandId}', '${c.stock}', '${c.imageUrl}', '${c.categoryId}')"  type="button" id="updateProductButton" data-drawer-target="drawer-update-product-default" data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default" data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                        <div id="productDescription${c.id}" style="display: none;">${c.description}</div>
+
+                                        <button onclick="doUpdate('${c.id}', '${c.name}', '${c.price}', '${c.brandId}', '${c.stock}', '${c.imageUrl}', '${c.categoryId}')"  type="button" id="updateProductButton" data-drawer-target="drawer-update-product-default" data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default" data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
                                             <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path>
@@ -191,7 +195,7 @@
                     </div>
                     <div>
                         <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                        <input type="text" name="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Description of Product is here" required="">
+                        <textarea type="text" name="description" id="description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Description of Product is here" required=""></textarea>
                     </div>
                     <div>
                         <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Type</label>
@@ -273,7 +277,7 @@
                     </div>
                     <div>
                         <label for="oDescription" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                        <input type="text" name="description" id="oDescription" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$" required="">
+                        <textarea type="text" name="description" id="oDescription" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$" required=""></textarea>
                     </div>
                     <div>
                         <label for="oType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Type</label>
@@ -326,12 +330,20 @@
 
 
         <script type="text/javascript">
-
-            function doUpdate(id, name, price, description, brandId, stock, imageUrl, categoryId) {
+            CKEDITOR.versionCheck = function () {}; // Vô hiệu hóa kiểm tra phiên bản
+            function doUpdate(id, name, price, brandId, stock, imageUrl, categoryId) {
                 // Cập nhật các trường trong form Edit Product Drawer
                 document.getElementById('oName').value = name;
                 document.getElementById('oPrice').value = price;
+//                document.getElementById('oDescription').value = description;
+                CKEDITOR.replace('oDescription');
+                const description = document.getElementById('productDescription' + id).innerHTML;
                 document.getElementById('oDescription').value = description;
+                CKEDITOR.instances['oDescription'].setData(description);
+
+
+
+//                CKEDITOR.instances['oDescription'].setData(description);
                 document.getElementById('oStock').value = stock;
                 document.getElementById('oldImage').value = imageUrl;
                 document.getElementById('oldId').value = id;
@@ -357,6 +369,8 @@
                     }
                 });
             }
+
+            CKEDITOR.replace('description');
 
 
             function openDeleteDrawer(productId) {

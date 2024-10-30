@@ -136,7 +136,7 @@ public class homeServlet extends HttpServlet {
                 if (!isCookie) {
                     valueCookieSP += productId + "/";
                     Cookie selectedProduct = new Cookie("selectedP", valueCookieSP);
-                    selectedProduct.setMaxAge(60 * 60 * 24 * 7); // 7 ngày
+                    selectedProduct.setMaxAge(60 * 60 * 24); // 7 ngày
                     response.addCookie(selectedProduct);
                 }
             }

@@ -27,7 +27,7 @@ public class OrderDAO extends DBContext {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-          String query2 = "DELETE FROM orders WHERE order_id = ?";
+        String query2 = "DELETE FROM orders WHERE order_id = ?";
 
         try (PreparedStatement statement = connection.prepareStatement(query2)) {
             statement.setInt(1, orderId);
@@ -72,10 +72,13 @@ public class OrderDAO extends DBContext {
 
     public List<Order> getAllOrder(int user_id) {
         List<Order> orders = new ArrayList<>();
-        String query = "SELECT * FROM orders WHERE user_id=?";
+        String query = "SELECT * FROM orders WHERE 1=1";
+
         try {
+            if (user_id != -1) {
+                query += "AND user_id =" + user_id;
+            }
             PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setInt(1, user_id);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Order order = new Order(
@@ -161,7 +164,7 @@ public class OrderDAO extends DBContext {
         String query3 = "UPDATE orders SET order_status = ? WHERE order_id = ?";
         try {
             PreparedStatement statement3 = connection.prepareStatement(query3);
-            statement3.setString(1, "Completed");
+            statement3.setString(1, "Processing");
             statement3.setInt(2, orderId);
             statement3.executeUpdate();
         } catch (SQLException e) {
@@ -196,7 +199,7 @@ public class OrderDAO extends DBContext {
         String query3 = "UPDATE orders SET order_status = ? WHERE order_id = ?";
         try {
             PreparedStatement statement3 = connection.prepareStatement(query3);
-            statement3.setString(1, "Completed");
+            statement3.setString(1, "Processcing");
             statement3.setInt(2, orderId);
             statement3.executeUpdate();
         } catch (SQLException e) {

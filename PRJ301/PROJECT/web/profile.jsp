@@ -230,8 +230,9 @@
                                         <td class="py-2">
                                             $${order.getTotal()}
                                         </td>
+                                        <!--Status___________________________________________________________________-->
                                         <c:if test="${order.getOrderStatus()=='Pending'}">
-                                            <td class="py-2 text-red-500">
+                                            <td class="py-2 text-yellow-500">
                                                 ${order.getOrderStatus()}
                                             </td>
                                         </c:if>
@@ -240,7 +241,19 @@
                                                 ${order.getOrderStatus()}
                                             </td>
                                         </c:if>
-                                            <td class="text-center">
+                                        <c:if test="${order.getOrderStatus()=='Cancelled'}">
+                                            <td class="py-2 text-red-500">
+                                                ${order.getOrderStatus()}
+                                            </td>
+                                        </c:if>
+                                        <c:if test="${order.getOrderStatus()=='Processing'}">
+                                            <td class="py-2 text-purple-500">
+                                                ${order.getOrderStatus()}
+                                            </td>
+                                        </c:if>
+                                        <!--____________________________________________________________________________-->
+                                        <!--ACTION__________________________________________________________________________-->
+                                        <td class="text-center">
                                             <c:if test="${order.getOrderStatus()=='Pending'}">
                                                 <a href="payment?orderId=${order.getOrderId()}&total=${order.getTotal()}"
                                                    class="text-gray-400 bg-gray-800 bg-gray-700 hover:text-white focus:ring-4 focus:ring-gray-700 border border-gray-600 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center">Pay</a>
@@ -251,7 +264,16 @@
                                                 <a href="orderDetail?orderId=${order.getOrderId()}&total=${order.getTotal()}"
                                                    class="text-gray-400 bg-gray-800 bg-gray-700 hover:text-white focus:ring-4 focus:ring-gray-700 border border-gray-600 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center">Detail</a>
                                             </c:if>
+                                            <c:if test="${order.getOrderStatus()=='Processing'}">
+                                                <a href="orderDetail?orderId=${order.getOrderId()}&total=${order.getTotal()}"
+                                                   class="text-gray-400 bg-gray-800 bg-gray-700 hover:text-white focus:ring-4 focus:ring-gray-700 border border-gray-600 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center">Detail</a>
+                                            </c:if>
+                                            <c:if test="${order.getOrderStatus()=='Cancelled'}">
+                                                <a href="orderDetail?orderId=${order.getOrderId()}&total=${order.getTotal()}"
+                                                   class="text-gray-400 bg-gray-800 bg-gray-700 hover:text-white focus:ring-4 focus:ring-gray-700 border border-gray-600 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center">Detail</a>
+                                            </c:if>
                                         </td>
+                                        <!--____________________________________________________________________________________-->
                                     </tr>
                                 </c:forEach>
                             </c:if>
