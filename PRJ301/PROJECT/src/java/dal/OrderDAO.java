@@ -18,6 +18,30 @@ import model.Statistic;
  */
 public class OrderDAO extends DBContext {
 
+    public void updateTotalAmout(double total, int orderId) {
+        String query = "UPDATE orders SET total = ? WHERE order_id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setDouble(1, total);
+            statement.setInt(2, orderId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateStatusOrder(String status, int orderId) {
+        String query = "UPDATE orders SET order_status = ? WHERE order_id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, status);
+            statement.setInt(2, orderId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Order getOrderById(int order_id) {
         String query = "SELECT * FROM orders WHERE order_id = ?";
 
@@ -62,9 +86,15 @@ public class OrderDAO extends DBContext {
 
     public List<OrderItem> getDetailOrder(int orderId) {
         List<OrderItem> items = new ArrayList<>();
-        String query = "SELECT oi.*, p.* \n"
-                + "FROM order_items oi, products p \n"
-                + "WHERE p.product_id=oi.product_id AND oi.order_id = ?";
+//        String query = "SELECT oi.*, p.* \n"
+//                + "FROM order_items oi, products p \n"
+//                + "WHERE p.product_id=oi.product_id AND oi.order_id = ?";
+        String query = "SELECT r.ram_size, oi.*, p.*\n"
+                + "FROM order_items oi \n"
+                + "JOIN products p ON p.product_id=oi.product_id\n"
+                + "LEFT JOIN ram r ON r.ram_id = oi.ram_id\n"
+                + "WHERE oi.order_id = ?";
+
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, orderId);
@@ -86,6 +116,8 @@ public class OrderDAO extends DBContext {
                         rs.getDouble("price"),
                         product
                 );
+                item.setRamId(rs.getInt("ram_id"));
+                item.setRamSize(rs.getString("ram_size"));
                 items.add(item);
             }
         } catch (Exception e) {
@@ -133,6 +165,7 @@ public class OrderDAO extends DBContext {
                         rs.getInt("quantity"),
                         rs.getDouble("price")
                 );
+                item.setRamId(rs.getInt("ram_id"));
                 items.add(item);
             }
         } catch (Exception e) {
@@ -140,7 +173,7 @@ public class OrderDAO extends DBContext {
         return items;
     }
 
-    public Statistic checkProductIdInStat(int productId) {
+    public Statistic getStatByPid(int productId) {
         String query = "SELECT * FROM statisticsTable WHERE product_id=?";
         try {
             PreparedStatement statementQ = connection.prepareStatement(query);
@@ -160,7 +193,7 @@ public class OrderDAO extends DBContext {
         return null;
     }
 
-    public void updateSatistic(int productId, int quantity, double totalAmount, Statistic oldStat, int stock, int orderId) {
+    public void updateSatistic(int productId, int stock, int quantity, double totalPrice, Statistic oldStat) {
         //Giảm sản phẩm còn lại
         String query1 = "UPDATE products SET stock = ? WHERE product_id = ?";
         try {
@@ -177,25 +210,14 @@ public class OrderDAO extends DBContext {
             PreparedStatement statement2 = connection.prepareStatement(query2);
             statement2.setInt(3, productId);
             statement2.setInt(1, quantity + oldStat.getTotalSale());
-            statement2.setBigDecimal(2, BigDecimal.valueOf(totalAmount + oldStat.getRevenue()));
+            statement2.setBigDecimal(2, BigDecimal.valueOf(totalPrice + oldStat.getRevenue()));
             statement2.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        // Thay đổi status order
-        String query3 = "UPDATE orders SET order_status = ? WHERE order_id = ?";
-        try {
-            PreparedStatement statement3 = connection.prepareStatement(query3);
-            statement3.setString(1, "Processing");
-            statement3.setInt(2, orderId);
-            statement3.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void addSatistic(int productId, int quantity, double totalAmount, int stock, int orderId) {
+    public void addSatistic(int productId, int stock, int quantity, double totalPrice) {
         //Giảm sản phẩm còn lại
         String query1 = "UPDATE products SET stock = ? WHERE product_id = ?";
         try {
@@ -212,22 +234,12 @@ public class OrderDAO extends DBContext {
             PreparedStatement statement2 = connection.prepareStatement(query2);
             statement2.setInt(1, productId);
             statement2.setInt(2, quantity);
-            statement2.setBigDecimal(3, BigDecimal.valueOf(totalAmount));
+            statement2.setBigDecimal(3, BigDecimal.valueOf(totalPrice));
             statement2.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        // Thay đổi status order
-        String query3 = "UPDATE orders SET order_status = ? WHERE order_id = ?";
-        try {
-            PreparedStatement statement3 = connection.prepareStatement(query3);
-            statement3.setString(1, "Processcing");
-            statement3.setInt(2, orderId);
-            statement3.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
 }

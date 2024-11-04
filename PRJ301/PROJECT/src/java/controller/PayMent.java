@@ -6,6 +6,7 @@ package controller;
 
 import dal.OrderDAO;
 import dal.ProductDAO;
+import dal.RamDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,9 +14,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import model.Order;
 import model.OrderItem;
+import model.Ram;
 
 /**
  *
@@ -101,29 +104,8 @@ public class PayMent extends HttpServlet {
             System.out.println(e);
         }
         OrderDAO od = new OrderDAO();
-        ProductDAO pd = new ProductDAO();
-        List<OrderItem> items = od.getListItemInOrder(orderId);
-        for (OrderItem temp : items) {
-            int stock = pd.getProductByID(temp.getProductId()).getStock();
-
-            if (od.checkProductIdInStat(temp.getProductId()) != null) {
-                od.updateSatistic(
-                        temp.getProductId(),
-                        temp.getQuantity(),
-                        totalAmount,
-                        od.checkProductIdInStat(temp.getProductId()),
-                        stock,
-                        orderId);
-            } else {
-                od.addSatistic(
-                        temp.getProductId(),
-                        temp.getQuantity(),
-                        totalAmount,
-                        stock,
-                        orderId);
-            }
-
-        }
+        od.updateStatusOrder("Processing", orderId);
+        od.updateTotalAmout(totalAmount, orderId);
         response.sendRedirect("home");
     }
 

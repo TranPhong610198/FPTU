@@ -43,7 +43,7 @@
                                 </span>
                             </div>
                         </c:if>
-                        <c:if test="${requestScope.status == 'Processing' || requestScope.status == 'Completed'}">
+                        <c:if test="${requestScope.status == 'Processing' || requestScope.status == 'Completed' || requestScope.status == 'CancelledC'}">
                             <div class="flex-1 h-1 bg-blue-600 mx-2">
                             </div>
                             <div class="flex items-center">
@@ -55,7 +55,7 @@
                                 </span>
                             </div>
                         </c:if>
-                        <c:if test="${requestScope.status == 'CancelledP' || requestScope.status == 'CancelledC'}">
+                        <c:if test="${requestScope.status == 'CancelledP'}">
                             <div class="flex-1 h-1 bg-red-600 mx-2">
                             </div>
                             <div class="flex items-center">
@@ -118,7 +118,7 @@
                                         <div class="w-24 h-24 shrink-0 bg-white p-2 rounded-md">
                                             <img src='${item.product.imageUrl}'class="w-full h-full object-contain" />
                                         </div>
-                                        <h3 class="text-base font-bold text-gray-800">${item.product.name}</h3>
+                                        <h3 class="text-base font-bold text-gray-800">${item.product.name} ${item.ramSize!=null&&!item.ramSize.isEmpty()?(item.ramSize):''}</h3>
                                     </div>
                                     <div class=" col-span-1 flex justify-end items-center space-x-4">
                                         <div class="flex gap-4 mt-4">
@@ -149,9 +149,28 @@
                             </li>
                         </ul>
                         <div class="mt-8 space-y-2">
-                            <a href="javascript:history.back()" class="text-sm px-4 py-2.5 w-1/8 font-semibold tracking-wide bg-transparent text-gray-800 border border-gray-300 rounded-md hover:bg-gray-500 hover:text-white">Back To Profile</a>
-                        </div>
+                            <a href="javascript:history.back()" class="text-sm px-4 py-2.5 w-1/8 font-semibold tracking-wide bg-transparent text-gray-800 border border-gray-300 rounded-md hover:bg-gray-500 hover:text-white">Back</a>
 
+                            <c:choose>
+                                <c:when test="${requestScope.status == 'Pending'}">
+                                    <a href="payment?orderId=${requestScope.orderId}&total=${requestScope.total}" class="text-sm px-4 py-2.5 w-1/8 font-semibold tracking-wide bg-blue-600 text-white border border-gray-300 rounded-md hover:bg-blue-800">Pay</a>
+                                    <a href="processOrder?orderId=${requestScope.orderId}&action=cancelP" class="text-sm px-4 py-2.5 w-1/8 font-semibold tracking-wide bg-red-500 text-white border border-gray-300 rounded-md hover:bg-red-700 hover:text-white">Cancel</a>
+                                </c:when>
+                                <c:when test="${requestScope.status == 'Processing'}">
+                                    <c:set value="${sessionScope.account}" var="acc"/>
+                                    <c:if test="${acc.getRole().equals('admin')}">
+                                        <a href="processOrder?orderId=${requestScope.orderId}&total=${requestScope.total}&action=confirm" class="text-sm px-4 py-2.5 w-1/8 font-semibold tracking-wide bg-blue-600 text-white border border-gray-300 rounded-md hover:bg-blue-800">Confirm</a>
+                                        <a href="processOrder?orderId=${requestScope.orderId}&action=cancelC" class="text-sm px-4 py-2.5 w-1/8 font-semibold tracking-wide bg-red-500 text-white border border-gray-300 rounded-md hover:bg-red-700 hover:text-white">Cancel</a>
+                                    </c:if>
+                                    <c:if test="${!acc.getRole().equals('admin')}">
+                                        <a href="processOrder?orderId=${requestScope.orderId}&action=cancelC" class="text-sm px-4 py-2.5 w-1/8 font-semibold tracking-wide bg-red-500 text-white border border-gray-300 rounded-md hover:bg-red-700 hover:text-white">Cancel</a>
+                                    </c:if>
+                                </c:when>
+                                <c:otherwise>
+                                    <!-- Nội dung nếu tất cả các điều kiện trên đều sai -->
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                     </div>
                     <!--_______________________________________________________________________________________________________-->
 

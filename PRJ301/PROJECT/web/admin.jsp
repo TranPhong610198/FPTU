@@ -489,7 +489,7 @@
                             <c:if test="${not empty requestScope.listOrder}">
                                 <c:forEach items="${requestScope.listOrder}" var="order">
                                     <tr class="border-t border-gray-700  text-gray-200">
-
+                                        <!--User Name___________________________________________________-->
                                         <c:forEach items="${requestScope.listUser}" var="user">
                                             <c:if test="${user.id == order.userId}">
                                                 <td class="py-2">
@@ -497,14 +497,14 @@
                                                 </td>
                                             </c:if>
                                         </c:forEach>
-
+                                        <!--_______________________________________________________________-->        
                                         <td class="py-2">
                                             ${order.getDate()}
                                         </td>
                                         <td class="py-2">
                                             $${order.getTotal()}
                                         </td>
-                                        
+                                        <!--Phone Number_______________________________________________________-->
                                         <c:forEach items="${requestScope.listUser}" var="user">
                                             <c:if test="${user.id == order.userId}">
                                                 <td class="py-2">
@@ -512,7 +512,8 @@
                                                 </td>
                                             </c:if>
                                         </c:forEach>
-                                                
+                                        <!--_________________________________________________________________________-->
+                                        <!--Status___________________________________________________________________-->
                                         <c:if test="${order.getOrderStatus()=='Pending'}">
                                             <td class="py-2 text-yellow-500">
                                                 ${order.getOrderStatus()}
@@ -523,6 +524,23 @@
                                                 ${order.getOrderStatus()}
                                             </td>
                                         </c:if>
+                                        <c:if test="${order.getOrderStatus()=='CancelledP' || order.getOrderStatus()=='CancelledC'}">
+                                            <td class="py-2 text-red-500">
+                                                ${order.getOrderStatus()}
+                                            </td>
+                                        </c:if>
+                                        <c:if test="${order.getOrderStatus()=='Processing'}">
+                                            <td class="py-2 text-purple-500">
+                                                ${order.getOrderStatus()}
+                                            </td>
+                                        </c:if>
+                                        <!--____________________________________________________________________________-->
+                                        <!--ACTION__________________________________________________________________________-->
+                                        <td class="text-left">
+                                            <a href="orderDetail?orderId=${order.getOrderId()}&total=${order.getTotal()}"
+                                               class="text-gray-400 bg-gray-800 bg-gray-700 hover:text-white focus:ring-4 focus:ring-gray-700 border border-gray-600 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center">Detail</a>
+                                        </td>
+                                        <!--____________________________________________________________________________________-->
 
                                     </tr>
                                 </c:forEach>

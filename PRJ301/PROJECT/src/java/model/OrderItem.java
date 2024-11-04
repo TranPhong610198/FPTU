@@ -9,8 +9,9 @@ package model;
  * @author tphon
  */
 public class OrderItem {
-    int orderItemId, orderId, productId, quantity;
+    int orderItemId, orderId, productId, quantity, ramId;
     double price;
+    String ramSize;
     
     Product product;
 
@@ -34,6 +35,44 @@ public class OrderItem {
         this.product = product;
     }
 
+    public OrderItem(int orderItemId, int orderId, int productId, int quantity, int ramId, double price, Product product) {
+        this.orderItemId = orderItemId;
+        this.orderId = orderId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.ramId = ramId;
+        this.price = price;
+        this.product = product;
+    }
+
+    public OrderItem(int orderItemId, int orderId, int productId, int quantity, int ramId, double price, String ramSize, Product product) {
+        this.orderItemId = orderItemId;
+        this.orderId = orderId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.ramId = ramId;
+        this.price = price;
+        this.ramSize = ramSize;
+        this.product = product;
+    }
+
+    public String getRamSize() {
+        return ramSize;
+    }
+
+    public void setRamSize(String ramSize) {
+        this.ramSize = ramSize;
+    }
+
+    public int getRamId() {
+        return ramId;
+    }
+
+    public void setRamId(int ramId) {
+        this.ramId = ramId;
+    }
+
+    
     public Product getProduct() {
         return product;
     }

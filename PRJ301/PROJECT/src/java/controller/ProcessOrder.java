@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
 import dal.OrderDAO;
+import dal.ProductDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,36 +20,39 @@ import model.OrderItem;
  *
  * @author tphon
  */
-@WebServlet(name="orderDetail", urlPatterns={"/orderDetail"})
-public class orderDetailServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+@WebServlet(name = "ProcessOrder", urlPatterns = {"/processOrder"})
+public class ProcessOrder extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet orderDetail</title>");  
+            out.println("<title>Servlet ProcessOrder</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet orderDetail at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ProcessOrder at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -57,30 +60,52 @@ public class orderDetailServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
+        String action = request.getParameter("action");
         String orderId_raw = request.getParameter("orderId");
-        String total_raw = request.getParameter("total");
-        int orderId=-1;
-        double total =-1;
-        try {
-            orderId = Integer.parseInt(orderId_raw);
-            total = Double.parseDouble(total_raw);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        int orderId = Integer.parseInt(orderId_raw);
         OrderDAO od = new OrderDAO();
-        String status = od.getOrderById(orderId).getOrderStatus();
-        
-        List<OrderItem> items = od.getDetailOrder(orderId);
-        request.setAttribute("orderId", orderId);
-        request.setAttribute("status", status);
-        request.setAttribute("total", total);
-        request.setAttribute("items", items);
-        request.getRequestDispatcher("detailOrder.jsp").forward(request, response);
-    } 
+        String referrer = request.getHeader("referer");
+        try {
+            switch (action) {
+                case "cancelP":
+                    od.updateStatusOrder("CancelledP", orderId);
 
-    /** 
+                    response.sendRedirect(referrer);
+                    break;
+                case "cancelC":
+                    od.updateStatusOrder("CancelledC", orderId);
+                    response.sendRedirect(referrer);
+                    break;
+                case "confirm":
+                    od.updateStatusOrder("Completed", orderId);
+                    ProductDAO pd = new ProductDAO();
+                    List<OrderItem> items = od.getListItemInOrder(orderId);
+
+                    for (OrderItem temp : items) {
+                        int productId = temp.getProductId();
+                        int stock = pd.getProductByID(productId).getStock();
+                        int quantity = temp.getQuantity();
+                        double totalPrice = quantity*temp.getPrice();
+                        if (od.getStatByPid(productId) != null) {
+                            od.updateSatistic(productId, stock, quantity, totalPrice, od.getStatByPid(productId));
+                        } else {
+                            od.addSatistic(productId, stock, quantity, totalPrice);
+                        }
+                    }
+                    response.sendRedirect(referrer);
+                    break;
+                default:
+                    throw new ServletException("Invalid action");
+            }
+        } catch (Exception e) {
+        }
+
+    }
+
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -88,12 +113,13 @@ public class orderDetailServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
