@@ -19,6 +19,36 @@
             <div class="flex justify-start mx-4">
                 <a href="home"><img alt="Brand Logo" class="h-30" src="images/FondevJSLogoDark.svg"></a>
             </div>
+            <div class="flex justify-between items-center mb-6 p-4 rounded-lg">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center">
+                        1
+                    </div>
+                    <span class="ml-2 font-semibold">
+                        Cart
+                    </span>
+                </div>
+                <div class="flex-1 h-1 bg-gray-300 mx-2">
+                </div>
+                <div class="flex items-center">
+                    <div class="w-8 h-8 bg-gray-300 text-white rounded-full flex items-center justify-center">
+                        2
+                    </div>
+                    <span class="ml-2 font-semibold">
+                        Payment
+                    </span>
+                </div>
+                <div class="flex-1 h-1 bg-gray-300 mx-2">
+                </div>
+                <div class="flex items-center">
+                    <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center">
+                        3
+                    </div>
+                    <span class="ml-2 text-gray-600">
+                        Confirmation
+                    </span>
+                </div>
+            </div>
             <!-- Main Content -->
             <form action="payment" method="post">
                 <input type="hidden" name="orderId" value="${requestScope.orderId}"/>
@@ -128,9 +158,9 @@
             }
 
             function updateTotal() {
-                let subtotal = parseFloat(document.getElementById("subTotal").value)||0;
-                let paymentFee = parseFloat(document.getElementById("paymentFee").value)||0;
-                let deliveryFee = parseFloat(document.getElementById("deliveryFee").value)||0;
+                let subtotal = parseFloat(document.getElementById("subTotal").value) || 0;
+                let paymentFee = parseFloat(document.getElementById("paymentFee").value) || 0;
+                let deliveryFee = parseFloat(document.getElementById("deliveryFee").value) || 0;
                 let total = subtotal + paymentFee + deliveryFee;
                 document.getElementById("totalAmount").value = total.toFixed(2);
             }

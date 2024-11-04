@@ -26,6 +26,8 @@ public class Product {
     private List<Category> listCategory;
     private List<SubImage> listSubImages;
     private int totalSale;
+    private List<Ram> listRam;
+    private String ramVersions;
 
     
 
@@ -84,6 +86,41 @@ public class Product {
         this.listSubImages = listSubImages;
         this.totalSale = totalSale;
     }
+
+    public Product(int id, String name, String description, BigDecimal price, int stock, int brandId, int categoryId, String imageUrl, List<String> subImages, List<Brand> listBrand, List<Category> listCategory, List<SubImage> listSubImages, int totalSale, List<Ram> listRam) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.brandId = brandId;
+        this.categoryId = categoryId;
+        this.imageUrl = imageUrl;
+        this.subImages = subImages;
+        this.listBrand = listBrand;
+        this.listCategory = listCategory;
+        this.listSubImages = listSubImages;
+        this.totalSale = totalSale;
+        this.listRam = listRam;
+    }
+
+    public Product(int id, String name, String description, BigDecimal price, int stock, int brandId, int categoryId, String imageUrl, List<String> subImages, List<Brand> listBrand, List<Category> listCategory, List<SubImage> listSubImages, int totalSale, List<Ram> listRam, String ramVersions) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.brandId = brandId;
+        this.categoryId = categoryId;
+        this.imageUrl = imageUrl;
+        this.subImages = subImages;
+        this.listBrand = listBrand;
+        this.listCategory = listCategory;
+        this.listSubImages = listSubImages;
+        this.totalSale = totalSale;
+        this.listRam = listRam;
+        this.ramVersions = ramVersions;
+    }
     
     
     
@@ -98,6 +135,24 @@ public class Product {
     }
 
     // Getters và Setters
+
+    public String getRamVersions() {
+        return ramVersions;
+    }
+
+    public void setRamVersions(String ramVersions) {
+        this.ramVersions = ramVersions;
+    }
+    
+    
+    public void setListRam(List<Ram> listRam) {
+        this.listRam = listRam;
+    }
+
+    public List<Ram> getListRam() {
+        return listRam;
+    }
+
     public int getId() {
         return id;
     }

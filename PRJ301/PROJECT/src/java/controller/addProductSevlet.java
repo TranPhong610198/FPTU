@@ -101,11 +101,11 @@ public class addProductSevlet extends HttpServlet {
         //        Part filePart = request.getPart("image");
         //        String fileName = extractFileName(filePart);
         //        String newFileName = UUID.randomUUID().toString()+fileName;
-                // Đường dẫn lưu file ảnh (lưu vào thư mục 'images' trong server)
+        // Đường dẫn lưu file ảnh (lưu vào thư mục 'images' trong server)
         //        String savePath = "D:/CODING/FPTU/PRJ301/PROJECT/web/imagesDB" + File.separator + newFileName;
         //        File fileSaveDir = new File(savePath);
         //        filePart.write(savePath); // Lưu ảnh vào thư mục
-                // Tạo URL của ảnh (ví dụ URL sẽ là "/images/filename.jpg")
+        // Tạo URL của ảnh (ví dụ URL sẽ là "/images/filename.jpg")
         //         String imageUrl = "imagesDB/" + newFileName;
         //_____________________________________________________________________________
         // Nhận file ảnh chính từ form
@@ -122,16 +122,16 @@ public class addProductSevlet extends HttpServlet {
             }
         }
         try {
-        //        int id = Integer.parseInt(id_raw);
-        //-- cái này làm trước khi thêm ảnh phụ nên phải sửa lại --
-        //        BigDecimal price = new BigDecimal(price_raw);
-        //        int stock = Integer.parseInt(stock_raw);
-        //        int categoryId = Integer.parseInt(categoryId_raw);
-        //        Product temp = new Product(name, descrip, price, stock, brand, categoryId, imageUrl);
-        //        ProductDAO pd = new ProductDAO();
-        //        pd.addProduct(temp);
-        //        response.sendRedirect("listProduct");
-        //------------------------------------------------------------
+            //        int id = Integer.parseInt(id_raw);
+            //-- cái này làm trước khi thêm ảnh phụ nên phải sửa lại --
+            //        BigDecimal price = new BigDecimal(price_raw);
+            //        int stock = Integer.parseInt(stock_raw);
+            //        int categoryId = Integer.parseInt(categoryId_raw);
+            //        Product temp = new Product(name, descrip, price, stock, brand, categoryId, imageUrl);
+            //        ProductDAO pd = new ProductDAO();
+            //        pd.addProduct(temp);
+            //        response.sendRedirect("listProduct");
+            //------------------------------------------------------------
             BigDecimal price = new BigDecimal(price_raw);
             int stock = Integer.parseInt(stock_raw);
             int categoryId = Integer.parseInt(categoryId_raw);
@@ -139,7 +139,14 @@ public class addProductSevlet extends HttpServlet {
 
             Product temp = new Product(name, descrip, price, stock, brandId, categoryId, mainImageUrl);
             ProductDAO pd = new ProductDAO();
-            pd.addProduct(temp, subImageUrls);
+            
+            String[] listRam = request.getParameterValues("ramId[]");
+            List<Integer> ramIds = new ArrayList<>();
+            for (String listRam1 : listRam) {
+                int ramId = Integer.parseInt(listRam1);
+                ramIds.add(ramId);
+            }
+            pd.addProduct(temp, subImageUrls, ramIds);
 
             response.sendRedirect("listProduct");
         } catch (NumberFormatException e) {
@@ -147,7 +154,17 @@ public class addProductSevlet extends HttpServlet {
         }
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
     // Phương thức để lấy tên file từ part
+
     private String extractFileName(Part part) {
         String contentDisp = part.getHeader("content-disposition");
         String[] items = contentDisp.split(";");
@@ -168,15 +185,4 @@ public class addProductSevlet extends HttpServlet {
         imagePart.write(savePath);  // Lưu ảnh vào folder server
         return newFileName;         // Trả về tên file đã lưu
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

@@ -86,6 +86,7 @@ public class deleteProductServlet extends HttpServlet {
                 }
                 pd.deleteProduct(id);
             }
+            pd.deleteProductRam(id);
             response.sendRedirect("listProduct");
         } catch (IOException | NumberFormatException e) {
             System.out.println(e);

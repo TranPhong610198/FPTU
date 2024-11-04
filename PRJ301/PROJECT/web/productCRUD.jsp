@@ -93,6 +93,7 @@
                                 <th class="py-2">Stock</th>
                                 <th class="py-2">Brand</th>
                                 <th class="py-2">Category</th>
+                                <th class="py-2">Ram Version</th>
                                 <th class="py-2">Image</th>
                                 <th class="py-2">Action</th>
                             </tr>
@@ -116,6 +117,11 @@
                                             ${(lC.categoryId==c.categoryId)?lC.categoryName:''}
                                         </c:forEach>
                                     </td>
+                                    <!--Ram Version_______________________________________________________________________________________-->
+                                    <td class="py-2">
+                                        ${c.ramVersions!=null&&!c.ramVersions.isEmpty()?c.ramVersions:'None options'}
+                                    </td>
+                                    <!--__________________________________________________________________________________________________-->
                                     <td class="py-2 grid justify-items-center">
                                         <img src="${c.imageUrl}" alt="${c.name}" width="150px"/>
                                     </td>
@@ -125,7 +131,7 @@
                                         </a>
                                         <div id="productDescription${c.id}" style="display: none;">${c.description}</div>
 
-                                        <button onclick="doUpdate('${c.id}', '${c.name}', '${c.price}', '${c.brandId}', '${c.stock}', '${c.imageUrl}', '${c.categoryId}')"  type="button" id="updateProductButton" data-drawer-target="drawer-update-product-default" data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default" data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                        <button onclick="doUpdate('${c.id}', '${c.name}', '${c.price}', '${c.brandId}', '${c.stock}', '${c.imageUrl}', '${c.categoryId}', '${c.ramVersions}')"  type="button" id="updateProductButton" data-drawer-target="drawer-update-product-default" data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default" data-drawer-placement="right" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                             <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                             <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"></path>
                                             <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd"></path>
@@ -211,6 +217,20 @@
                         <label for="stock" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stock</label>
                         <input type="text" name="stock" id="stock" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$" required="">
                     </div>
+                    <div>
+                        <div>
+                            <label for="ram" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ram versions</label>
+                            <c:if test="${not empty requestScope.listRam}">
+                                <div class="bg-gray-50 border border-gray-300 rounded-lg p-2.5 dark:bg-gray-700 dark:border-gray-600">
+                                    <c:forEach var="lR" items="${requestScope.listRam}">
+                                        <label class="flex items-center mb-1 hover:bg-gray-600">
+                                            <input type="checkbox" name="ramId[]" value="${lR.ramId}" class="mr-2"> ${lR.ramSize}
+                                        </label>
+                                    </c:forEach>
+                                </div>
+                            </c:if>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="image">Main Image</label>
                         <input name="image" class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" id="image" required="">
@@ -292,6 +312,20 @@
                         <label for="oStock" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stock</label>
                         <input type="text" name="stock" id="oStock" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="$" required="">
                     </div>
+                    <div>
+                        <div>
+                            <label for="oRam" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ram versions</label>
+                            <c:if test="${not empty requestScope.listRam}">
+                                <div class="bg-gray-50 border border-gray-300 rounded-lg p-2.5 dark:bg-gray-700 dark:border-gray-600">
+                                    <c:forEach var="lR" items="${requestScope.listRam}">
+                                        <label class="flex items-center mb-1 hover:bg-gray-600">
+                                            <input type="checkbox" name="oRamId[]" value="${lR.ramId}" class="mr-2"> ${lR.ramSize}
+                                        </label>
+                                    </c:forEach>
+                                </div>
+                            </c:if>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="image">Main Image</label>
                         <input name="image" class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file" id="image">
@@ -331,7 +365,7 @@
 
         <script type="text/javascript">
             CKEDITOR.versionCheck = function () {}; // Vô hiệu hóa kiểm tra phiên bản
-            function doUpdate(id, name, price, brandId, stock, imageUrl, categoryId) {
+            function doUpdate(id, name, price, brandId, stock, imageUrl, categoryId, ramVersions) {
                 // Cập nhật các trường trong form Edit Product Drawer
                 document.getElementById('oName').value = name;
                 document.getElementById('oPrice').value = price;
@@ -368,6 +402,20 @@
                         option.selected = false;
                     }
                 });
+
+                const ramSizes = ramVersions.split(' '); // Chuyển chuỗi ramVersions thành mảng các ramSize
+                const checkboxes = document.querySelectorAll('input[name="oRamId[]"]');
+                console.log(checkboxes.innerHTML);
+                checkboxes.forEach(checkbox => {
+                    const label = checkbox.parentElement.textContent.trim(); // Lấy nội dung (ramSize) kế tiếp của checkbox
+
+                    // Nếu ramSize của checkbox nằm trong mảng ramSizes, đặt nó là checked
+                    if (ramSizes.includes(label)) {
+                        checkbox.checked = true;
+                    } else {
+                        checkbox.checked = false;
+                    }
+                });
             }
 
             CKEDITOR.replace('description');
@@ -382,5 +430,6 @@
         <script async defer src="https://buttons.github.io/buttons.js "></script>
         <script src="https://flowbite-admin-dashboard.vercel.app//app.bundle.js "></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.2/datepicker.min.js "></script>
+
     </body>
 </html>

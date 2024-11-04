@@ -40,7 +40,7 @@
                                         <div class="w-24 h-24 shrink-0 bg-white p-2 rounded-md">
                                             <img src='${item.productImage}'class="w-full h-full object-contain" />
                                         </div>
-                                        <h3 class="text-base font-bold text-gray-800">${item.productName}</h3>
+                                            <h3 class="text-base font-bold text-gray-800">${item.productName} ${item.ramSize!=null&&!item.ramSize.isEmpty()?(item.ramSize):''}</h3>
                                     </div>
                                     <div class=" col-span-1 flex justify-end items-center space-x-4">
                                         <div class="flex gap-4 mt-4">
@@ -94,7 +94,9 @@
                             <form action="cart" method="post">
                                 <input type="hidden" name="action" value="checkout" />
                                 <input type="hidden" name="total" value="${requestScope.total}" />
-                                <button type="submit" class="text-sm px-4 py-2.5 w-1/8 font-semibold tracking-wide bg-blue-600 hover:bg-blue-700 text-white rounded-md">Checkout</button>
+                                <c:if test="${!empty requestScope.cartItems}">
+                                    <button type="submit" class="text-sm px-4 py-2.5 w-1/8 font-semibold tracking-wide bg-blue-600 hover:bg-blue-700 text-white rounded-md">Checkout</button>
+                                </c:if>
                                 <a href="home" class="text-sm px-4 py-2.5 w-1/8 font-semibold tracking-wide bg-transparent text-gray-800 border border-gray-300 rounded-md">Continue Shopping</a>
 
                             </form>

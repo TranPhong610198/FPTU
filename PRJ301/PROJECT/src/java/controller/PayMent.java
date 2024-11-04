@@ -71,6 +71,9 @@ public class PayMent extends HttpServlet {
             orderId = Integer.parseInt(orderId_raw);
         } catch (Exception e) {
         }
+        OrderDAO od = new OrderDAO();
+        String status = od.getOrderById(orderId).getOrderStatus();
+        request.setAttribute("status", status);
         request.setAttribute("total", total);
         request.setAttribute("orderId", orderId);
         request.getRequestDispatcher("payment.jsp").forward(request, response);
@@ -119,9 +122,9 @@ public class PayMent extends HttpServlet {
                         stock,
                         orderId);
             }
-           
+
         }
-         response.sendRedirect("home");
+        response.sendRedirect("home");
     }
 
     /**

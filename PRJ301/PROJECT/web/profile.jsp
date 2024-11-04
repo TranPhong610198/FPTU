@@ -241,7 +241,7 @@
                                                 ${order.getOrderStatus()}
                                             </td>
                                         </c:if>
-                                        <c:if test="${order.getOrderStatus()=='Cancelled'}">
+                                        <c:if test="${order.getOrderStatus()=='CancelledP' || order.getOrderStatus()=='CancelledC'}">
                                             <td class="py-2 text-red-500">
                                                 ${order.getOrderStatus()}
                                             </td>
@@ -254,24 +254,8 @@
                                         <!--____________________________________________________________________________-->
                                         <!--ACTION__________________________________________________________________________-->
                                         <td class="text-center">
-                                            <c:if test="${order.getOrderStatus()=='Pending'}">
-                                                <a href="payment?orderId=${order.getOrderId()}&total=${order.getTotal()}"
-                                                   class="text-gray-400 bg-gray-800 bg-gray-700 hover:text-white focus:ring-4 focus:ring-gray-700 border border-gray-600 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center">Pay</a>
-                                                <a href="deleteOrder?orderId=${order.getOrderId()}"
-                                                   class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base inline-flex items-center px-3 py-2.5 text-center mr-2">Delete</a>
-                                            </c:if>
-                                            <c:if test="${order.getOrderStatus()=='Completed'}">
                                                 <a href="orderDetail?orderId=${order.getOrderId()}&total=${order.getTotal()}"
                                                    class="text-gray-400 bg-gray-800 bg-gray-700 hover:text-white focus:ring-4 focus:ring-gray-700 border border-gray-600 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center">Detail</a>
-                                            </c:if>
-                                            <c:if test="${order.getOrderStatus()=='Processing'}">
-                                                <a href="orderDetail?orderId=${order.getOrderId()}&total=${order.getTotal()}"
-                                                   class="text-gray-400 bg-gray-800 bg-gray-700 hover:text-white focus:ring-4 focus:ring-gray-700 border border-gray-600 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center">Detail</a>
-                                            </c:if>
-                                            <c:if test="${order.getOrderStatus()=='Cancelled'}">
-                                                <a href="orderDetail?orderId=${order.getOrderId()}&total=${order.getTotal()}"
-                                                   class="text-gray-400 bg-gray-800 bg-gray-700 hover:text-white focus:ring-4 focus:ring-gray-700 border border-gray-600 font-medium inline-flex items-center rounded-lg text-base px-3 py-2.5 text-center">Detail</a>
-                                            </c:if>
                                         </td>
                                         <!--____________________________________________________________________________________-->
                                     </tr>

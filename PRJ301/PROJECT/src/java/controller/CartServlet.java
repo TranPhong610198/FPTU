@@ -89,7 +89,7 @@ public class CartServlet extends HttpServlet {
             //Lấy từ cookie các sản phẩm vừa xem
             String valueCookie = "";
             boolean isSelect = false;
-            
+
             Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
@@ -103,7 +103,7 @@ public class CartServlet extends HttpServlet {
                     ProductDAO pd = new ProductDAO();
                     List<Product> products = new ArrayList<>();
                     String[] ProductIds = valueCookie.split("/");
-                    for (String productId_raw : ProductIds){
+                    for (String productId_raw : ProductIds) {
                         int productId = Integer.parseInt(productId_raw);
                         Product temp = pd.getProductByID(productId);
                         products.add(temp);
@@ -135,7 +135,7 @@ public class CartServlet extends HttpServlet {
         }
         CartDAO cd = new CartDAO();
         User user = (User) request.getSession().getAttribute("account");
-        int productId, quantity, cartId, cartItemId;
+        int productId, quantity, cartId, cartItemId, ramId;
         if (user == null) {
             response.sendRedirect("login");
         } else {
@@ -145,13 +145,19 @@ public class CartServlet extends HttpServlet {
                     case "add":
                         productId = Integer.parseInt(request.getParameter("productId"));
                         quantity = Integer.parseInt(request.getParameter("quantity"));
+                        String ramId_raw = request.getParameter("ram");
+                        if (ramId_raw != null && !ramId_raw.isEmpty()) {
+                            ramId = Integer.parseInt(ramId_raw);
+                        } else {
+                            ramId = -1;
+                        }
                         cartId = cd.getCartIdByUserId(userId);
-                        int temp = cd.getCartItemIdbyPId(productId, cartId);
+                        int temp = cd.getCartItemIdbyPIdRid(productId, cartId, ramId);
                         if (temp != -1) {
-                            int oldQuantity = cd.getQuantitybyPId(productId, cartId);
+                            int oldQuantity = cd.getQuantitybyPIdRid(productId, cartId, ramId);
                             cd.updateCartItemQuantity(temp, quantity + oldQuantity);
                         } else {
-                            cd.addItemToCart(cartId, productId, quantity);
+                            cd.addItemToCart(cartId, productId, quantity, ramId);
                         }
                         response.sendRedirect("cart");
                         break;
@@ -175,7 +181,7 @@ public class CartServlet extends HttpServlet {
 //                        request.setAttribute("orderId", orderId);
 //                        request.setAttribute("total", total);
 //                        request.getRequestDispatcher("payment").forward(request, response);
-                        response.sendRedirect("payment?orderId="+orderId+"&total="+total);
+                        response.sendRedirect("payment?orderId=" + orderId + "&total=" + total);
                         break;
 
                     default:

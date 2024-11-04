@@ -46,9 +46,13 @@ public class CartDAO extends DBContext {
     }
 
     // Thêm một mục vào giỏ hàng
-    public void addItemToCart(int cartId, int productId, int quantity) {
+    public void addItemToCart(int cartId, int productId, int quantity, int ramId) {
         String sql = "INSERT INTO cart_items (cart_id, product_id, quantity) VALUES (?, ?, ?)";
         try {
+            if (ramId != -1) {
+                sql = "INSERT INTO cart_items (cart_id, product_id, quantity, ram_id) VALUES (?, ?, ?," + ramId + ")";
+            }
+
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, cartId);
             stmt.setInt(2, productId);
@@ -62,12 +66,13 @@ public class CartDAO extends DBContext {
     // Lấy danh sách các mục trong giỏ hàng của người dùng
     public List<CartItem> getCartItems(int userId) {
         List<CartItem> items = new ArrayList<>();
-        String sql = "SELECT ci.cart_item_id, ci.cart_id, ci.product_id, ci.quantity, "
-                + "p.name AS product_name, p.price, p.image_url "
-                + "FROM cart_items ci "
-                + "JOIN cart c ON ci.cart_id = c.cart_id "
-                + "JOIN products p ON ci.product_id = p.product_id "
-                + "WHERE c.user_id = ?";
+        String sql = "SELECT ci.cart_item_id, ci.cart_id, ci.product_id, ci.quantity, r.ram_size, r.ram_id,\n"
+                + "                p.name AS product_name, p.price, p.image_url \n"
+                + "                FROM cart_items ci \n"
+                + "                JOIN cart c ON ci.cart_id = c.cart_id\n"
+                + "                JOIN products p ON ci.product_id = p.product_id\n"
+                + "                LEFT JOIN ram r ON ci.ram_id = r.ram_id\n"
+                + "                WHERE c.user_id = ?";
 
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -81,9 +86,11 @@ public class CartDAO extends DBContext {
                         rs.getInt("product_id"),
                         rs.getInt("quantity"),
                         rs.getString("product_name"),
-                        rs.getDouble("price"),// Lấy giá sản phẩm
+                        rs.getDouble("price") + (double) rs.getInt("ram_id") * 20,// Lấy giá sản phẩm
                         rs.getString("image_url")
                 );
+                item.setRamSize(rs.getString("ram_size"));
+                item.setRamId(rs.getInt("ram_id"));
                 items.add(item);
             }
         } catch (SQLException e) {
@@ -149,7 +156,9 @@ public class CartDAO extends DBContext {
     // Hàm chuyển giỏ hàng thành đơn hàng khi checkout
     public int transferCartToOrder(int userId, double total) {
         String insertOrderSQL = "INSERT INTO orders (user_id, total, order_status, created_at) VALUES (?, ?, 'Pending', GETDATE())";
-        String insertOrderItemSQL = "INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
+//        String insertOrderItemSQL = "INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
+        String insertOrderItemWithRamSQL = "INSERT INTO order_items (order_id, product_id, quantity, price, ram_id) VALUES (?, ?, ?, ?, ?)";
+        String insertOrderItemWithoutRamSQL = "INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
         String deleteCartItemsSQL = "DELETE FROM cart_items WHERE cart_id = ?";
         int orderId = -1;
         try {
@@ -170,15 +179,29 @@ public class CartDAO extends DBContext {
 
             // Thêm các sản phẩm từ giỏ hàng vào đơn hàng mới
             List<CartItem> cartItems = getCartItems(userId);
-            PreparedStatement orderItemStmt = connection.prepareStatement(insertOrderItemSQL);
+
+//            PreparedStatement orderItemStmt = connection.prepareStatement(insertOrderItemSQL);
             for (CartItem item : cartItems) {
-                orderItemStmt.setInt(1, orderId);
-                orderItemStmt.setInt(2, item.getProductId());
-                orderItemStmt.setInt(3, item.getQuantity());
-                orderItemStmt.setDouble(4, item.getPrice());
-                orderItemStmt.addBatch();
+                if (item.getRamSize() == null) {
+                    PreparedStatement orderItemStmt = connection.prepareStatement(insertOrderItemWithoutRamSQL);
+                    orderItemStmt.setInt(1, orderId);
+                    orderItemStmt.setInt(2, item.getProductId());
+                    orderItemStmt.setInt(3, item.getQuantity());
+                    orderItemStmt.setDouble(4, item.getPrice());
+//                    orderItemStmt.addBatch();
+                    orderItemStmt.executeUpdate();
+                } else {
+                    // Sản phẩm có `ramId` (laptop)
+                    PreparedStatement orderItemStmt = connection.prepareStatement(insertOrderItemWithRamSQL);
+                    orderItemStmt.setInt(1, orderId);
+                    orderItemStmt.setInt(2, item.getProductId());
+                    orderItemStmt.setInt(3, item.getQuantity());
+                    orderItemStmt.setDouble(4, item.getPrice());
+                    orderItemStmt.setInt(5, item.getRamId()); // Thêm `ramId` cho sản phẩm laptop
+                    orderItemStmt.executeUpdate();
+                }
             }
-            orderItemStmt.executeBatch();
+//            orderItemStmt.executeBatch();
 
             // Xóa các mục trong giỏ hàng sau khi chuyển vào đơn hàng
             int cartId = getCartIdByUserId(userId);
@@ -205,11 +228,14 @@ public class CartDAO extends DBContext {
         return orderId;
     }
 
-    public int getCartItemIdbyPId(int productId, int cartId) {
+    public int getCartItemIdbyPIdRid(int productId, int cartId, int ramId) {
         String query1 = "SELECT ci.cart_item_id FROM cart_items ci, products p \n"
                 + "WHERE ci.product_id = p.product_id and\n"
-                + "ci.cart_id=? and ci.product_id=? ";
+                + "ci.cart_id=? and ci.product_id=?";
         try {
+            if (ramId != -1) {
+                query1 += " and ci.ram_id=" + ramId;
+            }
             PreparedStatement statementQ = connection.prepareStatement(query1);
             statementQ.setInt(1, cartId);
             statementQ.setInt(2, productId);
@@ -224,12 +250,15 @@ public class CartDAO extends DBContext {
         }
         return -1;
     }
-    
-        public int getQuantitybyPId(int productId, int cartId) {
+
+    public int getQuantitybyPIdRid(int productId, int cartId, int ramId) {
         String query1 = "SELECT ci.quantity FROM cart_items ci, products p \n"
                 + "WHERE ci.product_id = p.product_id and\n"
                 + "ci.cart_id=? and ci.product_id=? ";
         try {
+            if (ramId != -1) {
+                query1 += " and ram_id=" + ramId;
+            }
             PreparedStatement statementQ = connection.prepareStatement(query1);
             statementQ.setInt(1, cartId);
             statementQ.setInt(2, productId);

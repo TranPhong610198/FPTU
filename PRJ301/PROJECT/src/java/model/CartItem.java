@@ -14,11 +14,13 @@ public class CartItem {
     private int cartId;
     private int productId;
     private int quantity;
+    private int ramId;
 
     // Thông tin bổ sung về sản phẩm (có thể cần cho việc hiển thị trong giỏ hàng)
     private String productName;
     private String productImage;
     private double price;
+    private String ramSize;
 
     // Constructor không tham số
     public CartItem() {
@@ -31,6 +33,14 @@ public class CartItem {
         this.productId = productId;
         this.quantity = quantity;
     }
+    
+    public CartItem(int cartItemId, int cartId, int productId, int quantity, int ramId) {
+        this.cartItemId = cartItemId;
+        this.cartId = cartId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.ramId = ramId;
+    }
 
     // Constructor với các tham số đầy đủ, bao gồm thông tin bổ sung về sản phẩm
     public CartItem(int cartItemId, int cartId, int productId, int quantity, String productName, double price, String productImage) {
@@ -42,9 +52,37 @@ public class CartItem {
         this.price = price;
         this.productImage = productImage;
     }
+    
+        public CartItem(int cartItemId, int cartId, int productId, int quantity, int ramId, String productName, double price, String productImage, String ramSize) {
+        this.cartItemId = cartItemId;
+        this.cartId = cartId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.productName = productName;
+        this.price = price;
+        this.productImage = productImage;
+        this.ramId = ramId;
+        this.ramSize = ramSize;
+    }
 
     // Getter và Setter cho các thuộc tính
-    
+     
+    public void setRamSize(String ramSize) {
+        this.ramSize = ramSize;
+    }
+
+    public void setRamId(int ramId) {
+        this.ramId = ramId;
+    }
+
+    public int getRamId() {
+        return ramId;
+    }
+
+    public String getRamSize() {
+        return ramSize;
+    }
+
     public String getProductImage() {
         return productImage;
     }

@@ -160,7 +160,7 @@ public class updateProductServlet extends HttpServlet {
                 }
 
                 // Tạo tên mới cho ảnh
-                String newFileName = UUID.randomUUID().toString()+fileName;
+                String newFileName = UUID.randomUUID().toString() + fileName;
                 imageUrl = "imagesDB/" + newFileName; // URL của ảnh mới
 
                 // Lưu ảnh mới vào thư mục
@@ -170,24 +170,22 @@ public class updateProductServlet extends HttpServlet {
                 imageUrl = oldImageUrl;
             }
 //-------------------------------------------------------------------------------------------------------------------------------
-
+            String[] listRam = request.getParameterValues("oRamId[]");
+            if (listRam != null) {
+                List<Integer> ramIds = new ArrayList<>();
+                for (String listRam1 : listRam) {
+                    int ramId = Integer.parseInt(listRam1);
+                    ramIds.add(ramId);
+                }
+                pd.deleteProductRam(id);
+                pd.addProductRam(id, ramIds);
+            }
             Product temp = new Product(id, name, descrip, price, stock, brandId, categoryId, imageUrl);
             pd.updateProduct(temp);
             response.sendRedirect("listProduct");
         } catch (IOException | NumberFormatException e) {
             System.out.println(e);
         }
-    }
-
-    private String extractFileName(Part part) {
-        String contentDisp = part.getHeader("content-disposition");
-        String[] items = contentDisp.split(";");
-        for (String s : items) {
-            if (s.trim().startsWith("filename")) {
-                return s.substring(s.indexOf("=") + 2, s.length() - 1);
-            }
-        }
-        return "";
     }
 
     /**
@@ -200,4 +198,14 @@ public class updateProductServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    private String extractFileName(Part part) {
+        String contentDisp = part.getHeader("content-disposition");
+        String[] items = contentDisp.split(";");
+        for (String s : items) {
+            if (s.trim().startsWith("filename")) {
+                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+            }
+        }
+        return "";
+    }
 }

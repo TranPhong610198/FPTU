@@ -188,16 +188,25 @@
                         <div>
                             <h2 class="text-3xl font-bold mb-2">${product.name}</h2>
                             <div class="mb-4">
-                                <span class="text-2xl font-bold mr-2">$${product.price}</span>
+                                <span class="text-2xl font-bold mr-2 product-price">$${product.price}</span>
                             </div>
                         </div>
                         <div>
-                            <form action="cart" method="post">
+                            <form action="cart" method="post" onsubmit="return validateSelect()">
                                 <div class="mb-6">
 
                                     <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1">Quantity:</label>
                                     <input type="number" id="quantity" name="quantity" min="1" max="${product.stock}" value="1"
                                            class="w-12 text-center rounded-md border-gray-300  shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    <input type ="hidden" id="categoryId" name="categoryId" value="${product.categoryId}"/>
+                                    <c:if test="${product.categoryId != 4}">
+                                        <select id="ram" name="ram" class=" w-1/8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-gray-300 block p-2.5">
+                                            <option value="" selected="">Ram options</option>
+                                            <c:forEach var="ramVers" items="${requestScope.ramVers}">
+                                                <option value="${ramVers.ramId}">${ramVers.ramSize}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </c:if>
                                 </div>
                                 <div class="flex space-x-4 mb-6">
 
@@ -269,6 +278,34 @@
             </div>
         </div>
 
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const ramSelect = document.getElementById("ram");
+                const priceDisplay = document.querySelector(".product-price"); // Phần hiển thị giá
+                const basePrice = parseFloat(${product.price}); // Lấy giá gốc từ server
+
+                ramSelect.addEventListener("change", function () {
+                    const ramId = parseInt(ramSelect.value); // Lấy giá trị ramId
+                    let newPrice = basePrice;
+                    if (ramId) { // Kiểm tra nếu có ramId được chọn
+                        newPrice += ramId * 20; // Cộng thêm ramId * 20 vào giá
+                    }
+                    priceDisplay.textContent = "$" + newPrice.toFixed(2); // Cập nhật giá mới
+                });
+            });
+        </script>
+
+        <script>
+            function validateSelect() {
+                const select = document.getElementById("ram");
+                const cateId = document.getElementById("categoryId");
+                if (select.value === "" && cateId.value !== 4) {
+                    alert("Vui lòng chọn Ram option");
+                    return false; // Ngăn không cho form submit
+                }
+                return true; // Cho phép form submit nếu chọn đúng
+            }
+        </script>
         <script>
             function changeImage(src) {
                 document.getElementById('mainImage').src = src;

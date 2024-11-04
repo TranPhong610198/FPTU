@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Product;
+import model.Ram;
 import model.User;
 
 /**
@@ -105,6 +106,9 @@ public class homeServlet extends HttpServlet {
             int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
             List<String> subImages = pd.getSubImagesByProductId(productId);
             List<Product> samelist = pd.getSameProducts(product.getCategoryId(), pageSize, offset);
+            
+            List<Ram> ramVers = pd.getListRamByPid(productId);
+            request.setAttribute("ramVers", ramVers);
             request.setAttribute("product", product);
             request.setAttribute("totalPages", totalPages);
             request.setAttribute("currentPage", page);

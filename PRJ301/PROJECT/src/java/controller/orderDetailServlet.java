@@ -69,8 +69,9 @@ public class orderDetailServlet extends HttpServlet {
             System.out.println(e);
         }
         OrderDAO od = new OrderDAO();
+        String status = od.getOrderById(orderId).getOrderStatus();
         List<OrderItem> items = od.getDetailOrder(orderId);
-        
+        request.setAttribute("status", status);
         request.setAttribute("total", total);
         request.setAttribute("items", items);
         request.getRequestDispatcher("detailOrder.jsp").forward(request, response);

@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import model.Product;
+import model.Ram;
 
 /**
  *
@@ -88,6 +89,10 @@ public class listProductServlet extends HttpServlet {
         }
         int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
         request.setAttribute("searchKey", searchKeyword);
+        
+        List<Ram> listRam = pd.getAllRam();
+        request.setAttribute("listRam", listRam);
+        
         request.setAttribute("link", link);
         request.setAttribute("listProduct", list);
         request.setAttribute("totalPages", totalPages);

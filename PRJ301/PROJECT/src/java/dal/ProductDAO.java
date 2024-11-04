@@ -14,9 +14,101 @@ import java.util.List;
 import model.Brand;
 import model.Category;
 import model.Product;
+import model.Ram;
 import model.SubImage;
 
 public class ProductDAO extends DBContext {
+
+    public List<Ram> getAllRam() {
+        String sql = "SELECT * FROM ram";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            List<Ram> listRam = new ArrayList<>();
+            while (rs.next()) {
+                Ram ram = new Ram(
+                        rs.getInt("ram_id"),
+                        rs.getString("ram_size")
+                );
+                listRam.add(ram);
+            }
+            return listRam;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public List<Ram> getListRamByPid(int productId) {
+        String sql = "SELECT r.*\n"
+                + "FROM ram r\n"
+                + "JOIN product_ram pr ON r.ram_id = pr.ram_id\n"
+                + "WHERE pr.product_id =?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, productId);
+            ResultSet rs = stmt.executeQuery();
+            List<Ram> listRam = new ArrayList<>();
+            while (rs.next()) {
+                Ram ram = new Ram(
+                        rs.getInt("ram_id"),
+                        rs.getString("ram_size")
+                );
+                listRam.add(ram);
+            }
+            return listRam;
+        } catch (Exception e) {
+        }
+
+        return null;
+    }
+
+    public void deleteProductRam(int productId) {
+        String sql = "DELETE FROM product_ram WHERE product_id = ?";
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1, productId);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void addProductRam(int productId, List<Integer> ramIds) {
+        String sql = "INSERT INTO product_ram (product_id, ram_id) VALUES (?, ?)";
+
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            for (Integer ramId : ramIds) {
+                pstmt.setInt(1, productId);
+                pstmt.setInt(2, ramId);
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch(); // Thực thi batch
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    public String getRamVersions(int productId) {
+        String sql = "SELECT r.ram_size\n"
+                + "FROM ram r\n"
+                + "JOIN product_ram pr ON r.ram_id = pr.ram_id\n"
+                + "WHERE pr.product_id = ?; ";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, productId);
+            ResultSet rs = stmt.executeQuery();
+            String ramVers = "";
+            while (rs.next()) {
+                ramVers += rs.getString("ram_size") + " ";
+
+            }
+            return ramVers.trim();
+        } catch (Exception e) {
+        }
+
+        return null;
+    }
 
     //Lấy ra 5 sản phẩm bán chạy nhất
     public List<Product> getTop5Sale() {
@@ -274,7 +366,7 @@ public class ProductDAO extends DBContext {
     }
 
     // Thêm sản phẩm mới vào cơ sở dữ liệu
-    public void addProduct(Product product, List<String> subImages) {
+    public void addProduct(Product product, List<String> subImages, List<Integer> ramVers) {
         // **ADD ban đầu khi chưa có phần subimage, parametter chỉ có phần Product product**
         //        String query = "INSERT INTO products (name, description, price, stock, brand, category_id, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)";
         //
@@ -296,7 +388,7 @@ public class ProductDAO extends DBContext {
 
         String productQuery = "INSERT INTO products (name, description, price, stock, brand_id, category_id, image_url) VALUES (?, ?, ?, ?, ?, ?, ?)";
         String subImageQuery = "INSERT INTO sub_images (product_id, sub_image_url) VALUES (?, ?)";
-
+        String ramVersQuery = "INSERT INTO product_ram (product_id, ram_id) VALUES (?, ?);";
         try (PreparedStatement productStatement = connection.prepareStatement(productQuery, Statement.RETURN_GENERATED_KEYS)) {
 
             // Thêm sản phẩm vào bảng products
@@ -331,6 +423,20 @@ public class ProductDAO extends DBContext {
                             subImageStatement.executeBatch(); // Thực thi batch
                         }
                     }
+                    // Thêm ramVers nếu có
+                    if (ramVers != null && !ramVers.isEmpty()) {
+                        try {
+                            PreparedStatement pstmt = connection.prepareStatement(ramVersQuery);
+                            for (Integer ramId : ramVers) {
+                                pstmt.setInt(1, productId);
+                                pstmt.setInt(2, ramId);
+                                pstmt.addBatch();
+                            }
+                            pstmt.executeBatch(); // Thực thi batch
+                        } catch (SQLException e) {
+                            System.out.println(e);
+                        }
+                    }
                 } else {
                     throw new SQLException("Failed to add product, no product ID obtained.");
                 }
@@ -350,6 +456,7 @@ public class ProductDAO extends DBContext {
         String query2 = "SELECT * FROM brands";
         String query3 = "SELECT * FROM categories";
         String query4 = "SELECT * FROM sub_images";
+        String query5 = "SELECT * FROM ram";
         try {
             Statement statement = connection.createStatement();
             //get listBrands
@@ -381,6 +488,18 @@ public class ProductDAO extends DBContext {
                 subImage.setSubImageId(rsListSubIm.getInt("sub_image_id"));
                 subImage.setProductId(rsListSubIm.getInt("product_id"));
                 subImage.setSubImagePath(rsListSubIm.getString("sub_image_url"));
+                tempListSubIm.add(subImage);
+            }
+
+            //get listRam
+            List<Ram> tempListRam = new ArrayList<>();
+            ResultSet rsListRam = statement.executeQuery(query5);
+            while (rsListRam.next()) {
+                Ram ram = new Ram(
+                        rsListRam.getInt("ram_id"),
+                        rsListRam.getString("ram_size")
+                );
+                tempListRam.add(ram);
             }
             // get product
 //            ResultSet resultSet1 = statement.executeQuery(query1);
@@ -402,6 +521,10 @@ public class ProductDAO extends DBContext {
                 product.setListBrand(tempBrands);
                 product.setListCategory(tempCate);
                 product.setListSubImages(tempListSubIm);
+                product.setListRam(tempListRam);
+
+                String ramVers = getRamVersions(resultSet1.getInt("product_id"));
+                product.setRamVersions(ramVers);
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -828,6 +951,9 @@ public class ProductDAO extends DBContext {
                 product.setImageUrl(rs.getString("image_url"));
                 product.setListBrand(tempBrands);
                 product.setListCategory(tempCate);
+
+                String ramVers = getRamVersions(rs.getInt("product_id"));
+                product.setRamVersions(ramVers);
                 products.add(product);
             }
         } catch (SQLException e) {

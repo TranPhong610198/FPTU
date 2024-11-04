@@ -207,9 +207,6 @@ public class profileServlet extends HttpServlet {
         // CHỨC NĂNG HIỂN THỊ LIST ORDER
         OrderDAO od = new OrderDAO();
         List<Order> orderList = od.getAllOrder(id);
-        for (Order oder : orderList){
-            System.out.println(oder.getOrderId());
-        }
         request.setAttribute("orderList", orderList);
         
         request.getRequestDispatcher("profile.jsp").forward(request, response);

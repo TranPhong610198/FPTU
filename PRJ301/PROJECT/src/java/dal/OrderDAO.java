@@ -18,6 +18,29 @@ import model.Statistic;
  */
 public class OrderDAO extends DBContext {
 
+    public Order getOrderById(int order_id) {
+        String query = "SELECT * FROM orders WHERE order_id = ?";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setInt(1, order_id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                Order order = new Order(
+                        rs.getInt("order_id"),
+                        rs.getInt("user_id"),
+                        rs.getDouble("total"),
+                        rs.getString("order_status"),
+                        String.valueOf(rs.getDate("created_at"))
+                );
+                return order;
+            }
+
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
     public void deleteOrder(int orderId) {
         String query1 = "DELETE FROM order_items WHERE order_id = ?";
 
@@ -149,12 +172,12 @@ public class OrderDAO extends DBContext {
         }
 
         //Chỉnh sửa statistic
-        String query2 = "UPDATE statisticsTable SET total-sales = ?, revenue = ? WHERE product_id = ?";
+        String query2 = "UPDATE statisticsTable SET total_sales = ?, revenue = ? WHERE product_id = ?";
         try {
             PreparedStatement statement2 = connection.prepareStatement(query2);
-            statement2.setInt(1, productId);
-            statement2.setInt(2, quantity + oldStat.getTotalSale());
-            statement2.setBigDecimal(3, BigDecimal.valueOf(totalAmount + oldStat.getRevenue()));
+            statement2.setInt(3, productId);
+            statement2.setInt(1, quantity + oldStat.getTotalSale());
+            statement2.setBigDecimal(2, BigDecimal.valueOf(totalAmount + oldStat.getRevenue()));
             statement2.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
