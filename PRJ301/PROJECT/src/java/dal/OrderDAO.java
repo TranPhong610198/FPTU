@@ -11,6 +11,7 @@ import model.Order;
 import model.OrderItem;
 import model.Product;
 import model.Statistic;
+import model.User;
 
 /**
  *
@@ -18,6 +19,116 @@ import model.Statistic;
  */
 public class OrderDAO extends DBContext {
 
+    public double getTotalRevenue() {
+        double result = -1;
+        String query = "SELECT SUM(o.total) AS total_revenue\n"
+                + "FROM orders o\n"
+                + "WHERE o.order_status = 'Completed'";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                result = rs.getDouble("total_revenue");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<User> getTopSpendingUsers() {
+        List<User> topUsers = new ArrayList<>();
+        String query = "SELECT TOP(3) u.user_id, u.username, u.email, u.phone, SUM(o.total) AS total_spent "
+                + "FROM orders o "
+                + "JOIN users u ON o.user_id = u.user_id "
+                + "WHERE o.order_status = 'Completed' "
+                + "GROUP BY u.user_id, u.username, u.email, u.phone "
+                + "ORDER BY total_spent DESC ";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("user_id"));
+                user.setUsername(rs.getString("username"));
+                user.setEmail(rs.getString("email"));
+                user.setPhone(rs.getString("phone"));
+                user.setTotalSpent(rs.getDouble("total_spent"));
+
+                topUsers.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return topUsers;
+    }
+
+    public Map<String, Integer> getOrderStatusCounts() {
+        Map<String, Integer> statusCounts = new HashMap<>();
+        String query = "SELECT order_status, COUNT(*) AS count "
+                + "FROM orders "
+                + "GROUP BY order_status";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                statusCounts.put(rs.getString("order_status"), rs.getInt("count"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return statusCounts;
+    }
+
+    public List<String> getRevenueDates() {
+        List<String> dates = new ArrayList<>();
+        String query = "SELECT DISTINCT CONVERT(VARCHAR, created_at, 23) AS date "
+                + "FROM orders "
+                + "WHERE order_status = 'Completed' "
+                + "ORDER BY date";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                dates.add(rs.getString("date"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return dates;
+    }
+
+    public List<Double> getRevenueAmounts() {
+        List<Double> revenues = new ArrayList<>();
+        String query = "SELECT CONVERT(VARCHAR, created_at, 23) AS date, SUM(total) AS daily_revenue "
+                + "FROM orders "
+                + "WHERE order_status = 'Completed' "
+                + "GROUP BY CONVERT(VARCHAR, created_at, 23) "
+                + "ORDER BY date";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                revenues.add(rs.getDouble("daily_revenue"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return revenues;
+    }
+
+//--------------------------------------------------------------------------------------------------------------
     public void updateTotalAmout(double total, int orderId) {
         String query = "UPDATE orders SET total = ? WHERE order_id = ?";
         try {

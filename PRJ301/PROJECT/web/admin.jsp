@@ -11,11 +11,9 @@
     <head>
         <meta charset="utf-8"/>
         <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-        <title>
-            Admin Page
-        </title>
-        <script src="https://cdn.tailwindcss.com">
-        </script>
+        <title>Admin Page</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
         <style>
@@ -34,27 +32,13 @@
                 <nav>
                     <ul>
                         <li class="mb-2">
-                            <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="./admin.jsp">
+                            <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="admin">
                                 <i class="fas fa-tachometer-alt mr-2">
                                 </i>
                                 Dashboard
                             </a>
                         </li>
-                        <!--
                         <li class="mb-2">
-                        <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="#">
-                        <i class="fas fa-layer-group mr-2">
-                        </i>
-                        Layouts
-                        </a>
-                        </li>-->
-                        <li class="mb-2">
-                            <!--       
-                            <a class="flex items-center p-2 text-gray-300 hover:bg-gray-700 rounded" href="#">
-                            <i class="fas fa-database mr-2">
-                            </i>
-                            CRUD
-                            </a>-->
                             <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700" aria-controls="dropdown-crud" data-collapse-toggle="dropdown-crud" aria-expanded="false">
 
                                 <i class="fas fa-database mr-2"></i>
@@ -92,371 +76,164 @@
             </div>
             <!-- Main Content chưa dùng đến -->
             <div class="flex-1 p-6">
+                <!--Doanh thu--------------------------------------------------------------->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <div class="text-lg font-semibold text-white mb-4">
+                            Total Revenue
+                        </div>
+                        <div class="h-28 bg-gray-700 rounded-lg text-green-500 text-6xl text-center font-semibold pt-6">
+                            $${requestScope.totalRevenue}
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <div class="text-lg font-semibold text-white mb-4">
+                            Top 3 Best User 
+                        </div>
+                        <div class="h-32 bg-gray-700 rounded-lg text-white font-semibold pt-6 px-4">
+                            <table border="0" class="w-full">
+                                <tbody>
+                                    <c:forEach items="${requestScope.top3spent}" var="item">
+                                        <tr>
+                                            <td class="text-left">${item.username}</td>
+                                            <td class="text-center">${item.phone}</td>
+                                            <td class="text-right">${item.totalSpent}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <div class="text-lg font-semibold text-white mb-4">
+                            Top 5 Best Sale Products
+                        </div>
+                        <div class="h-32 bg-gray-700 rounded-lg text-white font-semibold pt-6 px-4">
+                            <table border="0">
+                                <tbody>
+                                    <c:forEach items="${requestScope.top5sale}" var="item">
+                                        <tr>
+                                            <td class="text-left">${item.name}</td>
+                                            <td class="text-right w-1/2">${item.totalSale}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <!----------------------------------------------------------------------------------->
+                <!--Chart------------------------------------------------------------------------->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                     <div class="col-span-2 bg-gray-800 p-4 rounded-lg">
                         <div class="flex justify-between items-center mb-4">
                             <div class="text-xl font-semibold text-white">
-                                $45,385
+                                Statistics Revenue By Day
                             </div>
-                            <div class="text-green-500">
+                            <!--<div class="text-green-500">
                                 12.5%
                                 <i class="fas fa-arrow-up">
                                 </i>
-                            </div>
+                            </div>-->
                         </div>
-                        <div class="h-48 bg-gray-700 rounded-lg">
-                        </div>
-                        <div class="flex justify-between items-center mt-4">
-                            <div class="text-gray-400">
-                                Last 7 days
-                            </div>
-                            <div class="text-blue-500">
-                                SALES REPORT
-                            </div>
+                        <div class="h-96 bg-gray-100 rounded-lg text-center text-white p-4">
+                            <canvas id="revenueChart" class="text-white"></canvas>
+                            <script>
+                                // Lấy dữ liệu từ Servlet (chuyển từ các đối tượng Java sang chuỗi JSON)
+
+                                const dates = <%= request.getAttribute("datesJson") %>;
+                                const revenues = <%= request.getAttribute("revenuesJson") %>;
+                                // Khởi tạo biểu đồ
+                                const ctx1 = document.getElementById('revenueChart').getContext('2d');
+                                const revenueChart = new Chart(ctx1, {
+                                    type: 'line',
+                                    data: {
+                                        labels: dates, // Các ngày trong dữ liệu
+                                        datasets: [{
+                                                label: 'Doanh thu (USD)',
+                                                data: revenues, // Doanh thu theo từng ngày
+                                                borderColor: 'rgba(75, 192, 192, 1)',
+                                                backgroundColor: 'rgba(75, 192, 192, 0.4)',
+                                                fill: true
+                                            }]
+                                    },
+                                    options: {
+                                        scales: {
+                                            x: {
+                                                title: {
+                                                    display: true,
+                                                    text: 'Ngày'
+                                                }
+                                            },
+                                            y: {
+                                                title: {
+                                                    display: true,
+                                                    text: 'Doanh thu (USD)'
+                                                },
+                                                beginAtZero: true
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
                         </div>
                     </div>
                     <div class="bg-gray-800 p-4 rounded-lg">
                         <div class="text-lg font-semibold text-white mb-4">
-                            Statistics this month
+                            Statistics Order
                         </div>
-                        <div class="mb-4">
-                            <div class="flex justify-between items-center mb-2">
-                                <div class="text-gray-400">
-                                    iPhone 14 Pro
-                                </div>
-                                <div class="text-green-500">
-                                    +12.5%
-                                </div>
-                            </div>
-                            <div class="text-white">
-                                $445,467
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <div class="flex justify-between items-center mb-2">
-                                <div class="text-gray-400">
-                                    Apple iMac 27"
-                                </div>
-                                <div class="text-green-500">
-                                    +8.2%
-                                </div>
-                            </div>
-                            <div class="text-white">
-                                $256,982
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <div class="flex justify-between items-center mb-2">
-                                <div class="text-gray-400">
-                                    Apple Watch SE
-                                </div>
-                                <div class="text-green-500">
-                                    +3.5%
-                                </div>
-                            </div>
-                            <div class="text-white">
-                                $201,689
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <div class="flex justify-between items-center mb-2">
-                                <div class="text-gray-400">
-                                    Apple iPad Air
-                                </div>
-                                <div class="text-green-500">
-                                    +12.5%
-                                </div>
-                            </div>
-                            <div class="text-white">
-                                $103,967
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <div class="flex justify-between items-center mb-2">
-                                <div class="text-gray-400">
-                                    Apple iMac 24"
-                                </div>
-                                <div class="text-red-500">
-                                    -2.1%
-                                </div>
-                            </div>
-                            <div class="text-white">
-                                $89,543
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center mt-4">
-                            <div class="text-gray-400">
-                                Last 7 days
-                            </div>
-                            <div class="text-blue-500">
-                                FULL REPORT
-                            </div>
+                        <div class="h-96 bg-gray-100 rounded-lg text-center text-white p-4">
+                            <canvas id="statusChart"></canvas>
+                            <script>
+                                // Lấy dữ liệu từ Servlet (chuyển từ các đối tượng Java sang chuỗi JSON)
+                                const labels = ${requestScope.labelsJson};
+                                const counts = ${requestScope.countsJson};
+
+                                // Khởi tạo biểu đồ
+                                const ctx2 = document.getElementById('statusChart').getContext('2d');
+                                const statusChart = new Chart(ctx2, {
+                                    type: 'pie',
+                                    data: {
+                                        labels: labels, // Các trạng thái đơn hàng
+                                        datasets: [{
+                                                label: 'Số lượng đơn hàng',
+                                                data: counts, // Số lượng đơn hàng theo từng trạng thái
+                                                backgroundColor: [
+                                                    'rgba(75, 192, 192, 0.4)', // Màu cho Processing
+                                                    'rgba(54, 162, 235, 0.4)', // Màu cho Completed
+                                                    'rgba(255, 99, 132, 0.4)', // Màu cho CancelledP
+                                                    'rgba(255, 159, 64, 0.4)', // Màu cho CancelledC
+                                                    'rgba(153, 102, 255, 0.4)'  // Màu cho Pending
+                                                ],
+                                                borderColor: [
+                                                    'rgba(75, 192, 192, 1)',
+                                                    'rgba(54, 162, 235, 1)',
+                                                    'rgba(255, 99, 132, 1)',
+                                                    'rgba(255, 159, 64, 1)',
+                                                    'rgba(153, 102, 255, 1)'
+                                                ],
+                                                borderWidth: 1
+                                            }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                            legend: {
+                                                position: 'top',
+                                            },
+                                            tooltip: {
+                                                enabled: true
+                                            }
+                                        }
+                                    }
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                    <div class="bg-gray-800 p-4 rounded-lg">
-                        <div class="text-lg font-semibold text-white mb-4">
-                            New products
-                        </div>
-                        <div class="h-24 bg-gray-700 rounded-lg">
-                        </div>
-                        <div class="text-green-500 mt-2">
-                            +12.5% Since last month
-                        </div>
-                    </div>
-                    <div class="bg-gray-800 p-4 rounded-lg">
-                        <div class="text-lg font-semibold text-white mb-4">
-                            Users
-                        </div>
-                        <div class="h-24 bg-gray-700 rounded-lg">
-                        </div>
-                        <div class="text-green-500 mt-2">
-                            +3.4% Since last month
-                        </div>
-                    </div>
-                    <div class="bg-gray-800 p-4 rounded-lg">
-                        <div class="text-lg font-semibold text-white mb-4">
-                            Desktop PC
-                        </div>
-                        <div class="h-24 bg-gray-700 rounded-lg">
-                        </div>
-                        <div class="text-green-500 mt-2">
-                            +12.5% Since last month
-                        </div>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                    <div class="col-span-2 bg-gray-800 p-4 rounded-lg">
-                        <div class="flex justify-between items-center mb-4">
-                            <div class="text-lg font-semibold text-white">
-                                Smart chat
-                            </div>
-                            <div class="text-blue-500">
-                                View all
-                            </div>
-                        </div>
-                        <div class="mb-4">
-                            <div class="flex items-start mb-4">
-                                <img alt="User avatar" class="w-10 h-10 rounded-full mr-4" height="40" src="https://storage.googleapis.com/a1aa/image/ed1feN6wYuFnYpg2ocEAe5rEMTSDIROXxeSi1ZHrFAU5LcycC.jpg" width="40"/>
-                                <div>
-                                    <div class="text-white font-semibold">
-                                        Michael Cough
-                                    </div>
-                                    <div class="text-gray-400 text-sm">
-                                        01/03/2023 4:15 PM
-                                    </div>
-                                    <div class="text-gray-300 mt-2">
-                                        Hello @designteam, Let's schedule a kick-off meeting and workshop this week. It would be great to gather everyone involved in the design project. Let me know about your availability in the thread. Looking forward to it! Thanks.
-                                    </div>
-                                    <div class="text-blue-500 mt-2">
-                                        4 replies
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-start mb-4">
-                                <img alt="User avatar" class="w-10 h-10 rounded-full mr-4" height="40" src="https://storage.googleapis.com/a1aa/image/ed1feN6wYuFnYpg2ocEAe5rEMTSDIROXxeSi1ZHrFAU5LcycC.jpg" width="40"/>
-                                <div>
-                                    <div class="text-white font-semibold">
-                                        Bonnie Green
-                                    </div>
-                                    <div class="text-gray-400 text-sm">
-                                        01/03/2023 4:15 PM
-                                    </div>
-                                    <div class="text-gray-300 mt-2">
-                                        Hello everyone, Thank you for the workshop, it was very productive meeting. I can't wait to start working on this new project with you guys. But first things first, I am waiting for the offer and pitch deck from you. It would be great to get it by the end of the month. Cheers!
-                                    </div>
-                                    <div class="text-blue-500 mt-2">
-                                        14
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-start mb-4">
-                                <img alt="User avatar" class="w-10 h-10 rounded-full mr-4" height="40" src="https://storage.googleapis.com/a1aa/image/ed1feN6wYuFnYpg2ocEAe5rEMTSDIROXxeSi1ZHrFAU5LcycC.jpg" width="40"/>
-                                <div>
-                                    <div class="text-white font-semibold">
-                                        Jese Leos
-                                    </div>
-                                    <div class="text-gray-400 text-sm">
-                                        01/03/2023 4:15 PM
-                                    </div>
-                                    <div class="text-gray-300 mt-2">
-                                        Ok @team I am attaching our offer and pitch deck. Take your time to review everything. I am looking forward to the next steps! Thank you.
-                                    </div>
-                                    <div class="flex items-center mt-2">
-                                        <div class="bg-gray-700 p-2 rounded-lg mr-2">
-                                            <div class="text-white">
-                                                flowbite.offer.345
-                                            </div>
-                                            <div class="text-gray-400 text-sm">
-                                                PDF, 2.3 MB
-                                            </div>
-                                        </div>
-                                        <div class="bg-gray-700 p-2 rounded-lg">
-                                            <div class="text-white">
-                                                bersgide_pitch
-                                            </div>
-                                            <div class="text-gray-400 text-sm">
-                                                PPTX, 101 MB
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-start mb-4">
-                                <img alt="User avatar" class="w-10 h-10 rounded-full mr-4" height="40" src="https://storage.googleapis.com/a1aa/image/ed1feN6wYuFnYpg2ocEAe5rEMTSDIROXxeSi1ZHrFAU5LcycC.jpg" width="40"/>
-                                <div>
-                                    <div class="text-white font-semibold">
-                                        Joseph Mcfallin
-                                    </div>
-                                    <div class="text-gray-400 text-sm">
-                                        01/03/2023 4:15 PM
-                                    </div>
-                                    <div class="text-gray-300 mt-2">
-                                        Hello @jeseleos I need some informations about flowbite reset version.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="flex items-start mb-4">
-                                <img alt="User avatar" class="w-10 h-10 rounded-full mr-4" height="40" src="https://storage.googleapis.com/a1aa/image/ed1feN6wYuFnYpg2ocEAe5rEMTSDIROXxeSi1ZHrFAU5LcycC.jpg" width="40"/>
-                                <div>
-                                    <div class="text-white font-semibold">
-                                        Jese Leos
-                                    </div>
-                                    <div class="text-gray-400 text-sm">
-                                        01/03/2023 4:15 PM
-                                    </div>
-                                    <div class="text-gray-300 mt-2">
-                                        Hi @josephmc Sure, just let me know when you are available and we can speak.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center">
-                            <input class="w-full p-2 bg-gray-700 text-gray-300 rounded-l-lg" placeholder="Write your message" type="text"/>
-                            <button class="bg-blue-500 p-2 rounded-r-lg text-white">
-                                Send message
-                            </button>
-                        </div>
-                    </div>
-                    <div class="bg-gray-800 p-4 rounded-lg">
-                        <div class="text-lg font-semibold text-white mb-4">
-                            Sales by category
-                        </div>
-                        <div class="h-48 bg-gray-700 rounded-lg">
-                        </div>
-                        <div class="flex justify-between items-center mt-4">
-                            <div class="text-gray-400">
-                                Last 7 days
-                            </div>
-                            <div class="text-blue-500">
-                                SALES REPORT
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
-                    <div class="bg-gray-800 p-4 rounded-lg">
-                        <div class="text-lg font-semibold text-white mb-4">
-                            Latest Activity
-                        </div>
-                        <div class="mb-4">
-                            <div class="text-gray-400">
-                                April 2023
-                            </div>
-                            <div class="text-white font-semibold">
-                                Application UI design in Figma
-                            </div>
-                            <div class="text-gray-400 text-sm">
-                                Get access to over 20+ pages including a dashboard layout, charts, kanban board, calendar, and pre-order E-commerce &amp; Marketing pages.
-                            </div>
-                            <button class="bg-blue-500 text-white p-2 rounded mt-2">
-                                Learn more
-                            </button>
-                        </div>
-                        <div class="mb-4">
-                            <div class="text-gray-400">
-                                March 2023
-                            </div>
-                            <div class="text-white font-semibold">
-                                Marketing UI code in Flowbite
-                            </div>
-                            <div class="text-gray-400 text-sm">
-                                Get started with dozens of web components and interactive elements built on top of Tailwind CSS.
-                            </div>
-                            <button class="bg-blue-500 text-white p-2 rounded mt-2">
-                                Go to Flowbite Blocks
-                            </button>
-                        </div>
-                        <div class="mb-4">
-                            <div class="text-gray-400">
-                                February 2023
-                            </div>
-                            <div class="text-white font-semibold">
-                                Marketing UI design in Figma
-                            </div>
-                            <div class="text-gray-400 text-sm">
-                                Get started with dozens of web components and interactive elements built on top of Tailwind CSS.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-gray-800 p-4 rounded-lg">
-                        <div class="text-lg font-semibold text-white mb-4">
-                            Insights
-                        </div>
-                        <div class="text-white font-semibold mb-2">
-                            You are going to grow by 44% next year
-                        </div>
-                        <div class="text-gray-400 text-sm mb-4">
-                            Get started with a free and open-source admin dashboard layout built with Tailwind CSS and Flowbite featuring charts, widgets, CRUD layouts, authentication pages, and more
-                        </div>
-                        <div class="text-white font-semibold mb-2">
-                            Key Takeaways:
-                        </div>
-                        <ul class="list-disc list-inside text-gray-400 text-sm">
-                            <li>
-                                What are the new challenges in the delivery industry due to new consumer expectations.
-                            </li>
-                            <li>
-                                How the online delivery business model is diversifying to meet new demands.
-                            </li>
-                            <li>
-                                Which new technology requirements must be met to ensure true retail experiences.
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="bg-gray-800 p-4 rounded-lg">
-                        <div class="text-lg font-semibold text-white mb-4">
-                            Traffic by device
-                        </div>
-                        <div class="h-48 bg-gray-700 rounded-lg">
-                        </div>
-                        <div class="flex justify-between items-center mt-4">
-                            <div class="text-gray-400">
-                                Desktop
-                            </div>
-                            <div class="text-white">
-                                234k
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center mt-2">
-                            <div class="text-gray-400">
-                                Phone
-                            </div>
-                            <div class="text-white">
-                                94k
-                            </div>
-                        </div>
-                        <div class="flex justify-between items-center mt-2">
-                            <div class="text-gray-400">
-                                Tablet
-                            </div>
-                            <div class="text-white">
-                                16k
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!--______________________________________________________________________________________-->
                 <!--List Order-->
                 <div class="bg-gray-800 p-4 rounded-lg mb-8 w-full">
                     <div class="text-lg font-semibold text-white mb-4">

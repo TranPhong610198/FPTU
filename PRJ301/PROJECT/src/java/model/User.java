@@ -13,6 +13,7 @@ public class User {
     int id;
     String username, password, email, phone, address, role, avtUrl;
     boolean blocked;
+    double totalSpent;
     
     public User() {
     }
@@ -35,6 +36,28 @@ public class User {
         this.email = email;
     }
 
+    public User(int id, String username, String password, String email, String phone, String address, String role, String avtUrl, boolean blocked, double totalSpent) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.role = role;
+        this.avtUrl = avtUrl;
+        this.blocked = blocked;
+        this.totalSpent = totalSpent;
+    }
+
+    public double getTotalSpent() {
+        return totalSpent;
+    }
+
+    public void setTotalSpent(double totalSpent) {
+        this.totalSpent = totalSpent;
+    }
+
+    
     public String getAddress() {
         return address;
     }
