@@ -1,0 +1,60 @@
+Tuần 1: Nền tảng và cơ bản về Git và GitHub
+Ngày 1-2: Giới thiệu về Git
+Tìm hiểu về hệ thống kiểm soát phiên bản là gì.
+
+Cài đặt Git trên máy tính của bạn.
+
+Các lệnh cơ bản: git init, git status, git add, git commit, git log.
+
+Ngày 3-4: Làm quen với GitHub
+Tạo tài khoản GitHub.
+
+Tạo kho lưu trữ (repository) mới trên GitHub.
+
+Kết nối kho địa phương với kho GitHub (remote repository): git remote add, git push.
+
+Ngày 5-6: Làm việc với nhánh (branches)
+Tìm hiểu khái niệm về nhánh (branch).
+
+Tạo và chuyển nhánh: git branch, git checkout -b.
+
+Gộp nhánh (merge branches): git merge.
+
+Giải quyết xung đột (conflicts) khi gộp nhánh.
+
+Ngày 7: Tổng kết và thực hành
+Ôn lại các lệnh và khái niệm đã học.
+
+Thực hành bằng cách tạo một dự án nhỏ và thực hiện các thao tác đã học.
+
+Tuần 2: Làm việc nhóm và nâng cao
+Ngày 8-9: Làm việc nhóm trên GitHub
+Tạo nhóm và thêm thành viên vào dự án trên GitHub.
+
+Cloning dự án về máy của từng thành viên: git clone.
+
+Thực hiện các thao tác pull và push giữa các thành viên: git pull, git push.
+
+Ngày 10-11: Pull Requests và Reviews
+Tạo pull request để yêu cầu xem xét và hợp nhất thay đổi.
+
+Xem xét và phản hồi pull request.
+
+Sử dụng GitHub Issues để quản lý công việc và lỗi.
+
+Ngày 12: CI/CD (Tích hợp liên tục và triển khai liên tục)
+Giới thiệu về CI/CD và cách thiết lập GitHub Actions.
+
+Tạo file cấu hình để tự động hóa quy trình kiểm tra và triển khai.
+
+Ngày 13: Cải tiến và tối ưu hóa quy trình làm việc
+Tìm hiểu về cách viết thông điệp commit rõ ràng và dễ hiểu.
+
+Sử dụng các công cụ hỗ trợ khác như GitHub Projects, GitHub Wiki.
+
+Ngày 14: Thực hành tổng quát và đánh giá
+Ôn lại toàn bộ các khái niệm và lệnh đã học.
+
+Thực hành trên dự án nhóm và hoàn thiện quy trình làm việc.
+
+Đánh giá kết quả học tập và thực hành, nhận xét và cải thiện.
